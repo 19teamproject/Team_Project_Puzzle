@@ -4,7 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - TargetPoint
+  - CinemachineTarget
   layers:
   - Default
   - TransparentFX
@@ -12,7 +12,12 @@ TagManager:
   - 
   - Water
   - UI
-  - reflectable
+  - 
+  - 
+  - Player
+  - 
+  - 
+  - Interactable
   - 
   - 
   - 
@@ -31,13 +36,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PostProcessing
+  - UI_PostProcessing
   m_SortingLayers:
   - name: Default
     uniqueID: 0
