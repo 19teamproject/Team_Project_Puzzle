@@ -34,9 +34,9 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Ground
+  - YCube
+  - XCube
   m_SortingLayers:
   - name: Default
     uniqueID: 0
