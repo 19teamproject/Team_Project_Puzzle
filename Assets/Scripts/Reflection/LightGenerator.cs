@@ -64,14 +64,15 @@ public class LightGenerator : MonoBehaviour
                 }
 
                 // 거울을 맞았으면 반사
-                if (((1 << hit.collider.gameObject.layer) & reflectableLayer) != 0)
+                Mirror mirror = hit.collider.GetComponent<Mirror>();
+                if (mirror != null)
                 {
-                    direction = Vector3.Reflect(direction, hit.normal);
+                    direction = mirror.Reflect(direction, hit.normal);
                     startPosition = hit.point;
                 }
                 else
                 {
-                    // 벽에 부딪히면 멈춤
+                    // 벽이나 장애물에 부딪히면 멈춤
                     break;
                 }
             }
@@ -83,7 +84,7 @@ public class LightGenerator : MonoBehaviour
             }
         }
 
-        if (!stillHittingTarget && !isClear)
+        if (!stillHittingTarget && isContactingTarget && !isClear)
         {
             Debug.Log("초기화 진행");
             contactStartTime = 0f;
