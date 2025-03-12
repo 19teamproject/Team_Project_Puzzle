@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Fire : MonoBehaviour
 {
     public GameObject fireEffect;  // 불이 붙을 이펙트

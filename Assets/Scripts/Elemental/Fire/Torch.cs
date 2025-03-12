@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// »∂∫“¿ª 
+
 public class Torch : MonoBehaviour
 {
     public GameObject fireEffect;
