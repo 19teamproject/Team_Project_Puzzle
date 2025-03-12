@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Experimental.GraphView.GraphView;
@@ -36,5 +34,18 @@ public class CapsuleController : MonoBehaviour
                 }
             }
         }
+    }
+    public void OnTriggerEnter(Collider other) //닿았을 때 실행되어야하므로 Ray가 아닌 Trigger로
+    {
+        if(other.CompareTag("TeleportCube"))
+        {
+            TeleportEffect teleport = other.GetComponent<TeleportEffect>();
+
+            if (teleport != null)
+            {
+                teleport.StartTeleport(player);
+            }
+        }
+
     }
 }
