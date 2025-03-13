@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 876918420383722083}
   - component: {fileID: 5097964582807372895}
   - component: {fileID: 8374477316878517929}
-  - component: {fileID: 5676675516750040245}
   - component: {fileID: 4786707118838878837}
   - component: {fileID: 1085065418773395118}
+  - component: {fileID: 7600518460732058383}
   m_Layer: 11
   m_Name: TeleportCube
   m_TagString: Untagged
@@ -86,18 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5676675516750040245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3767735105275630659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0ca3615f2bbc3a46befd1bdda5c450e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4786707118838878837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,3 +122,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: f43fa08d976b8d8409adc850c2a1a07b, type: 3}
+--- !u!114 &7600518460732058383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3767735105275630659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 280207ec93f886743972571ea9cefc90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubeType: T
+  teleportTarget: {fileID: 0}
+  teleportDelay: 2

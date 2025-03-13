@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 581420379832931358}
   - component: {fileID: 1325018489569558456}
   - component: {fileID: 4899166651883145177}
+  - component: {fileID: -4078297398360461950}
   m_Layer: 11
   m_Name: RedCube
   m_TagString: Untagged
@@ -28,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3732586955166750703}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.59, y: 0.75, z: 0.5}
-  m_LocalScale: {x: 25, y: 25, z: 25}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -121,3 +122,16 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: f43fa08d976b8d8409adc850c2a1a07b, type: 3}
+--- !u!114 &-4078297398360461950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3732586955166750703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b944e55a6ced11944a50c670b96d3d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubeType: Scalable

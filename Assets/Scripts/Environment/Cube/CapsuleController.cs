@@ -10,9 +10,8 @@ public class CapsuleController : MonoBehaviour
     public float rayDistance = 10f; // Ray가 닿는 거리
     public LayerMask layerMask; // Player가 확인 할 수 있는 Ray
 
-    private TeleportEffect teleportEffect;
-    private CubeInteraction cubeInteraction;
-    private float scaleAmount = 25f; //한칸당 25f씩
+    private Cube cube;
+    private float scaleAmount = 50f; //한칸당 25f씩
 
     public void OnInteraction(InputAction.CallbackContext context)
     {
@@ -24,28 +23,20 @@ public class CapsuleController : MonoBehaviour
             if (Physics.Raycast(ray, out hit, rayDistance))
             {
                 Debug.Log($"Ray가 맞은 오브젝트 : {hit.collider.gameObject.name}");
-                if (hit.collider.gameObject.CompareTag("XCube"))
+                Cube cube = hit.collider.GetComponent<Cube>();
+                if (cube != null)
                 {
-                    cubeInteraction.ChangeScale(hit.collider.gameObject, Vector3.right, scaleAmount);
-                }
-                else if (hit.collider.gameObject.CompareTag("YCube"))
-                {
-                    cubeInteraction.ChangeScale(hit.collider.gameObject, Vector3.up, scaleAmount);
+                    cube.HandleInteraction(player);
                 }
             }
         }
     }
     public void OnTriggerEnter(Collider other) //닿았을 때 실행되어야하므로 Ray가 아닌 Trigger로
     {
-        if(other.CompareTag("TeleportCube"))
+        Cube cube = other.GetComponent<Cube>();
+        if (cube != null)
         {
-            TeleportEffect teleport = other.GetComponent<TeleportEffect>();
-
-            if (teleport != null)
-            {
-                teleport.StartTeleport(player);
-            }
+            cube.HandleInteraction(player);
         }
-
     }
 }
