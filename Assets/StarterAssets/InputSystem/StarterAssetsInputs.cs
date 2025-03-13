@@ -12,6 +12,7 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+        public bool interaction;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -19,6 +20,8 @@ namespace StarterAssets
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
+
+		public UIInventory Inventory { get; set; }
 
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
@@ -43,6 +46,18 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
+
+		public void OnScroll(InputValue value)
+		{
+			if (value.Get<Vector2>().y != 0)
+			{
+				Inventory.Scroll();
+			}
+		}
+        //public void OnInteraction(InputValue value)
+        //{
+        //    InteractionInput(value.isPressed);
+        //}
 #endif
 
 
@@ -75,6 +90,11 @@ namespace StarterAssets
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
-	}
+        //public void InteractionInput(bool newInteractionState)
+        //{
+        //    interaction = newInteractionState;
+        //    Debug.Log($"interaction 상태 변경: {interaction}"); 
+        //}
+    }
 	
 }

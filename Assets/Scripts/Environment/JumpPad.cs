@@ -14,7 +14,11 @@ public class JumpPad : MonoBehaviour
 {
     [SerializeField] private Vector3 jumpDir = Vector3.up;
     [SerializeField] private float jumpForce = 10f;
-    [SerializeField] private PadType type = PadType.Jump;
+    [SerializeField] private AudioClip[] jumpAudioClips;
+    [Range(0, 1)]
+    [SerializeField] private float jumpAudioVolume;
+    // [SerializeField] private float delay = 1f;
+    // [SerializeField] private PadType type = PadType.Jump;
 
     private Tween launchCall;
 
@@ -22,27 +26,44 @@ public class JumpPad : MonoBehaviour
     {
         if (other.TryGetComponent(out ThirdPersonController playerController))
         {
-            switch (type)
-            {
-                case PadType.Jump:
-                    playerController.AddJumpForce(jumpDir.normalized * jumpForce);
-                    break;
+            // switch (delay)
+            // {
+            //     case 0f:
+            //         playerController.AddJumpForce(jumpDir.normalized * jumpForce);
+            //         if (jumpAudioClips.Length > 0)
+            //         {
+            //             var index = Random.Range(0, jumpAudioClips.Length);
+            //             AudioSource.PlayClipAtPoint(jumpAudioClips[index], transform.position, jumpAudioVolume);
+            //         }
+            //         break;
 
-                case PadType.Launch:
-                    launchCall = DOVirtual.DelayedCall(3f, () =>
-                        playerController.AddJumpForce(jumpDir.normalized * jumpForce));
-                    break;
+            //     default:
+            //         if (jumpAudioClips.Length > 0)
+            //         {
+            //             var index = Random.Range(0, jumpAudioClips.Length);
+            //             AudioSource.PlayClipAtPoint(jumpAudioClips[index], transform.position, jumpAudioVolume);
+            //         }
+            //         launchCall = DOVirtual.DelayedCall(delay, () => 
+            //         {
+            //             playerController.AddJumpForce(jumpDir.normalized * jumpForce);
+            //         });
+            //         break;
+            // }
+
+            if (jumpAudioClips.Length > 0)
+            {
+                var index = Random.Range(0, jumpAudioClips.Length);
+                AudioSource.PlayClipAtPoint(jumpAudioClips[index], transform.position, jumpAudioVolume);
             }
+            launchCall = DOVirtual.DelayedCall(0.1f, () => 
+            {
+                playerController.AddJumpForce(jumpDir.normalized * jumpForce);
+            });
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         launchCall?.Kill();
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        launchCall.Kill();
     }
 }

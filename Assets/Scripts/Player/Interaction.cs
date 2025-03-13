@@ -11,7 +11,6 @@ public class Interaction : MonoBehaviour
     [SerializeField] private float checkRate = 0.05f;
     private float lastCheckTime;
 
-    [Header("Text")]
     [SerializeField] private TextMeshProUGUI promptText;
     [SerializeField] private TextMeshProUGUI promptTextPlus;
 
@@ -20,17 +19,18 @@ public class Interaction : MonoBehaviour
     private RectTransform promptTextRect;
     private CanvasGroup promptTextCanvas;
     private Camera cam;
-
-    public float CheckDistanceBonus { get; set;}
+    private Cube curCube;
+    public float CheckDistanceBonus { get; set; }
 
     private void Start()
     {
-        promptTextRect = promptText.GetComponent<RectTransform>();
-        promptTextCanvas = promptText.GetComponent<CanvasGroup>();
         cam = Camera.main;
 
-        promptTextCanvas.alpha = 0f;
+        promptTextRect = promptText.GetComponent<RectTransform>();
+        promptTextCanvas = promptText.GetComponent<CanvasGroup>();
+
         promptTextRect.anchoredPosition = new(0f, 25f);
+        promptTextCanvas.alpha = 0f;
     }
 
     private void Update()
@@ -76,10 +76,11 @@ public class Interaction : MonoBehaviour
         promptTextPlus.text = curInteractable.GetInteractPrompt();
     }
 
-    public void OnInteractInput(InputAction.CallbackContext context)
+    public void OnInteract(InputValue value)
     {
-        if (context.phase == InputActionPhase.Started && curInteractable != null)
+        if (value.isPressed && curInteractable != null)
         {
+            if (curCube != null) Debug.Log($"{curCube}");
             if (!curInteractable.OnInteract()) return;
 
             curInteractGameObject = null;
