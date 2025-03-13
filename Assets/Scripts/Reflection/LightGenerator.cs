@@ -149,7 +149,7 @@ public class LightGenerator : EnvironmentObject
         if (beamRenderer != null)
         {
             beamRenderer.material.color = beamColor;
-            beamRenderer.material.SetColor("_EmissionColor", beamColor * 1.5f);
+            beamRenderer.material.SetColor("_EmissionColor", beamColor * 2f);
         }
 
     }

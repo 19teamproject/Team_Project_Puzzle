@@ -54,6 +54,7 @@ public class Interaction : MonoBehaviour
 
                     curInteractGameObject = hit.collider.gameObject;
                     curInteractable = hit.collider.GetComponent<IInteractable>();
+                    Debug.Log($"[확인] curInteractable 타입: {curInteractable.GetType().Name}");
                     curInteractable.SetOutline(true);
                     AnimatePromptText(true);
                     SetPromptText();
@@ -102,6 +103,7 @@ public class Interaction : MonoBehaviour
         }
 
         selectedRotatableObject = curInteractGameObject.GetComponent<RotateObject>();
+        
 
         if (selectedRotatableObject != null)
         {

@@ -1797,7 +1797,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 64d951145908b14459081e805c36a5f4, type: 2}
   outline: {fileID: 1737021771}
-  mirrorColor: {r: 0, g: 0, b: 0, a: 1}
+  mirrorColor: {r: 0.09849739, g: 1, b: 0, a: 1}
 --- !u!65 &1737021768
 BoxCollider:
   m_ObjectHideFlags: 0
