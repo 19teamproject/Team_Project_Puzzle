@@ -7,12 +7,14 @@ namespace HPlayer
 {
     public class PlayerInteractions : MonoBehaviour, IObjectHolder
     {
+        // 바라보고 있는 오브젝트
         [Header("Select")]
         [SerializeField, Required] private Transform playerCamera;
         [SerializeField] private float selectRange = 10f;
         [SerializeField] private LayerMask selectLayer;
         [field: SerializeField, ReadOnly] public Interactable SelectedObject { get; private set; } = null;
 
+        // 들고 있는 오브젝트
         [Header("Hold")]
         [SerializeField, Required] private Transform handTransform;
         [SerializeField, Min(1)] private float holdingForce = 0.5f;
@@ -20,6 +22,7 @@ namespace HPlayer
         [SerializeField] [Range(0f, 90f)] private float heldClamXRotation = 45f;
         [field: SerializeField, ReadOnly] public Liftable HeldObject { get; private set; } = null;
 
+        // 상호작용 중인지
         [field: Header("Input")]
         [field: SerializeField, ReadOnly] public bool Interacting { get; private set; } = false;
 
@@ -44,8 +47,10 @@ namespace HPlayer
 
         private void Update()
         {
+            // 입력
             UpdateInput();
 
+            // 바라보는 오브젝트
             UpdateSelectedObject();
 
             if (HeldObject)
@@ -56,6 +61,7 @@ namespace HPlayer
 
         private void UpdateInput()
         {
+            // 마우스 좌클릭하면 상호작용 시작
             bool interacting = Input.GetMouseButton(0);
             if (interacting != Interacting)
             {
@@ -90,7 +96,6 @@ namespace HPlayer
 
             if (foundInteractable && foundInteractable.enabled)
             {
-
                 foundInteractable.Select();
                 OnSelect?.Invoke();
             }
@@ -102,7 +107,7 @@ namespace HPlayer
 
         private void UpdateHeldObjectPosition()
         {
-            HeldObject.Rigidbody.velocity = (handTransform.position - HeldObject.transform.position) * holdingForce;
+            HeldObject.rb.velocity = (handTransform.position - HeldObject.transform.position) * holdingForce;
 
             Vector3 handRot = handTransform.rotation.eulerAngles;
             if (handRot.x > 180f)

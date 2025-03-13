@@ -82,6 +82,7 @@ namespace HPlayer
 
         private CharacterController controller;
 
+        // 포트 연결할 때 실행
         public static Action OnPlayerEnterPortal;
 
         private void Awake()
