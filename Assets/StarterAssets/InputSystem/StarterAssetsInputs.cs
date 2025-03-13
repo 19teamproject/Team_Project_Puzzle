@@ -12,6 +12,7 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+        public bool interaction;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -53,6 +54,10 @@ namespace StarterAssets
 				Inventory.Scroll();
 			}
 		}
+        //public void OnInteraction(InputValue value)
+        //{
+        //    InteractionInput(value.isPressed);
+        //}
 #endif
 
 
@@ -85,6 +90,11 @@ namespace StarterAssets
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
-	}
+        //public void InteractionInput(bool newInteractionState)
+        //{
+        //    interaction = newInteractionState;
+        //    Debug.Log($"interaction 상태 변경: {interaction}"); 
+        //}
+    }
 	
 }

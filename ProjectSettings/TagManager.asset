@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - CinemachineTarget
+  - XCube
+  - YCube
   - Fire
   - Flammable
   - Ice
@@ -25,7 +27,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Holdable
   - 
   - 
   - 
