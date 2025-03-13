@@ -6,19 +6,18 @@ using DG.Tweening;
 
 public class UIInventory : MonoBehaviour
 {
+    [Header("Item")]
     [SerializeField] private ItemSlot[] slots;
-
     [SerializeField] private Transform slotPanel;
     [SerializeField] private Transform dropPosition;
 
-    [Header("Selected Item")]
+    [Header("Text")]
     [SerializeField] private TextMeshProUGUI selectedItemText;
     [SerializeField] private TextMeshProUGUI selectedItemTextPlus;
 
     private CanvasGroup selectedItemTextCanvas;
     private ItemSlot selectedItem;
     private int selectedItemIndex;
-    // private bool firstScrollSkipped;
     private bool canUse;
     private bool canEquip;
     private bool canUnEquip;
@@ -28,17 +27,20 @@ public class UIInventory : MonoBehaviour
 
     private bool isTextVisible = false;
 
+    private Player player;
     private PlayerCondition condition;
 
     public ItemData ItemData => selectedItem.Item;
 
     private void Start()
     {
-        condition = CharacterManager.Instance.Player.Condition;
-        dropPosition = CharacterManager.Instance.Player.DropPosition;
+        player = CharacterManager.Instance.Player;
 
-        CharacterManager.Instance.Player.AddItem += AddItem;
-        CharacterManager.Instance.Player.Controller.Inventory = this;
+        condition = player.Condition;
+        dropPosition = player.DropPosition;
+
+        player.AddItem += AddItem;
+        player.Controller.Inventory = this;
 
         slots = new ItemSlot[slotPanel.childCount - 1];
 
@@ -104,7 +106,7 @@ public class UIInventory : MonoBehaviour
 
     public void AddItem()
     {
-        ItemData data = CharacterManager.Instance.Player.ItemData;
+        ItemData data = player.ItemData;
 
         if (data.canStack)
         {
@@ -113,7 +115,7 @@ public class UIInventory : MonoBehaviour
             {
                 slot.Quantity++;
                 UpdateUI();
-                CharacterManager.Instance.Player.ItemData = null;
+                player.ItemData = null;
                 return;
             }
         }
@@ -125,12 +127,12 @@ public class UIInventory : MonoBehaviour
             emptySlot.Item = data;
             emptySlot.Quantity = 1;
             UpdateUI();
-            CharacterManager.Instance.Player.ItemData = null;
+            player.ItemData = null;
             return;
         }
 
         ThrowItem(data);
-        CharacterManager.Instance.Player.ItemData = null;
+        player.ItemData = null;
     }
 
     public void UpdateUI()
@@ -270,7 +272,7 @@ public class UIInventory : MonoBehaviour
 
                 slots[selectedItemIndex].Equipped = true;
                 curEquipIndex = selectedItemIndex;
-                CharacterManager.Instance.Player.Equipment.EquipNew(selectedItem.Item);
+                player.Equipment.EquipNew(selectedItem.Item);
                 UpdateUI();
 
                 // SelectItem(selectedItemIndex);
@@ -308,7 +310,7 @@ public class UIInventory : MonoBehaviour
     private void UnEquip(int index)
     {
         slots[index].Equipped = false;
-        CharacterManager.Instance.Player.Equipment.UnEquip();
+        player.Equipment.UnEquip();
         UpdateUI();
 
         // if (selectedItemIndex == index)

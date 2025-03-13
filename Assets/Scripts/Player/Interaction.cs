@@ -11,7 +11,6 @@ public class Interaction : MonoBehaviour
     [SerializeField] private float checkRate = 0.05f;
     private float lastCheckTime;
 
-    [Header("Text")]
     [SerializeField] private TextMeshProUGUI promptText;
     [SerializeField] private TextMeshProUGUI promptTextPlus;
 
@@ -21,16 +20,17 @@ public class Interaction : MonoBehaviour
     private CanvasGroup promptTextCanvas;
     private Camera cam;
 
-    public float CheckDistanceBonus { get; set;}
+    public float CheckDistanceBonus { get; set; }
 
     private void Start()
     {
-        promptTextRect = promptText.GetComponent<RectTransform>();
-        promptTextCanvas = promptText.GetComponent<CanvasGroup>();
         cam = Camera.main;
 
-        promptTextCanvas.alpha = 0f;
+        promptTextRect = promptText.GetComponent<RectTransform>();
+        promptTextCanvas = promptText.GetComponent<CanvasGroup>();
+
         promptTextRect.anchoredPosition = new(0f, 25f);
+        promptTextCanvas.alpha = 0f;
     }
 
     private void Update()
