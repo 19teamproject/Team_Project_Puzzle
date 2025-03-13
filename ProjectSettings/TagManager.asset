@@ -8,6 +8,7 @@ TagManager:
   - Fire
   - Flammable
   - Ice
+  - TargetPoint
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - 
   - 
   - Interactable
-  - 
+  - Reflectable
   - 
   - 
   - 

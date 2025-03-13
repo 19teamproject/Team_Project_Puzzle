@@ -76,7 +76,7 @@ public class TargetPoint : MonoBehaviour
     }
 
     // 목표지점 색상과 빛 색상 체크
-    public bool CheckColorMatch(Color beamColor, float tolerance = 0.3f)
+    public bool CheckColorMatch(Color beamColor, float tolerance = 0.1f)
     {
         float rDiff = Mathf.Abs(targetColor.r - beamColor.r);
         float gDiff = Mathf.Abs(targetColor.g - beamColor.g);
