@@ -516,6 +516,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1660334105485760526, guid: 07c2d9b7a04564c45a7c86a8849aa831, type: 3}
+      propertyPath: heldObjectLayer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1660334105485760526, guid: 07c2d9b7a04564c45a7c86a8849aa831, type: 3}
+      propertyPath: selectLayer.m_Bits
+      value: 65537
+      objectReference: {fileID: 0}
     - target: {fileID: 2437766923880463700, guid: 07c2d9b7a04564c45a7c86a8849aa831, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -1744,6 +1752,10 @@ PrefabInstance:
     - target: {fileID: 7148214467790260629, guid: f786ade4c966e6949b63640d6856d568, type: 3}
       propertyPath: m_Layer
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7314069847372321391, guid: f786ade4c966e6949b63640d6856d568, type: 3}
+      propertyPath: <ConnectionColor>k__BackingField
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7399807453771395605, guid: f786ade4c966e6949b63640d6856d568, type: 3}
       propertyPath: m_Layer

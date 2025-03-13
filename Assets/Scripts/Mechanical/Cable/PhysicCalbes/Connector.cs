@@ -7,12 +7,12 @@ namespace HPhysic
     [RequireComponent(typeof(Rigidbody))]
     public class Connector : MonoBehaviour
     {
-        public enum ConType { Male, Female }
+        public enum ConType { Plug, Outlet }
         public enum CableColor { White, Red, Green, Yellow, Blue, Cyan, Magenta }
 
         [field: Header("Settings")]
 
-        [field: SerializeField] public ConType ConnectionType { get; private set; } = ConType.Male;
+        [field: SerializeField] public ConType ConnectionType { get; private set; } = ConType.Plug;
         [field: SerializeField, OnValueChanged(nameof(UpdateConnectorColor))] public CableColor ConnectionColor { get; private set; } = CableColor.White;
 
         [SerializeField] private bool makeConnectionKinematic = false;
