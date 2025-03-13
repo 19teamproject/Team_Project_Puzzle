@@ -11,7 +11,6 @@ public class CapsuleController : MonoBehaviour
     public LayerMask layerMask; // Player가 확인 할 수 있는 Ray
 
     private Cube cube;
-    private float scaleAmount = 50f; //한칸당 25f씩
 
     public void OnInteraction(InputAction.CallbackContext context)
     {

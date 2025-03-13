@@ -19,7 +19,7 @@ public class Interaction : MonoBehaviour
     private RectTransform promptTextRect;
     private CanvasGroup promptTextCanvas;
     private Camera cam;
-
+    private Cube curCube;
     public float CheckDistanceBonus { get; set; }
 
     private void Start()
@@ -80,6 +80,7 @@ public class Interaction : MonoBehaviour
     {
         if (value.isPressed && curInteractable != null)
         {
+            if (curCube != null) Debug.Log($"{curCube}");
             if (!curInteractable.OnInteract()) return;
 
             curInteractGameObject = null;
