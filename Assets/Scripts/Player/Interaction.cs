@@ -20,6 +20,8 @@ public class Interaction : MonoBehaviour
     private CanvasGroup promptTextCanvas;
     private Camera cam;
     private Cube curCube;
+    private RotateObject selectedRotatableObject;
+    private bool isRotating = false;
     public float CheckDistanceBonus { get; set; }
 
     private void Start()
@@ -68,6 +70,7 @@ public class Interaction : MonoBehaviour
                 curInteractable = null;
             }
         }
+        RotateInput();
     }
 
     private void SetPromptText()
@@ -83,9 +86,49 @@ public class Interaction : MonoBehaviour
             if (curCube != null) Debug.Log($"{curCube}");
             if (!curInteractable.OnInteract()) return;
 
+            CheckRotatable();
+
             curInteractGameObject = null;
             curInteractable = null;
             AnimatePromptText(false);
+        }
+    }
+
+    public void CheckRotatable()
+    {
+        if (selectedRotatableObject != null && selectedRotatableObject != curInteractGameObject.GetComponent<RotateObject>())
+        {
+            isRotating = false;  // 기존 선택 해제
+        }
+
+        selectedRotatableObject = curInteractGameObject.GetComponent<RotateObject>();
+
+        if (selectedRotatableObject != null)
+        {
+            isRotating = !isRotating; // 토글 방식으로 설정 (켜기/끄기)
+            Debug.Log($"회전 가능 상태: {isRotating} ({curInteractGameObject.name})");
+        }
+    }
+
+    public void RotateInput()
+    {
+        if (isRotating && selectedRotatableObject != null)
+        {
+            float rotationInput = 0f;
+
+            if (Mouse.current.leftButton.isPressed)
+            {
+                rotationInput = -1f; // 왼쪽 회전
+            }
+            else if (Mouse.current.rightButton.isPressed)
+            {
+                rotationInput = 1f; // 오른쪽 회전
+            }
+
+            if (rotationInput != 0f) // 입력이 있을 때만 회전
+            {
+                selectedRotatableObject.Rotate(rotationInput);
+            }
         }
     }
 
