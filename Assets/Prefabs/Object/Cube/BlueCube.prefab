@@ -101,8 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 6e76a77b6bd2d0942bce156c178ec866, type: 2}
   outline: {fileID: -8755239636995028997}
-  cubeType: Jumpable
-  jumpForce: 50
+  cubeType: 1
+  jumpForce: 20
 --- !u!135 &3170736728335758546
 SphereCollider:
   m_ObjectHideFlags: 0

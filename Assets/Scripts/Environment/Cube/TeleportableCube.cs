@@ -6,10 +6,6 @@ public class TeleportableCube : Cube //텔레포트가 가능한 큐브
 {
     public GameObject teleportTarget; //텔레포트를 위한 변수
     public Vector3 offset = Vector3.up;
-    public void Awake()
-    {
-        cubeType = "Teleportable";
-    }
     public void StartTeleport(GameObject player) //상호작용시 플레이어 텔레포트 기능 구현
     {
         if (teleportTarget != null) //이동할 큐브가 존재한다면

@@ -7,10 +7,6 @@ public class JumpableCube : Cube //상호작용시 순간적인 점프가 가능
 {
     public float jumpForce=10f; // cube를 밟았을 때의 점프력
     private bool canJump;
-    private void Awake()
-    {
-        cubeType = "Jumpable";
-    }
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("충돌");

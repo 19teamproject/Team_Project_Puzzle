@@ -10,7 +10,7 @@ public enum CubeType
 }
 public class Cube : EnvironmentObject
 {
-    public string cubeType; // 큐브 타입을 지정하기 위한 변수
+    public CubeType cubeType; // 큐브 타입을 지정하기 위한 변수
 
     private Interaction interaction;
     protected virtual void Start()
