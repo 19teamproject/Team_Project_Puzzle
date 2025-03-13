@@ -150,27 +150,27 @@ namespace HPlayer
 
         private void GetInput()
         {
-            // movement
+            // 이동
             inputMove.x = Input.GetAxisRaw("Horizontal");
             inputMove.y = Input.GetAxisRaw("Vertical");
 
-            // mouse
+            // 마우스
             inputMouse.x = Input.GetAxisRaw("Mouse X");
             inputMouse.y = Input.GetAxisRaw("Mouse Y");
 
-            //sprint on/off
+            // 달리기
             inputSprint = Input.GetKey(KeyCode.LeftShift);
 
-            //Crouching controller
+            // 앉기
             inputCrouch = Input.GetKey(KeyCode.LeftControl);
 
-            //jumping
+            // 점프
             inputJump = Input.GetKey(KeyCode.Space);
         }
 
         private void MoveCamera()
         {
-            // Verrrrrry gross hack to stop camera swinging down at start
+            // 초기에 카메라가 아래로 휘청거리는 것을 막기 위한 임시 해결책
             if (Time.unscaledTime < 6f && inputMouse.x * inputMouse.x + inputMouse.y * inputMouse.y > 50)
             {
                 inputMouse.x = 0;

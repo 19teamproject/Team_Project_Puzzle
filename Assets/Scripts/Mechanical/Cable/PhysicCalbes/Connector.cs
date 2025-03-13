@@ -178,6 +178,7 @@ namespace HPhysic
             collorRenderer.SetPropertyBlock(probs);
         }
 
+        // 종류에 맞게 색상 반환
         private Color MaterialColor(CableColor cableColor) => cableColor switch
         {
             CableColor.White => Color.white,
@@ -190,7 +191,7 @@ namespace HPhysic
             _ => Color.clear
         };
 
-
+        // 연결할 수 있는지 확인
         public bool CanConnect(Connector secondConnector) =>
             this != secondConnector
             && !this.IsConnected && !secondConnector.IsConnected
