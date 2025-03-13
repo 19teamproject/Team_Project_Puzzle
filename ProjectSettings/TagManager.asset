@@ -7,6 +7,9 @@ TagManager:
   - CinemachineTarget
   - XCube
   - YCube
+  - Fire
+  - Flammable
+  - Ice
   layers:
   - Default
   - TransparentFX
