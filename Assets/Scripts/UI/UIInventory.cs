@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class UIInventory : MonoBehaviour
 {
@@ -12,7 +13,9 @@ public class UIInventory : MonoBehaviour
 
     [Header("Selected Item")]
     [SerializeField] private TextMeshProUGUI selectedItemText;
+    [SerializeField] private TextMeshProUGUI selectedItemTextPlus;
 
+    private CanvasGroup selectedItemTextCanvas;
     private ItemSlot selectedItem;
     private int selectedItemIndex;
     // private bool firstScrollSkipped;
@@ -22,6 +25,8 @@ public class UIInventory : MonoBehaviour
     private bool canDrop;
 
     private int curEquipIndex;
+
+    private bool isTextVisible = false;
 
     private PlayerCondition condition;
 
@@ -33,6 +38,7 @@ public class UIInventory : MonoBehaviour
         dropPosition = CharacterManager.Instance.Player.DropPosition;
 
         CharacterManager.Instance.Player.AddItem += AddItem;
+        CharacterManager.Instance.Player.Controller.Inventory = this;
 
         slots = new ItemSlot[slotPanel.childCount - 1];
 
@@ -46,6 +52,12 @@ public class UIInventory : MonoBehaviour
         }
 
         ClearSelectedItemWindow();
+
+        selectedItemTextCanvas = selectedItemText.GetComponent<CanvasGroup>();
+        selectedItemTextCanvas.alpha = 0f;
+
+        selectedItemText.text = string.Empty;
+        selectedItemTextPlus.text = string.Empty;
     }
 
     private void Update()
@@ -55,16 +67,27 @@ public class UIInventory : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
                 selectedItemIndex = i;
-                //SelectItem(selectedItemIndex);
             }
         }
 
         SelectItem(selectedItemIndex);
 
-        // if (EventSystem.current.currentSelectedGameObject == null)
-        // {
-        //     firstScrollSkipped = false;
-        // }
+        bool shouldShow = selectedItemText.text != string.Empty;
+        if (isTextVisible != shouldShow)
+        {
+            isTextVisible = shouldShow;
+            AnimateSelectedItemText(shouldShow);
+        }
+    }
+
+    private void AnimateSelectedItemText(bool show)
+    {
+        float alpha = show ? 1f : 0f;
+        float yPos = show ? 50f : 25f;
+
+        selectedItemTextCanvas.DOFade(alpha, 0.5f)
+            .SetEase(Ease.OutCubic)
+            .SetUpdate(true);
     }
 
     private void ClearSelectedItemWindow()
@@ -178,6 +201,7 @@ public class UIInventory : MonoBehaviour
         }
 
         selectedItemText.text = $"<font=\"GmarketSansMedium SDF\" material=\"GmarketSansMedium SDF Glow Blue\">{selectedItem.Item.displayName}</font> - {selectedItem.Item.description}";
+        selectedItemTextPlus.text = selectedItemText.text;
 
         canUse = selectedItem.Item.type == ItemType.Consumable;
         canEquip = selectedItem.Item.type == ItemType.Equipable && !slots[index].Equipped;
@@ -191,38 +215,9 @@ public class UIInventory : MonoBehaviour
     /// <summary>
     /// 아이템 선택 [마우스 휠]
     /// </summary>
-    /// <param name="context"></param>
-    public void OnScrollInput(InputAction.CallbackContext context)
+    public void Scroll()
     {
-        float scrollInput = context.ReadValue<float>();
-        
-        // if (!firstScrollSkipped)
-        // {
-        //     SelectItem(selectedItemIndex);
-        //     firstScrollSkipped = true;
-        //     return;
-        // }
-
-        if (scrollInput > 0)
-        {
-            selectedItemIndex--;
-        }
-        else if (scrollInput < 0)
-        {
-            selectedItemIndex++;
-        }
-
-        if (selectedItemIndex < 0)
-        {
-            selectedItemIndex = Mathf.Min(slots.Length - 1, 8);
-        }
-        else if (selectedItemIndex > Mathf.Min(slots.Length - 1, 8))
-        {
-            selectedItemIndex = 0;
-        }
-        selectedItemIndex = Mathf.Clamp(selectedItemIndex, 0, Mathf.Min(slots.Length - 1, 9));
-
-        // SelectItem(selectedItemIndex);
+        selectedItemIndex = 1 - selectedItemIndex;
     }
 
     /// <summary>

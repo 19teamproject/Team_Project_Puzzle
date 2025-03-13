@@ -76,9 +76,9 @@ public class Interaction : MonoBehaviour
         promptTextPlus.text = curInteractable.GetInteractPrompt();
     }
 
-    public void OnInteractInput(InputAction.CallbackContext context)
+    public void OnInteract(InputValue value)
     {
-        if (context.phase == InputActionPhase.Started && curInteractable != null)
+        if (value.isPressed && curInteractable != null)
         {
             if (!curInteractable.OnInteract()) return;
 
