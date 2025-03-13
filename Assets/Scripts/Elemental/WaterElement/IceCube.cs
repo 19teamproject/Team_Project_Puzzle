@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IceObject : MonoBehaviour
+public class IceCube : MonoBehaviour
 {
     private Renderer iceRenderer; // 투명도 조절할 Renderer
     public Rigidbody rigid;

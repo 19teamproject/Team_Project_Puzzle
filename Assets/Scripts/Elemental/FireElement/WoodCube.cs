@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlammableObject : MonoBehaviour
+public class WoodCube : MonoBehaviour
 {
-    public Renderer targetRenderer; // ºÒ¿¡ Å¸´Â µ¿¾È »öÀ» º¯°æÇÒ Renderer
+    public Renderer targetRenderer; // ë¶ˆì— íƒ€ëŠ” ë™ì•ˆ ìƒ‰ì„ ë³€ê²½í•  Renderer
     public Rigidbody rigid;
-    public GameObject flameEffect,endEffect;  // È­¿° È¿°ú, ¸¶¹«¸® È¿°ú Prefab
-    private bool isBurning = false;  // ºÒÀÌ ÀÌ¹Ì ºÙ¾ú´ÂÁö È®ÀÎÇÏ´Â °ª (Áßº¹ ½ÇÇà¹æÁö)
+    public GameObject flameEffect,endEffect;  // í™”ì—¼ íš¨ê³¼, ë§ˆë¬´ë¦¬ íš¨ê³¼ Prefab
+    private bool isBurning = false;  // ë¶ˆì´ ì´ë¯¸ ë¶™ì—ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” ê°’ (ì¤‘ë³µ ì‹¤í–‰ë°©ì§€)
     public Color startColor = new Vector4(1,1,1,1);
     public Color endColor = new Vector4(0,0,0, 1);
 
-    public float duration = 2f; // »öÀÌ º¯ÇÏ´Â µ¥ °É¸®´Â ½Ã°£
+    public float duration = 2f; // ìƒ‰ì´ ë³€í•˜ëŠ” ë° ê±¸ë¦¬ëŠ” ì‹œê°„
 
     public void Awake()
     {
@@ -29,20 +29,20 @@ public class FlammableObject : MonoBehaviour
 
     private IEnumerator BurnWood()
     {
-        rigid.isKinematic = true;  //   // ¿ÀºêÁ§Æ®°¡ ¸¶±¸ ¿òÁ÷ÀÌÁö ¾Ê°Ô °íÁ¤
+        rigid.isKinematic = true;  //   // ì˜¤ë¸Œì íŠ¸ê°€ ë§ˆêµ¬ ì›€ì§ì´ì§€ ì•Šê²Œ ê³ ì •
         isBurning = true;
         GameObject[] flame = new GameObject[4];
         for (int i = 0; i < 4; i++)
         {
             Vector3 myPos = transform.position;
             flame[i] = Instantiate(flameEffect,myPos,Quaternion.identity);
-            flame[i].transform.SetParent(transform); // ºÒ²ÉÀÌ ¿ÀºêÁ§Æ® µû¶ó´Ù´Ï°Ô ÇÔ
+            flame[i].transform.SetParent(transform); // ë¶ˆê½ƒì´ ì˜¤ë¸Œì íŠ¸ ë”°ë¼ë‹¤ë‹ˆê²Œ í•¨
             flame[i].transform.position = new Vector3(myPos.x + Random.Range(0f, 1f), myPos.y + Random.Range(0f, 1f), myPos.z + Random.Range(0f, 1f));
         }
 
-        float elapsedTime = 0f;  // °æ°ú ½Ã°£ ÃÊ±âÈ­
+        float elapsedTime = 0f;  // ê²½ê³¼ ì‹œê°„ ì´ˆê¸°í™”
 
-        while (elapsedTime < duration)  // duration µ¿¾È ½ÇÇà
+        while (elapsedTime < duration)  // duration ë™ì•ˆ ì‹¤í–‰
         {
             targetRenderer.material.color = Color.Lerp(startColor, endColor, elapsedTime / duration);
             elapsedTime += Time.deltaTime;  

@@ -12,14 +12,13 @@ public class Fire : MonoBehaviour
     {
         if (!isFireActive) return;  // 이미 꺼진 불이면 아무 것도 하지 않음
 
-        if(other.CompareTag("Flammable")) // 가연성 오브젝트(ex.woodBlock)
+        if (other.CompareTag("Flammable")) // 가연성 오브젝트(ex.woodBlock)
         {
             Destroy(other.gameObject);
         }
-        else if(other.CompareTag("Ice"))  // 얼음을 녹임
+        else if (other.CompareTag("Ice"))  // 얼음을 녹임
         {
             Destroy(other.gameObject);
         }
-
-
+    }
 }
