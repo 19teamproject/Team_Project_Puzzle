@@ -2,20 +2,22 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class UIInventory : MonoBehaviour
 {
+    [Header("Item")]
     [SerializeField] private ItemSlot[] slots;
-
     [SerializeField] private Transform slotPanel;
     [SerializeField] private Transform dropPosition;
 
-    [Header("Selected Item")]
+    [Header("Text")]
     [SerializeField] private TextMeshProUGUI selectedItemText;
+    [SerializeField] private TextMeshProUGUI selectedItemTextPlus;
 
+    private CanvasGroup selectedItemTextCanvas;
     private ItemSlot selectedItem;
     private int selectedItemIndex;
-    // private bool firstScrollSkipped;
     private bool canUse;
     private bool canEquip;
     private bool canUnEquip;
@@ -23,16 +25,22 @@ public class UIInventory : MonoBehaviour
 
     private int curEquipIndex;
 
+    private bool isTextVisible = false;
+
+    private Player player;
     private PlayerCondition condition;
 
     public ItemData ItemData => selectedItem.Item;
 
     private void Start()
     {
-        condition = CharacterManager.Instance.Player.Condition;
-        dropPosition = CharacterManager.Instance.Player.DropPosition;
+        player = CharacterManager.Instance.Player;
 
-        CharacterManager.Instance.Player.AddItem += AddItem;
+        condition = player.Condition;
+        dropPosition = player.DropPosition;
+
+        player.AddItem += AddItem;
+        player.Controller.Inventory = this;
 
         slots = new ItemSlot[slotPanel.childCount - 1];
 
@@ -46,6 +54,12 @@ public class UIInventory : MonoBehaviour
         }
 
         ClearSelectedItemWindow();
+
+        selectedItemTextCanvas = selectedItemText.GetComponent<CanvasGroup>();
+        selectedItemTextCanvas.alpha = 0f;
+
+        selectedItemText.text = string.Empty;
+        selectedItemTextPlus.text = string.Empty;
     }
 
     private void Update()
@@ -55,16 +69,27 @@ public class UIInventory : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
                 selectedItemIndex = i;
-                //SelectItem(selectedItemIndex);
             }
         }
 
         SelectItem(selectedItemIndex);
 
-        // if (EventSystem.current.currentSelectedGameObject == null)
-        // {
-        //     firstScrollSkipped = false;
-        // }
+        bool shouldShow = selectedItemText.text != string.Empty;
+        if (isTextVisible != shouldShow)
+        {
+            isTextVisible = shouldShow;
+            AnimateSelectedItemText(shouldShow);
+        }
+    }
+
+    private void AnimateSelectedItemText(bool show)
+    {
+        float alpha = show ? 1f : 0f;
+        float yPos = show ? 50f : 25f;
+
+        selectedItemTextCanvas.DOFade(alpha, 0.5f)
+            .SetEase(Ease.OutCubic)
+            .SetUpdate(true);
     }
 
     private void ClearSelectedItemWindow()
@@ -81,7 +106,7 @@ public class UIInventory : MonoBehaviour
 
     public void AddItem()
     {
-        ItemData data = CharacterManager.Instance.Player.ItemData;
+        ItemData data = player.ItemData;
 
         if (data.canStack)
         {
@@ -90,7 +115,7 @@ public class UIInventory : MonoBehaviour
             {
                 slot.Quantity++;
                 UpdateUI();
-                CharacterManager.Instance.Player.ItemData = null;
+                player.ItemData = null;
                 return;
             }
         }
@@ -102,12 +127,12 @@ public class UIInventory : MonoBehaviour
             emptySlot.Item = data;
             emptySlot.Quantity = 1;
             UpdateUI();
-            CharacterManager.Instance.Player.ItemData = null;
+            player.ItemData = null;
             return;
         }
 
         ThrowItem(data);
-        CharacterManager.Instance.Player.ItemData = null;
+        player.ItemData = null;
     }
 
     public void UpdateUI()
@@ -178,6 +203,7 @@ public class UIInventory : MonoBehaviour
         }
 
         selectedItemText.text = $"<font=\"GmarketSansMedium SDF\" material=\"GmarketSansMedium SDF Glow Blue\">{selectedItem.Item.displayName}</font> - {selectedItem.Item.description}";
+        selectedItemTextPlus.text = selectedItemText.text;
 
         canUse = selectedItem.Item.type == ItemType.Consumable;
         canEquip = selectedItem.Item.type == ItemType.Equipable && !slots[index].Equipped;
@@ -191,38 +217,9 @@ public class UIInventory : MonoBehaviour
     /// <summary>
     /// 아이템 선택 [마우스 휠]
     /// </summary>
-    /// <param name="context"></param>
-    public void OnScrollInput(InputAction.CallbackContext context)
+    public void Scroll()
     {
-        float scrollInput = context.ReadValue<float>();
-        
-        // if (!firstScrollSkipped)
-        // {
-        //     SelectItem(selectedItemIndex);
-        //     firstScrollSkipped = true;
-        //     return;
-        // }
-
-        if (scrollInput > 0)
-        {
-            selectedItemIndex--;
-        }
-        else if (scrollInput < 0)
-        {
-            selectedItemIndex++;
-        }
-
-        if (selectedItemIndex < 0)
-        {
-            selectedItemIndex = Mathf.Min(slots.Length - 1, 8);
-        }
-        else if (selectedItemIndex > Mathf.Min(slots.Length - 1, 8))
-        {
-            selectedItemIndex = 0;
-        }
-        selectedItemIndex = Mathf.Clamp(selectedItemIndex, 0, Mathf.Min(slots.Length - 1, 9));
-
-        // SelectItem(selectedItemIndex);
+        selectedItemIndex = 1 - selectedItemIndex;
     }
 
     /// <summary>
@@ -275,7 +272,7 @@ public class UIInventory : MonoBehaviour
 
                 slots[selectedItemIndex].Equipped = true;
                 curEquipIndex = selectedItemIndex;
-                CharacterManager.Instance.Player.Equipment.EquipNew(selectedItem.Item);
+                player.Equipment.EquipNew(selectedItem.Item);
                 UpdateUI();
 
                 // SelectItem(selectedItemIndex);
@@ -313,7 +310,7 @@ public class UIInventory : MonoBehaviour
     private void UnEquip(int index)
     {
         slots[index].Equipped = false;
-        CharacterManager.Instance.Player.Equipment.UnEquip();
+        player.Equipment.UnEquip();
         UpdateUI();
 
         // if (selectedItemIndex == index)

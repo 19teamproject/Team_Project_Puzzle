@@ -20,6 +20,8 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
+		public UIInventory Inventory { get; set; }
+
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
 		{
@@ -42,6 +44,14 @@ namespace StarterAssets
 		public void OnSprint(InputValue value)
 		{
 			SprintInput(value.isPressed);
+		}
+
+		public void OnScroll(InputValue value)
+		{
+			if (value.Get<Vector2>().y != 0)
+			{
+				Inventory.Scroll();
+			}
 		}
 #endif
 

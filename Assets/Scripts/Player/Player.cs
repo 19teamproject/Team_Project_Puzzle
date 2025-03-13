@@ -8,11 +8,13 @@ public class Player : MonoBehaviour
 
     [SerializeField] private StarterAssetsInputs controller;
     [SerializeField] private PlayerCondition condition;
+    [SerializeField] private Interaction interaction;
     [SerializeField] private Transform dropPosition;
     [SerializeField] private Equipment equipment;
 
     public StarterAssetsInputs Controller => controller;
     public PlayerCondition Condition => condition;
+    public Interaction Interaction => interaction;
     public Transform DropPosition => dropPosition;
     public Equipment Equipment => equipment;
     public ItemData ItemData { get; set; }
