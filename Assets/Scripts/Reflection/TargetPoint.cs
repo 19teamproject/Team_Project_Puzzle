@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetPoint : MonoBehaviour
+public class TargetPoint : EnvironmentObject
 {
-    [SerializeField] private Color targetColor;     //¸ñÇ¥ »ö»ó
-    [SerializeField] private Transform objectToMove;    // ¿òÁ÷ÀÏ ¿ÀºêÁ§Æ®
-    [SerializeField] private Vector3 targetPosition;  // ¸ñÇ¥ À§Ä¡
-    [SerializeField] private float lerpTime;    // ·¯ÇÁ ½Ã°£
-    [SerializeField] private float elapsedTime;     // °æ°ú ½Ã°£
+    [SerializeField] private Color targetColor;     //ëª©í‘œ ìƒ‰ìƒ
+    [SerializeField] private Transform objectToMove;    // ì›€ì§ì¼ ì˜¤ë¸Œì íŠ¸
+    [SerializeField] private Vector3 targetPosition;  // ëª©í‘œ ìœ„ì¹˜
+    [SerializeField] private float lerpTime;    // ëŸ¬í”„ ì‹œê°„
+    [SerializeField] private float elapsedTime;     // ê²½ê³¼ ì‹œê°„
 
     private bool isClear = false;
 
@@ -20,7 +20,7 @@ public class TargetPoint : MonoBehaviour
         targetRenderer = GetComponent<Renderer>();
         if (targetRenderer == null)
         {
-            Debug.LogError($"Renderer°¡ ¾ø½À´Ï´Ù! ¿ÀºêÁ§Æ®: {gameObject.name}", gameObject);
+            Debug.LogError($"Rendererê°€ ì—†ìŠµë‹ˆë‹¤! ì˜¤ë¸Œì íŠ¸: {gameObject.name}", gameObject);
             return;
         }
 
@@ -32,41 +32,51 @@ public class TargetPoint : MonoBehaviour
     {
         if (isClear && objectToMove != null)
         {
-            // ¹®ÀÌ ÀÌµ¿ÇÒ ½Ã°£ ºñÀ²À» °è»ê
-            elapsedTime += Time.deltaTime;  // °æ°ú ½Ã°£ Ãß°¡
-            float t = Mathf.Clamp01(elapsedTime / lerpTime);  // 0°ú 1 »çÀÌ·Î ºñÀ²À» °è»ê
+            // ë¬¸ì´ ì´ë™í•  ì‹œê°„ ë¹„ìœ¨ì„ ê³„ì‚°
+            elapsedTime += Time.deltaTime;  // ê²½ê³¼ ì‹œê°„ ì¶”ê°€
+            float t = Mathf.Clamp01(elapsedTime / lerpTime);  // 0ê³¼ 1 ì‚¬ì´ë¡œ ë¹„ìœ¨ì„ ê³„ì‚°
 
-            // Lerp¸¦ »ç¿ëÇÏ¿© ¹®À» ¼­¼­È÷ ÀÌµ¿
+            // Lerpë¥¼ ì‚¬ìš©í•˜ì—¬ ë¬¸ì„ ì„œì„œíˆ ì´ë™
             objectToMove.position = Vector3.Lerp(objectToMove.position, targetPosition, t);
 
-            // ¹®ÀÌ ¸ñÇ¥ À§Ä¡¿¡ µµ´ŞÇÑ ÈÄ ÀÌµ¿À» ¸ØÃß°Ô ÇÏ±â
+            // ë¬¸ì´ ëª©í‘œ ìœ„ì¹˜ì— ë„ë‹¬í•œ í›„ ì´ë™ì„ ë©ˆì¶”ê²Œ í•˜ê¸°
             if (t >= 1f)
             {
-                elapsedTime = 0f;  // °æ°ú ½Ã°£ ÃÊ±âÈ­ (ÃßÈÄ ´Ù¸¥ µ¿ÀÛÀ» À§ÇØ ¸®¼Â)
+                elapsedTime = 0f;  // ê²½ê³¼ ì‹œê°„ ì´ˆê¸°í™” (ì¶”í›„ ë‹¤ë¥¸ ë™ì‘ì„ ìœ„í•´ ë¦¬ì…‹)
             }
         }
     }
 
-    // ¸ñÇ¥ÁöÁ¡ È÷Æ® ½Ã È£Ãâ
+    public override bool OnInteract()
+    {
+        HandleInteraction(CharacterManager.Instance.Player.gameObject);
+        return true;
+    }
+    public virtual void HandleInteraction(GameObject player)
+    {
+        Debug.Log($"{gameObject.name} ì…ë‹ˆë‹¤.");
+    }
+
+    // ëª©í‘œì§€ì  íˆíŠ¸ ì‹œ í˜¸ì¶œ
     public void OnLightHit(Color beamColor)
     {
         if (!isClear)
         {
-            // »ö»ó ÀÏÄ¡ ½Ã ¿ÀºêÁ§Æ® ¿òÁ÷ÀÓ
+            // ìƒ‰ìƒ ì¼ì¹˜ ì‹œ ì˜¤ë¸Œì íŠ¸ ì›€ì§ì„
             if (CheckColorMatch(beamColor))
             {
                 isClear = true;
-                Debug.Log("¸ñÇ¥ »ö»ó°ú ÀÏÄ¡! ÆÛÁñ ¼º°ø!");
+                Debug.Log("ëª©í‘œ ìƒ‰ìƒê³¼ ì¼ì¹˜! í¼ì¦ ì„±ê³µ!");
                 MoveObject();  
             }
             else
             {
-                Debug.Log("»ö»óÀÌ ´Ù¸¨´Ï´Ù. ´Ù½Ã ¹İ»çÇÏ¼¼¿ä!");
+                Debug.Log("ìƒ‰ìƒì´ ë‹¤ë¦…ë‹ˆë‹¤. ë‹¤ì‹œ ë°˜ì‚¬í•˜ì„¸ìš”!");
             }
         }
     }
 
-    // ¸ñÇ¥ »ö»óÀ» ¾÷µ¥ÀÌÆ®
+    // ëª©í‘œ ìƒ‰ìƒì„ ì—…ë°ì´íŠ¸
     private void UpdateTargetColor()
     {
         targetRenderer.GetPropertyBlock(propertyBlock);
@@ -75,7 +85,7 @@ public class TargetPoint : MonoBehaviour
         targetRenderer.SetPropertyBlock(propertyBlock);
     }
 
-    // ¸ñÇ¥ÁöÁ¡ »ö»ó°ú ºû »ö»ó Ã¼Å©
+    // ëª©í‘œì§€ì  ìƒ‰ìƒê³¼ ë¹› ìƒ‰ìƒ ì²´í¬
     public bool CheckColorMatch(Color beamColor, float tolerance = 0.1f)
     {
         float rDiff = Mathf.Abs(targetColor.r - beamColor.r);
@@ -85,7 +95,12 @@ public class TargetPoint : MonoBehaviour
         return (rDiff < tolerance && gDiff < tolerance && bDiff < tolerance);
     }
 
-    // ¿òÁ÷ÀÏ ¿ÀºêÁ§Æ®ÀÇ ¸ñÇ¥ ÁöÁ¡ ¼³Á¤
+    public bool isTargetClear()
+    {
+        return isClear;
+    }
+
+    // ì›€ì§ì¼ ì˜¤ë¸Œì íŠ¸ì˜ ëª©í‘œ ì§€ì  ì„¤ì •
     private void MoveObject()
     {
         if (objectToMove != null)

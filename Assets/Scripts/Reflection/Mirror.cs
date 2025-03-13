@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mirror : MonoBehaviour
+public class Mirror : EnvironmentObject
 {
-    [SerializeField] private Color mirrorColor;     // °Å¿ï »ö»ó
+    [SerializeField] private Color mirrorColor;     // ê±°ìš¸ ìƒ‰ìƒ
 
     private Renderer mirrorRenderer;
     private MaterialPropertyBlock propertyBlock;
@@ -14,7 +14,7 @@ public class Mirror : MonoBehaviour
         mirrorRenderer = GetComponent<Renderer>();
         if (mirrorRenderer == null)
         {
-            Debug.LogError($"Renderer°¡ ¾ø½À´Ï´Ù! ¿ÀºêÁ§Æ®: {gameObject.name}", gameObject);
+            Debug.LogError($"Rendererê°€ ì—†ìŠµë‹ˆë‹¤! ì˜¤ë¸Œì íŠ¸: {gameObject.name}", gameObject);
             return;
         }
 
@@ -22,7 +22,17 @@ public class Mirror : MonoBehaviour
         UpdateMirrorColor();
     }
 
-    // °Å¿ï »ö»ó ¾÷µ¥ÀÌÆ®
+    public override bool OnInteract()
+    {
+        HandleInteraction(CharacterManager.Instance.Player.gameObject);
+        return true;
+    }
+    public virtual void HandleInteraction(GameObject player)
+    {
+        Debug.Log($"{gameObject.name} ì…ë‹ˆë‹¤.");
+    }
+
+    // ê±°ìš¸ ìƒ‰ìƒ ì—…ë°ì´íŠ¸
     private void UpdateMirrorColor()
     {
         if (mirrorRenderer == null || propertyBlock == null) return;
@@ -32,19 +42,19 @@ public class Mirror : MonoBehaviour
         mirrorRenderer.SetPropertyBlock(propertyBlock);
     }
 
-    // ¹İ»ç°¢ °è»ê
+    // ë°˜ì‚¬ê° ê³„ì‚°
     public Vector3 Reflect(Vector3 incomingDirection, Vector3 normal)
     {
         return Vector3.Reflect(incomingDirection, normal);
     }
 
-    // °Å¿ï »ö»ó ¹İÈ¯
+    // ê±°ìš¸ ìƒ‰ìƒ ë°˜í™˜
     public Color GetMirrorColor()
     {
         return mirrorColor;
     }
 
-    // µé¾î¿Â ºû »ö»ó°ú ÇöÀç °Å¿ï »ö»ó ¹Í½º
+    // ë“¤ì–´ì˜¨ ë¹› ìƒ‰ìƒê³¼ í˜„ì¬ ê±°ìš¸ ìƒ‰ìƒ ë¯¹ìŠ¤
     public Color MixColor(Color incomingColor)
     {
         Color mix = new Color(

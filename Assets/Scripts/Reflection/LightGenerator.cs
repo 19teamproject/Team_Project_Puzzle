@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
 
-public class LightGenerator : MonoBehaviour
+public class LightGenerator : EnvironmentObject
 {
     [Header("Light")]
-    [SerializeField] private GameObject lightBeamPrefab; // Cylinder ÇÁ¸®ÆÕ
+    [SerializeField] private GameObject lightBeamPrefab; // Cylinder í”„ë¦¬íŒ¹
     [SerializeField] private LayerMask reflectableLayer;
     [SerializeField] private LayerMask blockLayer;
     [SerializeField] private float maxDistance = 100f;
@@ -24,10 +24,20 @@ public class LightGenerator : MonoBehaviour
     {
         GenerateLight();
     }
+    public override bool OnInteract()
+    {
+        HandleInteraction(CharacterManager.Instance.Player.gameObject);
+        return true;
+    }
+    public virtual void HandleInteraction(GameObject player)
+    {
+        Debug.Log($"{gameObject.name} ì…ë‹ˆë‹¤.");
+    }
+
 
     void GenerateLight()
     {
-        // ±âÁ¸ ºû Á¦°Å
+        // ê¸°ì¡´ ë¹› ì œê±°
         foreach (GameObject beam in lightBeams)
         {
             Destroy(beam);
@@ -37,33 +47,33 @@ public class LightGenerator : MonoBehaviour
         Vector3 direction = transform.forward;
         Vector3 startPosition = transform.position;
 
-        float currentLightDistance = 0f;        // ÇöÀç ºûÀÇ »ç°Å¸®
-        bool stillHittingTarget = false;        // ºûÀÌ Å¸°ÙÀ» ÄÁÅÃÇÏ°í ÀÖ´Â ÁßÀÎÁö Ã¼Å©
+        float currentLightDistance = 0f;        // í˜„ì¬ ë¹›ì˜ ì‚¬ê±°ë¦¬
+        bool stillHittingTarget = false;        // ë¹›ì´ íƒ€ê²Ÿì„ ì»¨íƒí•˜ê³  ìˆëŠ” ì¤‘ì¸ì§€ ì²´í¬
 
-        Color beamColor = startLightColor;        // ºû »ö»ó ½ÃÀÛ »ö»óÀ¸·Î ÁöÁ¤
+        Color beamColor = startLightColor;        // ë¹› ìƒ‰ìƒ ì‹œì‘ ìƒ‰ìƒìœ¼ë¡œ ì§€ì •
 
-        while (currentLightDistance < maxDistance)  // ÃÖ´ë»ç°Å¸®±îÁö¸¸ ºû ±âµÕ »ı¼º
+        while (currentLightDistance < maxDistance)  // ìµœëŒ€ì‚¬ê±°ë¦¬ê¹Œì§€ë§Œ ë¹› ê¸°ë‘¥ ìƒì„±
         {
             RaycastHit hit;
 
-            // ÁöÁ¤ÇÑ ·¹ÀÌ¾î¿Í hit µÇ¾úÀ»¶§
+            // ì§€ì •í•œ ë ˆì´ì–´ì™€ hit ë˜ì—ˆì„ë•Œ
             if (Physics.Raycast(startPosition, direction, out hit, maxDistance - currentLightDistance, reflectableLayer | blockLayer))
             {
                 float segmentLength = Vector3.Distance(startPosition, hit.point);
                 CreateLightBeam(startPosition, hit.point, beamColor);
                 currentLightDistance += segmentLength;
 
-                // ¸ñÇ¥ÁöÁ¡ ÅÂ±× µÇ¾úÀ»¶§
+                // ëª©í‘œì§€ì  íƒœê·¸ ë˜ì—ˆì„ë•Œ
                 if (hit.collider.CompareTag(targetTag))
                 {
                     stillHittingTarget = true;
 
-                    // Ã³À½ ÄÁÅÃ µÇ¾úÀ»¶§
+                    // ì²˜ìŒ ì»¨íƒ ë˜ì—ˆì„ë•Œ
                     if (!isContactingTarget)
                     {
                         contactStartTime = Time.time;
                         isContactingTarget = true;
-                        Debug.Log("¸ñÇ¥¿¡ Á¢ÃË ½ÃÀÛ!");
+                        Debug.Log("ëª©í‘œì— ì ‘ì´‰ ì‹œì‘!");
                     }
                     if (Time.time - contactStartTime >= contactTime)
                     {
@@ -72,19 +82,19 @@ public class LightGenerator : MonoBehaviour
                     }
                 }
 
-                // °Å¿ï°ú Á¢ÃË ½Ã
+                // ê±°ìš¸ê³¼ ì ‘ì´‰ ì‹œ
                 Mirror mirror = hit.collider.GetComponent<Mirror>();
                 if (mirror != null)
                 {
-                    // Ã¹ ¹İ»ç¿¡´Â ¹Í½º°¡ ¾ÈµÇ°Ô ÇÔ
+                    // ì²« ë°˜ì‚¬ì—ëŠ” ë¯¹ìŠ¤ê°€ ì•ˆë˜ê²Œ í•¨
                     if (beamColor == startLightColor)
                     {
-                        // Ã¹ ¹øÂ° ¹İ»çÀÏ °æ¿ì, °Å¿ï »ö»óÀ» Á÷Á¢ Àû¿ë
+                        // ì²« ë²ˆì§¸ ë°˜ì‚¬ì¼ ê²½ìš°, ê±°ìš¸ ìƒ‰ìƒì„ ì§ì ‘ ì ìš©
                         beamColor = mirror.GetMirrorColor();
                     }
                     else
                     {
-                        // ÀÌÈÄ ¹İ»ç¿¡´Â 2°¡Áö »ö»ó ¹Í½º
+                        // ì´í›„ ë°˜ì‚¬ì—ëŠ” 2ê°€ì§€ ìƒ‰ìƒ ë¯¹ìŠ¤
                         beamColor = mirror.MixColor(beamColor);
                     }
 
@@ -96,10 +106,10 @@ public class LightGenerator : MonoBehaviour
                     break;
                 }
             }
-            // ±× ¿Ü¿¡ °æ¿ì
+            // ê·¸ ì™¸ì— ê²½ìš°
             else
             {
-                // ÃÖ´ë »ç°Å¸®±îÁö ºû ±âµÕ »ı¼º
+                // ìµœëŒ€ ì‚¬ê±°ë¦¬ê¹Œì§€ ë¹› ê¸°ë‘¥ ìƒì„±
                 Vector3 endPosition = startPosition + direction * (maxDistance - currentLightDistance);
                 CreateLightBeam(startPosition, endPosition, beamColor);
                 break;
@@ -108,49 +118,50 @@ public class LightGenerator : MonoBehaviour
 
         if (!stillHittingTarget && isContactingTarget && !isClear)
         {
-            Debug.Log("ÃÊ±âÈ­ ÁøÇà");
+            Debug.Log("ì´ˆê¸°í™” ì§„í–‰");
             contactStartTime = 0f;
             isContactingTarget = false;
         }
     }
 
-    // ºû ±âµÕ »ı¼º
+    // ë¹› ê¸°ë‘¥ ìƒì„±
     void CreateLightBeam(Vector3 start, Vector3 end, Color beamColor)
     {
         GameObject beam = Instantiate(lightBeamPrefab);
         lightBeams.Add(beam);
 
-        // À§Ä¡ ¼³Á¤
+        // ìœ„ì¹˜ ì„¤ì •
         beam.transform.position = (start + end) / 2;
 
-        // ºûÀÇ ¹æÇâ ¼³Á¤
+        // ë¹›ì˜ ë°©í–¥ ì„¤ì •
         Quaternion rotation = Quaternion.LookRotation(end - start);
         beam.transform.rotation = rotation * Quaternion.Euler(90, 0, 0);
 
-        // Å©±â Á¶Á¤
+        // í¬ê¸° ì¡°ì •
         beam.transform.localScale = new Vector3(
-            lightBeamPrefab.transform.localScale.x,   // ÇÁ¸®ÆÕÀÇ X Å©±â À¯Áö
-            (end - start).magnitude / 2,              // ±æÀÌ Á¶Á¤
-            lightBeamPrefab.transform.localScale.z    // ÇÁ¸®ÆÕÀÇ Z Å©±â À¯Áö
+            lightBeamPrefab.transform.localScale.x,   // í”„ë¦¬íŒ¹ì˜ X í¬ê¸° ìœ ì§€
+            (end - start).magnitude / 2,              // ê¸¸ì´ ì¡°ì •
+            lightBeamPrefab.transform.localScale.z    // í”„ë¦¬íŒ¹ì˜ Z í¬ê¸° ìœ ì§€
         );
 
-        // ºû ±âµÕÀÇ »ö»ó °áÁ¤
+        // ë¹› ê¸°ë‘¥ì˜ ìƒ‰ìƒ ê²°ì •
         Renderer beamRenderer = beam.GetComponent<Renderer>();
         if (beamRenderer != null)
         {
             beamRenderer.material.color = beamColor;
-            beamRenderer.material.SetColor("_EmissionColor", beamColor);
+            beamRenderer.material.SetColor("_EmissionColor", beamColor * 2f);
         }
 
     }
 
-    // ¸ñÇ¥ ÁöÁ¡ hit µÇ¾úÀ»¶§
+    // ëª©í‘œ ì§€ì  hit ë˜ì—ˆì„ë•Œ
     void OnLightHitTarget(RaycastHit hit, Color beamColor)
     {
         TargetPoint target = hit.collider.GetComponent<TargetPoint>();
         if (target != null)
         {
-            target.OnLightHit(beamColor);  // ¸ñÇ¥ÁöÁ¡¿¡¼­ »ö»ó ÀÏÄ¡ ¿©ºÎ¸¦ Ã³¸®
+            target.OnLightHit(beamColor);  // ëª©í‘œì§€ì ì—ì„œ ìƒ‰ìƒ ì¼ì¹˜ ì—¬ë¶€ë¥¼ ì²˜ë¦¬
+            isClear = target.isTargetClear();
         }
     }
 }
