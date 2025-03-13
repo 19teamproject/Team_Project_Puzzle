@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace StarterAssets
@@ -355,6 +355,10 @@ namespace StarterAssets
             {
                 animator.SetBool(animIDJump, true);
             }
+        }
+        private void HandleInteraction()
+        {
+            
         }
     }
 }

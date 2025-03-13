@@ -14,6 +14,7 @@ public class EnvironmentObject : MonoBehaviour, IInteractable
 
     public virtual void SetOutline(bool show)
     {
+        if(outline != null) 
         outline.color = show ? 0 : 1;
     }
 
