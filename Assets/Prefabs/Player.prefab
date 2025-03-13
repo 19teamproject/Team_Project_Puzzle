@@ -2033,7 +2033,7 @@ MonoBehaviour:
   groundedRadius: 0.28
   groundLayers:
     serializedVersion: 2
-    m_Bits: 3221227575
+    m_Bits: 3221293111
   cinemachineCameraTarget: {fileID: 6058263477833680555}
   topClamp: 70
   bottomClamp: -30
@@ -2072,6 +2072,7 @@ MonoBehaviour:
   look: {x: 0, y: 0}
   jump: 0
   sprint: 0
+  interaction: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -2187,6 +2188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 4921643871567583480}
   condition: {fileID: 1874577825505516933}
+  interaction: {fileID: 0}
   dropPosition: {fileID: 890635692876517271}
   equipment: {fileID: 60618754307522885}
 --- !u!114 &1874577825505516933

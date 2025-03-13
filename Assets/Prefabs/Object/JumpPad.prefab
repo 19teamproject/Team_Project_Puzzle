@@ -76,8 +76,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2458e08a70cc4be4fb2d9dbb73db2c5a, type: 3}
   - {fileID: 8300000, guid: e57c4e6b4ba17bd4bb19bbdaf34fd7af, type: 3}
   jumpAudioVolume: 1
-  baseColor: {r: 2, g: 1.4117647, b: 0, a: 1}
-  activeColor: {r: 2, g: 0, b: 0.52991676, a: 1}
+  baseColor: {r: 0, g: 2.1148791, b: 2.996079, a: 1}
+  activeColor: {r: 2, g: 1.4117647, b: 0, a: 1}
 --- !u!33 &7239164143902505531
 MeshFilter:
   m_ObjectHideFlags: 0

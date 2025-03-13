@@ -29,16 +29,18 @@ public class JumpPad : MonoBehaviour
     // [SerializeField] private PadType type = PadType.Jump;
 
     private MeshRenderer meshRenderer;
-    private MaterialPropertyBlock materialPropertyBlock;
+    private Material[] materials;
+    // private MaterialPropertyBlock materialPropertyBlock;
 
     private Tween launchCall;
 
     private void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>();
-        materialPropertyBlock = new MaterialPropertyBlock();
+        materials = meshRenderer.materials;
+        // materialPropertyBlock = new MaterialPropertyBlock();
 
-        meshRenderer.GetPropertyBlock(materialPropertyBlock, 1);
+        // meshRenderer.GetPropertyBlock(materialPropertyBlock, 1);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,7 +57,8 @@ public class JumpPad : MonoBehaviour
                 playerController.AddJumpForce(jumpDir.normalized * jumpForce);
             });
 
-            ChangeMaterialColor(activeColor, 0.2f);
+            // ChangeMaterialColor(activeColor, 0.2f);
+            ActivateJumpPad(activeColor, 0.2f);
         }
     }
 
@@ -63,18 +66,34 @@ public class JumpPad : MonoBehaviour
     {
         launchCall?.Kill();
 
-        ChangeMaterialColor(activeColor, 0.5f);
+        // ChangeMaterialColor(activeColor, 0.5f);
+        DOVirtual.DelayedCall(0.2f, () => ActivateJumpPad(baseColor, 0.5f));
     }
 
-    private void ChangeMaterialColor(Color targetColor, float duration)
+    // private void ChangeMaterialColor(Color targetColor, float duration)
+    // {
+    //     Color startColor = materialPropertyBlock.HasProperty("_Color") ? materialPropertyBlock.GetColor("_Color") : Color.white;
+
+    //     DOTween.To(() => startColor, x => startColor = x, targetColor, duration)
+    //         .SetEase(Ease.OutCubic)
+    //         .OnUpdate(() => {
+    //             materialPropertyBlock.SetColor("_Color", startColor);
+    //             meshRenderer.SetPropertyBlock(materialPropertyBlock, 1);
+    //         });
+    // }
+
+    public void ActivateJumpPad(Color targetColor, float duration)
     {
-        Color startColor = materialPropertyBlock.HasProperty("_Color") ? materialPropertyBlock.GetColor("_Color") : Color.white;
+        // DOTween.To(() => materials[1].GetColor("_Color"), x => SetJumpPadColor(x), targetColor, duration)
+        //     .SetEase(Ease.OutQuad);
 
-        DOTween.To(() => startColor, x => startColor = x, targetColor, duration)
-            .SetEase(Ease.OutCubic)
-            .OnUpdate(() => {
-                materialPropertyBlock.SetColor("_Color", startColor);
-                meshRenderer.SetPropertyBlock(materialPropertyBlock, 1);
-            });
+        materials[1].DOColor(targetColor, duration);
     }
+
+    // public void SetJumpPadColor(Color color)
+    // {
+    //     materials[1] = new Material(materials[1]);  // 개별 인스턴스 복사
+    //     materials[1].SetColor("_Color", color);     // "_Color" 변경
+    //     meshRenderer.materials = materials;         // 변경된 머티리얼 적용
+    // }
 }
