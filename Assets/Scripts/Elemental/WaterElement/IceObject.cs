@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class IceObject : MonoBehaviour
 {
-    private Renderer iceRenderer; // Åõ¸íµµ Á¶ÀıÇÒ Renderer
+    private Renderer iceRenderer; // íˆ¬ëª…ë„ ì¡°ì ˆí•  Renderer
     public Rigidbody rigid;
     private BoxCollider boxCollider;
 
-    private bool isMelting = false;  // ¾óÀ½ÀÌ ³ì´Â ÁßÀÎÁö ¿©ºÎ
+    private bool isMelting = false;  // ì–¼ìŒì´ ë…¹ëŠ” ì¤‘ì¸ì§€ ì—¬ë¶€
 
-    public float minSize = 0.1f; // ÃÖ¼Ò Å©±â Á¦ÇÑ
+    public float minSize = 0.1f; // ìµœì†Œ í¬ê¸° ì œí•œ
     private Vector3 currentScale;
-    private float elapsedTime = 0f; // ¾óÀ½ÀÌ ºÒ¿¡ ´êÀº ÈÄ °æ°úµÈ ½Ã°£
-    public float meltingDuration = 5f;  // ³ì´Â µ¥ °É¸®´Â ÃÑ ½Ã°£
+    private float elapsedTime = 0f; // ì–¼ìŒì´ ë¶ˆì— ë‹¿ì€ í›„ ê²½ê³¼ëœ ì‹œê°„
+    public float meltingDuration = 5f;  // ë…¹ëŠ” ë° ê±¸ë¦¬ëŠ” ì´ ì‹œê°„
 
+    public GameObject waterPuddlePrefab;  // ë¬¼ ì›…ë©ì´ í”„ë¦¬íŒ¹
+     
     public void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -41,10 +43,10 @@ public class IceObject : MonoBehaviour
 
     private IEnumerator MeltIce()
     {
-        rigid.isKinematic = true;  // ¿ÀºêÁ§Æ®°¡ ¸¶±¸ ¿òÁ÷ÀÌÁö ¾Ê°Ô °íÁ¤
+        rigid.isKinematic = true;  // ì˜¤ë¸Œì íŠ¸ê°€ ë§ˆêµ¬ ì›€ì§ì´ì§€ ì•Šê²Œ ê³ ì •
         isMelting = true;
 
-        while (elapsedTime < meltingDuration && isMelting)  // duration µ¿¾È ½ÇÇà
+        while (elapsedTime < meltingDuration && isMelting)  // duration ë™ì•ˆ ì‹¤í–‰
         {
             float progress = elapsedTime / meltingDuration;
 
@@ -52,7 +54,7 @@ public class IceObject : MonoBehaviour
             transform.localScale = currentScale;
 
             boxCollider.size = Vector3.Max(boxCollider.size, new Vector3(0.3f, 0.3f, 0.3f));
-            // boxCollider Å©±â°¡ ³Ê¹« ÁÙ¾îµé¸é Fire¿Í Trigger°¡ ¾È ÀÏ¾î³³´Ï´Ù. µû¶ó¼­ Å©±â °íÁ¤.
+            // boxCollider í¬ê¸°ê°€ ë„ˆë¬´ ì¤„ì–´ë“¤ë©´ Fireì™€ Triggerê°€ ì•ˆ ì¼ì–´ë‚©ë‹ˆë‹¤. ë”°ë¼ì„œ í¬ê¸° ê³ ì •.
 
             Color newColor = iceRenderer.material.color;
             newColor.a = Mathf.Lerp(1f, 0f, progress);
@@ -63,8 +65,9 @@ public class IceObject : MonoBehaviour
 
         }
 
-        if (transform.localScale.x <= minSize)
+        if (transform.localScale.x <= minSize)  // ì–¼ìŒì´ ë‹¤ ë…¹ìœ¼ë©´
         {
+            Instantiate(waterPuddlePrefab, transform.position, Quaternion.identity);  // í˜„ì¬ ìœ„ì¹˜ì— ë¬¼ ì›…ë©ì´ ìƒì„±
             Destroy(transform.parent.gameObject);
         }
 

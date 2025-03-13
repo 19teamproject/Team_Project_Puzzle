@@ -5,33 +5,21 @@ using UnityEngine;
 
 public class Fire : MonoBehaviour
 {
-    public GameObject fireEffect;  // ºÒÀÌ ºÙÀ» ÀÌÆåÆ®
+    public GameObject fireEffect;  // ë¶ˆì´ ë¶™ì„ ì´í™íŠ¸
     public bool isFireActive = true;
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Flammable")) // °¡¿¬¼º ¿ÀºêÁ§Æ®(ex.woodBlock)
+        if (!isFireActive) return;  // ì´ë¯¸ êº¼ì§„ ë¶ˆì´ë©´ ì•„ë¬´ ê²ƒë„ í•˜ì§€ ì•ŠìŒ
+
+        if(other.CompareTag("Flammable")) // ê°€ì—°ì„± ì˜¤ë¸Œì íŠ¸(ex.woodBlock)
         {
             Destroy(other.gameObject);
         }
-        else if(other.CompareTag("Ice"))  // ¾óÀ½À» ³ìÀÓ
+        else if(other.CompareTag("Ice"))  // ì–¼ìŒì„ ë…¹ì„
         {
             Destroy(other.gameObject);
         }
-        else if(other.CompareTag("Water"))
-        {
-            ExtinguishFire();
-        }
 
-    }
-
-    void ExtinguishFire()
-    {
-        if(isFireActive)
-        {
-            isFireActive = false;
-            fireEffect.SetActive(false);
-        }
-    }
 
 }
