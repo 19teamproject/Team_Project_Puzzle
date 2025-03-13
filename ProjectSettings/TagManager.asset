@@ -8,6 +8,7 @@ TagManager:
   - Fire
   - Flammable
   - Ice
+  - Water
   layers:
   - Default
   - TransparentFX
