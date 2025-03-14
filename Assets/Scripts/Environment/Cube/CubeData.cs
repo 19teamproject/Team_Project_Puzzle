@@ -3,6 +3,7 @@ using NaughtyAttributes;
 
 public enum CubeType
 {
+    None,
     Scale,
     Teleport,
     Jump
