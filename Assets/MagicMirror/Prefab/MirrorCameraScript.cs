@@ -68,11 +68,12 @@ public class MirrorCameraScript : MonoBehaviour
         {
             cameraObject.targetTexture = reflectionTexture;
         }
+
     }
 
     private void Update()
     {
-		if (VRMode && Camera.current == Camera.main) {
+        if (VRMode && Camera.current == Camera.main) {
 			return;
 		}
         CreateRenderTexture();
@@ -116,7 +117,7 @@ public class MirrorCameraScript : MonoBehaviour
         Camera cameraLookingAtThisMirror;
 
         // bail if we don't have a camera or renderer
-		if (renderingMirror || !enabled || (cameraLookingAtThisMirror = Camera.current) == null ||
+        if (renderingMirror || !enabled || (cameraLookingAtThisMirror = Camera.current) == null ||
             mirrorRenderer == null || mirrorMaterial == null || !mirrorRenderer.enabled)
         {
             return;
@@ -173,8 +174,8 @@ public class MirrorCameraScript : MonoBehaviour
 					}
 				}
 
-				worldToCameraMatrix *= reflectionMatrix;
-				cameraObject.worldToCameraMatrix = worldToCameraMatrix;
+                worldToCameraMatrix *= reflectionMatrix;
+                cameraObject.worldToCameraMatrix = worldToCameraMatrix;
 
                	// Clip out background
                	Vector4 clipPlane = CameraSpacePlane(ref worldToCameraMatrix, ref pos, ref normal, 1.0f);
