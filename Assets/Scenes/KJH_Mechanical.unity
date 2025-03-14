@@ -1127,6 +1127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2340053364305663754, guid: f786ade4c966e6949b63640d6856d568, type: 3}
+      propertyPath: <ConnectionColor>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5128321505770509625, guid: f786ade4c966e6949b63640d6856d568, type: 3}
       propertyPath: m_Name
       value: PhysicCablePP
@@ -1707,6 +1711,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 245af5220737363449b1cbfa7d713966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energy: 0
+  maxEnergy: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

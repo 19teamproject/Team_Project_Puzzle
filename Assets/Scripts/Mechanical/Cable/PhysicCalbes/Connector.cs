@@ -38,7 +38,7 @@ namespace HPhysic
 
 
         private FixedJoint _fixedJoint;
-        public Rigidbody Rigidbody { get; private set; }
+        public Rigidbody rb { get; private set; }
 
         public Vector3 ConnectionPosition => connectionPoint ? connectionPoint.position : transform.position;
         public Quaternion ConnectionRotation => connectionPoint ? connectionPoint.rotation : transform.rotation;
@@ -52,7 +52,7 @@ namespace HPhysic
 
         private void Awake()
         {
-            Rigidbody = gameObject.GetComponent<Rigidbody>();
+            rb = gameObject.GetComponent<Rigidbody>();
         }
 
         private void Start()
@@ -75,7 +75,7 @@ namespace HPhysic
         public void SetAsConnectedTo(Connector secondConnector)
         {
             ConnectedTo = secondConnector;
-            _wasConnectionKinematic = secondConnector.Rigidbody.isKinematic;
+            _wasConnectionKinematic = secondConnector.rb.isKinematic;
             UpdateInteractableWhenIsConnected();
         }
 
@@ -98,12 +98,12 @@ namespace HPhysic
             secondConnector.transform.position = ConnectionPosition - (secondConnector.ConnectionPosition - secondConnector.transform.position);
 
             _fixedJoint = gameObject.AddComponent<FixedJoint>();
-            _fixedJoint.connectedBody = secondConnector.Rigidbody;
+            _fixedJoint.connectedBody = secondConnector.rb;
 
             secondConnector.SetAsConnectedTo(this);
-            _wasConnectionKinematic = secondConnector.Rigidbody.isKinematic;
+            _wasConnectionKinematic = secondConnector.rb.isKinematic;
             if (makeConnectionKinematic)
-                secondConnector.Rigidbody.isKinematic = true;
+                secondConnector.rb.isKinematic = true;
             ConnectedTo = secondConnector;
 
             // 잘못된 연결에서 발생하는 스파크
@@ -128,7 +128,7 @@ namespace HPhysic
             Connector toDisconect = ConnectedTo;
             ConnectedTo = null;
             if (makeConnectionKinematic)
-                toDisconect.Rigidbody.isKinematic = _wasConnectionKinematic;
+                toDisconect.rb.isKinematic = _wasConnectionKinematic;
             toDisconect.Disconnect(this);
 
             // 잘못된 연결에서 발생하는 스파크
