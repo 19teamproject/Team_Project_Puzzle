@@ -144,7 +144,7 @@ public class LightGenerator : MonoBehaviour
 
         // 빛의 방향 설정
         Quaternion rotation = Quaternion.LookRotation(end - start);
-        beam.transform.rotation = rotation * Quaternion.Euler(90, 0, 0);
+        beam.transform.rotation = rotation * Quaternion.Euler(-90, 0, 0);
 
         // 크기 조정
         beam.transform.localScale = new Vector3(

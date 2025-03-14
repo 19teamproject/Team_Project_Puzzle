@@ -52,6 +52,8 @@ public class Interaction : MonoBehaviour, IObjectHolder
     private Cube curCube;
     private RotateObject selectedRotatableObject;
     private bool isRotating = false;
+    private float lastInputTime;
+    private float rotationTimeout = 2f;
     public float CheckDistanceBonus { get; set; }
 
     private void Start()
@@ -123,6 +125,9 @@ public class Interaction : MonoBehaviour, IObjectHolder
                 curInteractable = null;
             }
         }
+
+        if (!isRotating) return;
+
         RotateInput();
     }
 
@@ -265,11 +270,17 @@ public class Interaction : MonoBehaviour, IObjectHolder
         }
 
         selectedRotatableObject = curInteractGameObject.GetComponent<RotateObject>();
-        
+
 
         if (selectedRotatableObject != null)
         {
             isRotating = !isRotating; // 토글 방식으로 설정 (켜기/끄기)
+
+            if (isRotating)
+            {
+                lastInputTime = Time.time; // 선택 시 타이머 리셋
+            }
+
             Debug.Log($"회전 가능 상태: {isRotating} ({curInteractGameObject.name})");
         }
     }
@@ -282,17 +293,25 @@ public class Interaction : MonoBehaviour, IObjectHolder
 
             if (Mouse.current.leftButton.isPressed)
             {
-                rotationInput = -1f; // 왼쪽 회전
+                rotationInput = -1f;
             }
             else if (Mouse.current.rightButton.isPressed)
             {
-                rotationInput = 1f; // 오른쪽 회전
+                rotationInput = 1f;
             }
 
             if (rotationInput != 0f) // 입력이 있을 때만 회전
             {
+                Vector3 rotationAxis = selectedRotatableObject.transform.right;
                 selectedRotatableObject.Rotate(rotationInput);
+                lastInputTime = Time.time;
             }
+        }
+
+        if (Time.time - lastInputTime > rotationTimeout)
+        {
+            isRotating = false;
+            Debug.Log("입력 시간 초과로 회전 모드 해제");
         }
     }
 
