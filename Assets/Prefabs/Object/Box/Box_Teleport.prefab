@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: 3112522657293908344, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -5495902117074765545, guid: c7ff53bf0e59c4e4d9b2a4ada2d4d6ae, type: 3}
+      objectReference: {fileID: -5495902117074765545, guid: d41e94ffc26af784a858cbaa291e0573, type: 3}
     - target: {fileID: 5463841238141181159, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_Name
       value: Box_Teleport

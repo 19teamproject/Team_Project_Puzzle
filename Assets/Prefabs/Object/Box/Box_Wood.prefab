@@ -48,12 +48,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3112522657293908344, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2228417370725966487, guid: f1cbe080dcc9b1a40ae28f19941a1071, type: 3}
     - target: {fileID: 5463841238141181159, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_Name
-      value: Box_Wood Variant
+      value: Box_Wood
       objectReference: {fileID: 0}
     - target: {fileID: 6831961105436800165, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 73ea1d0f1ecb1874390140699cd6a84b, type: 2}
+    - target: {fileID: 6831961105436800165, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
+      propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 73ea1d0f1ecb1874390140699cd6a84b, type: 2}
     m_RemovedComponents: []

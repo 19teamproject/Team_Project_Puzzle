@@ -48,12 +48,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3112522657293908344, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5495902117074765545, guid: 3c6ab22effb421e4eaac86d2488bc098, type: 3}
     - target: {fileID: 5463841238141181159, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_Name
-      value: Box_Ice Variant
+      value: Box_Ice
       objectReference: {fileID: 0}
     - target: {fileID: 6831961105436800165, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38aaa12a9155c104ca128e516354472e, type: 2}
+    - target: {fileID: 6831961105436800165, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
+      propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 38aaa12a9155c104ca128e516354472e, type: 2}
     m_RemovedComponents: []
