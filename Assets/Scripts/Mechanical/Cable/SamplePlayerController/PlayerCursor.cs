@@ -5,19 +5,19 @@ using HInteractions;
 namespace HPlayer
 {
     // PlayerInteractions 없으면 자동 추가
-    [RequireComponent(typeof(PlayerInteractions))]
+    [RequireComponent(typeof(Interaction))]
     public class PlayerCursor : MonoBehaviour
     {
         // 임시 에임
         [SerializeField] private GameObject cursorCanvas;
         [SerializeField, Min(0)] private float minShowDistance;
 
-        private PlayerInteractions playerInteractions;
+        private Interaction playerInteractions;
         private IEnumerator cursorUpdater;
 
         private void OnEnable()
         {
-            playerInteractions = GetComponent<PlayerInteractions>();
+            playerInteractions = GetComponent<Interaction>();
             if (playerInteractions == null)
                 return;
 
