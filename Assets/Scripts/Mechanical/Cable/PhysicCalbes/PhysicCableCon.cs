@@ -1,10 +1,11 @@
-using System.Collections;
 using UnityEngine;
 using HInteractions;
 
 namespace HPhysic
 {
+    // Connector 없으면 자동으로 추가
     [RequireComponent(typeof(Connector))]
+    // Start나 End에 들어갈 스크립트
     public class PhysicCableCon : Liftable
     {
         private Connector _connector;
@@ -16,6 +17,7 @@ namespace HPhysic
             _connector = gameObject.GetComponent<Connector>();
         }
 
+        // 잡아들기
         public override void PickUp(IObjectHolder holder, int layer)
         {
             base.PickUp(holder, layer);
@@ -24,6 +26,7 @@ namespace HPhysic
                 _connector.Disconnect();
         }
 
+        // 놓기
         public override void Drop()
         {
             if (ObjectHolder.SelectedObject && ObjectHolder.SelectedObject.TryGetComponent(out Connector secondConnector))

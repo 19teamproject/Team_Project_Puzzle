@@ -4,8 +4,10 @@ using NaughtyAttributes;
 
 namespace HPhysic
 {
+    // 케이블 부모 스크립트
     public class PhysicCable : MonoBehaviour
     {
+        // 길이 조절
         [Header("Look")]
         [SerializeField, Min(1)] private int numberOfPoints = 3;
         [SerializeField, Min(0.01f)] private float space = 0.3f;
@@ -18,6 +20,7 @@ namespace HPhysic
         private float brakeLength;
         private float timeToBrake = 1f;
 
+        // 세팅에 필요한 오브젝트
         [Header("Object to set")]
         [SerializeField, Required] private GameObject start;
         [SerializeField, Required] private GameObject end;
@@ -32,6 +35,7 @@ namespace HPhysic
         private Connector startConnector;
         private Connector endConnector;
 
+        // 버튼을 누르면 설정한 값에 맞게 초기화된다.
         [Button("Reset points")]
         private void UpdatePoints()
         {
@@ -41,7 +45,7 @@ namespace HPhysic
                 return;
             }
 
-            // delete old
+            // 전에 것 지워주기
             int length = transform.childCount;
             for (int i = 0; i < length; i++)
                 if (transform.GetChild(i).name.StartsWith(cloneText))
@@ -51,7 +55,7 @@ namespace HPhysic
                     i--;
                 }
 
-            // set new
+            // 새거 세팅하기
             Vector3 lastPos = start.transform.position;
             Rigidbody lasBody = start.GetComponent<Rigidbody>();
             for (int i = 0; i < numberOfPoints; i++)
@@ -86,6 +90,7 @@ namespace HPhysic
             Vector3 CountNewPointPos(Vector3 lastPos) => lastPos + transform.forward * space;
         }
 
+        // 관절 포인트를 추가하기
         [Button("Add point")]
         private void AddPoint()
         {
@@ -111,7 +116,7 @@ namespace HPhysic
             SetSpirng(cPoint.GetComponent<SpringJoint>(), lastprevPoint.GetComponent<Rigidbody>());
             SetSpirng(cPoint.AddComponent<SpringJoint>(), endRB);
 
-            // fix end
+            // 마지막거 위치 수정
             end.transform.position += end.transform.forward * space;
 
             cConnector.transform.position = CountConPos(cPoint.transform.position, end.transform.position);
@@ -121,6 +126,7 @@ namespace HPhysic
             numberOfPoints++;
         }
 
+        // 관절 포인트 삭제하기
         [Button("Remove point")]
         private void RemovePoint()
         {
@@ -259,7 +265,7 @@ namespace HPhysic
         private Transform GetConnector(int index) => index > 0 ? transform.Find(ConnectorName(index)) : connector0.transform;
         private Transform GetPoint(int index) => index > 0 ? transform.Find(PointName(index)) : point0.transform;
 
-
+        // SprintJoint 속성 설정
         public void SetSpirng(SpringJoint spring, Rigidbody connectedBody)
         {
             spring.connectedBody = connectedBody;
@@ -271,6 +277,7 @@ namespace HPhysic
             spring.minDistance = space;
             spring.maxDistance = space;
         }
+        // 포인트 오브젝트 생성 및 설정
         private GameObject CreateNewPoint(int index)
         {
             GameObject temp = Instantiate(point0);
@@ -278,6 +285,7 @@ namespace HPhysic
             temp.transform.parent = transform;
             return temp;
         }
+        // 커넥터 오브젝트 생성 및 설정
         private GameObject CreateNewCon(int index)
         {
             GameObject temp = Instantiate(connector0);
