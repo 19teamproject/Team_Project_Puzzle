@@ -108,7 +108,11 @@ public class TargetPoint : EnvironmentObject
     {
         if (objectToMove != null)
         {
-            targetPosition = objectToMove.position + Vector3.left * 5f;
+            // 문이 바라보는 방향을 기준으로 왼쪽 방향 계산
+            Vector3 leftDirection = -objectToMove.right;
+
+            // 문이 바라보는 방향 기준 왼쪽으로 5m 이동
+            targetPosition = objectToMove.position + leftDirection * 5f;
         }
     }
 }

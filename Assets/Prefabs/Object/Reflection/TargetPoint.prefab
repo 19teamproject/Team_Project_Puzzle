@@ -120,7 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: d8f130a6250e59549adfee0b3f0b4366, type: 2}
   outline: {fileID: 0}
-  targetColor: {r: 0.5019608, g: 0, b: 0.5019608, a: 1}
+  targetColor: {r: 1, g: 1, b: 0.5019608, a: 1}
   objectToMove: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
   lerpTime: 50

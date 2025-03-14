@@ -117,6 +117,8 @@ public class LightGenerator : MonoBehaviour
     // 빛 기둥 생성
     void CreateLightBeam(Vector3 start, Vector3 end, Color beamColor)
     {
+        if (isClear) return;
+
         GameObject beam = Instantiate(lightBeamPrefab);
         lightBeams.Add(beam);
 
@@ -141,7 +143,54 @@ public class LightGenerator : MonoBehaviour
             beamRenderer.material.color = beamColor;
             beamRenderer.material.SetColor("_EmissionColor", beamColor * 2f);
         }
+    }
 
+    void ClearLightBeams()
+    {
+        foreach (GameObject beam in lightBeams)
+        {
+            if (beam != null)
+            {
+                StartCoroutine(FadeOutAndDestroy(beam));
+            }
+        }
+        lightBeams.Clear();
+    }
+
+    IEnumerator FadeOutAndDestroy(GameObject beam)
+    {
+        Renderer beamRenderer = beam.GetComponent<Renderer>();
+        if (beamRenderer == null) yield break;
+
+        Material material = beamRenderer.material;
+        Color startColor = material.color;
+        Color startEmission = material.GetColor("_EmissionColor"); // 초기 Emission 색상 저장
+        Vector3 startScale = beam.transform.localScale; // 초기 크기 저장
+        float duration = 1.5f; // 서서히 사라지는 시간 (초)
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float fadeAmount = Mathf.Lerp(1f, 0f, elapsed / duration); // 1 → 0으로 점점 감소
+
+            // 색상 투명도 적용
+            material.color = new Color(startColor.r, startColor.g, startColor.b, fadeAmount);
+
+            // Emission 강도 감소
+            Color newEmission = startEmission * fadeAmount;
+            material.SetColor("_EmissionColor", newEmission);
+
+            beam.transform.localScale = new Vector3(
+                startScale.x * fadeAmount,  // 가로 크기 줄이기
+                startScale.y,               // 높이(Y)는 그대로 유지
+                startScale.z * fadeAmount   // 세로 크기 줄이기
+                );
+
+            yield return null;
+        }
+
+        Destroy(beam); // 완전히 사라진 후 오브젝트 삭제
     }
 
     // 목표 지점 hit 되었을때
@@ -152,6 +201,11 @@ public class LightGenerator : MonoBehaviour
         {
             target.OnLightHit(beamColor);  // 목표지점에서 색상 일치 여부를 처리
             isClear = target.isTargetClear();
+
+            if (isClear) 
+            {
+                ClearLightBeams();
+            }
         }
     }
 }
