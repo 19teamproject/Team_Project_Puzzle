@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 624f7c65553c5314884ddc0ee35a4447, type: 3}
-  m_Name: Object_ScalableCube
+  m_Script: {fileID: 11500000, guid: 902d95f843101244893be071f99d81bd, type: 3}
+  m_Name: Cube_Scale-Y
   m_EditorClassIdentifier: 
   displayName: "\uBE68\uAC04 \uD050\uBE0C"
-  description: "\uD050\uBE0C\uB97C \uD65C\uC6A9\uD558\uC5EC \uC774\uB3D9\uD558\uC138\uC694."
-  type: 1
+  description: "[E]\uD0A4\uB97C \uB20C\uB7EC \uC815\uD574\uC9C4 \uBC29\uD5A5\uC73C\uB85C
+    \uB298\uB9B4 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+  type: 0
+  scaleDir: 1
+  jumpForce: {x: 0, y: 0, z: 0}

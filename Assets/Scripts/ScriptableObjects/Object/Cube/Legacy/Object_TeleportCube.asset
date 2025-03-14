@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: Object_TeleportCube
   m_EditorClassIdentifier: 
   displayName: "\uB178\uB780 \uD050\uBE0C"
-  description: "\uD154\uB808\uD3EC\uD2B8\uAC00 \uAC00\uB2A5\uD569\uB2C8\uB2E4"
-  type: 1
+  description: 

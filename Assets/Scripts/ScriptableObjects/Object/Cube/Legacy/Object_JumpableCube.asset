@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: Object_JumpableCube
   m_EditorClassIdentifier: 
   displayName: "\uD30C\uB780 \uD050\uBE0C"
-  description: "\uD050\uBE0C\uB97C \uC774\uC6A9\uD558\uC5EC \uC810\uD504\uAC00 \uAC00\uB2A5\uD569\uB2C8\uB2E4"
-  type: 1
+  description: 

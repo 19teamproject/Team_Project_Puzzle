@@ -12,30 +12,31 @@ public class CapsuleController : MonoBehaviour
 
     private Cube cube;
 
-    public void OnInteraction(InputAction.CallbackContext context)
-    {
-        if (context.phase == InputActionPhase.Started)
-        {
-            Ray ray = new Ray(transform.position, transform.forward); // Ray를 캐릭터의 포지션으로부터
-            RaycastHit hit;
+    // public void OnInteraction(InputAction.CallbackContext context)
+    // {
+    //     if (context.phase == InputActionPhase.Started)
+    //     {
+    //         Ray ray = new Ray(transform.position, transform.forward); // Ray를 캐릭터의 포지션으로부터
+    //         RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, rayDistance))
-            {
-                Debug.Log($"Ray가 맞은 오브젝트 : {hit.collider.gameObject.name}");
-                Cube cube = hit.collider.GetComponent<Cube>();
-                if (cube != null)
-                {
-                    cube.HandleInteraction(player);
-                }
-            }
-        }
-    }
-    public void OnTriggerEnter(Collider other) //닿았을 때 실행되어야하므로 Ray가 아닌 Trigger로
-    {
-        Cube cube = other.GetComponent<Cube>();
-        if (cube != null)
-        {
-            cube.HandleInteraction(player);
-        }
-    }
+    //         if (Physics.Raycast(ray, out hit, rayDistance))
+    //         {
+    //             Debug.Log($"Ray가 맞은 오브젝트 : {hit.collider.gameObject.name}");
+    //             Cube cube = hit.collider.GetComponent<Cube>();
+    //             if (cube != null)
+    //             {
+    //                 cube.HandleInteraction(player);
+    //             }
+    //         }
+    //     }
+    // }
+    
+    // public void OnTriggerEnter(Collider other) //닿았을 때 실행되어야하므로 Ray가 아닌 Trigger로
+    // {
+    //     Cube cube = other.GetComponent<Cube>();
+    //     if (cube != null)
+    //     {
+    //         cube.HandleInteraction(player);
+    //     }
+    // }
 }
