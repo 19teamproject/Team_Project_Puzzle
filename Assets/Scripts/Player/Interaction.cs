@@ -5,8 +5,6 @@ using DG.Tweening;
 using HInteractions;
 using NaughtyAttributes;
 using System;
-using HPlayer;
-using StarterAssets;
 using HPhysic;
 
 public class Interaction : MonoBehaviour, IObjectHolder

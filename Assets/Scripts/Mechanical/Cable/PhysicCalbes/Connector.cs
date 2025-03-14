@@ -25,7 +25,7 @@ namespace HPhysic
         [SerializeField] private bool hideInteractableWhenIsConnected = false;
         [SerializeField] private bool allowConnectDifrentCollor = false;
 
-        // 연결할 오브젝트의 Connector
+        // 연결한 오브젝트의 Connector
         [field: SerializeField] public Connector ConnectedTo { get; private set; }
 
         
@@ -71,7 +71,7 @@ namespace HPhysic
 
         private void OnDisable() => Disconnect();
 
-        // 연결되어 있는 곳에 연결한다
+        // 연결할 곳에 연결한다
         public void SetAsConnectedTo(Connector secondConnector)
         {
             ConnectedTo = secondConnector;
