@@ -1160,6 +1160,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1127330412}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &754773377 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3132719687861689901, guid: bfd40beaa98671b4798e31598898bbb3, type: 3}
+  m_PrefabInstance: {fileID: 1456383132}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &775566581 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3972689600372785613, guid: e16c5af0d54d02646815c4571e4f9409, type: 3}
@@ -1762,6 +1767,14 @@ PrefabInstance:
       propertyPath: promptText
       value: 
       objectReference: {fileID: 868114888}
+    - target: {fileID: 8198246594871879012, guid: bfd40beaa98671b4798e31598898bbb3, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 1008839190}
+    - target: {fileID: 8198246594871879012, guid: bfd40beaa98671b4798e31598898bbb3, type: 3}
+      propertyPath: handTransform
+      value: 
+      objectReference: {fileID: 754773377}
     - target: {fileID: 8198246594871879012, guid: bfd40beaa98671b4798e31598898bbb3, type: 3}
       propertyPath: promptTextPlus
       value: 
