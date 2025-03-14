@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 1352508433228381298}
   - component: {fileID: 6299909469249829177}
   - component: {fileID: 1559416021362948593}
+  - component: {fileID: 4242197446344701017}
   m_Layer: 11
   m_Name: Cylinder
   m_TagString: Untagged
@@ -424,6 +425,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &4242197446344701017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8007324191799058643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 1
+  eraseRenderer: 0
 --- !u!1 &8629108606236483858
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,6 +449,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7576872949865518377}
   - component: {fileID: 4338506543983885138}
+  - component: {fileID: 4645911109607739213}
   m_Layer: 11
   m_Name: Torch
   m_TagString: Fire
@@ -479,6 +495,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4645911109607739213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8629108606236483858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78862a18326bb2f489c010755793dcd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: cdec031076ecbbf45a160feb1ac2ea86, type: 2}
+  outline: {fileID: 4242197446344701017}
 --- !u!1 &8903452332057657788
 GameObject:
   m_ObjectHideFlags: 0

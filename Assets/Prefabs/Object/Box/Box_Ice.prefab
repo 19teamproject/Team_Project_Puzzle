@@ -53,6 +53,10 @@ PrefabInstance:
       value: Box_Ice
       objectReference: {fileID: 0}
     - target: {fileID: 5463841238141181159, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5463841238141181159, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_TagString
       value: Ice
       objectReference: {fileID: 0}
@@ -67,6 +71,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5463841238141181159, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4975347623416898698}
+    - targetCorrespondingSourceObject: {fileID: 5463841238141181159, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1062692266148657745}
   m_SourcePrefab: {fileID: 100100000, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
 --- !u!1 &4825490481889399874 stripped
 GameObject:
@@ -85,7 +92,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841305e9feb26cd4f8ff384d2523e28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 568fe6191d44118459621257449a498e, type: 2}
+  outline: {fileID: 1062692266148657745}
+  cubeType: 
   rigid: {fileID: 0}
   minSize: 0.1
   meltingDuration: 5
   waterPuddlePrefab: {fileID: 0}
+--- !u!114 &1062692266148657745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4825490481889399874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 1
+  eraseRenderer: 0
