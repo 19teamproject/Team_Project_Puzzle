@@ -1,15 +1,17 @@
 using UnityEngine;
 using cakeslice;
-using UnityEngine.UIElements;
 using StarterAssets;
+using NaughtyAttributes;
 
 public class Cube : MonoBehaviour, IInteractable
 {
+    [Header("Data")]
     [SerializeField] protected CubeData data;
     [SerializeField] protected Outline outline;
 
-    [Header("Teleport")]
-    [SerializeField] private GameObject teleportTarget;
+    [Space(10f)]
+    [Header("Teleport Cube Only")]
+    [SerializeField] private GameObject target;
     [SerializeField] private Vector3 offset = Vector3.up;
 
     private GameObject player;
@@ -36,7 +38,7 @@ public class Cube : MonoBehaviour, IInteractable
 
     public bool OnInteract()
     {
-        if (!isTrigger) return false;
+        // if (!isTrigger) return false;
 
         switch (data.type)
         {
@@ -69,15 +71,15 @@ public class Cube : MonoBehaviour, IInteractable
     // 텔레포트
     private void Teleport()
     {
-        if (teleportTarget != null) //이동할 큐브가 존재한다면
+        if (target != null) //이동할 큐브가 존재한다면
         {
             CharacterController controller = player.GetComponent<CharacterController>();
 
             controller.enabled = false;
-            player.transform.position = teleportTarget.transform.position + offset; //큐브타겟 목표지점의 위에 텔레포트하여 충돌 방지
+            player.transform.position = target.transform.position + offset; //큐브타겟 목표지점의 위에 텔레포트하여 충돌 방지
             controller.enabled = true;
 
-            Debug.Log($"플레이어 이동 완료: {gameObject} => {teleportTarget}");
+            Debug.Log($"플레이어 이동 완료: {gameObject} => {target}");
         }
         else
         {
