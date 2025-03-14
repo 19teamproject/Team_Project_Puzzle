@@ -74,8 +74,8 @@ public class CubeBoneScaler : MonoBehaviour
                     t.DOMoveX(currentScale.x - offset, speed);
 
                 DOTween.To(() => boxCollider.center, x => boxCollider.center = x, new Vector3(currentScale.x / 2f, boxCollider.center.y, boxCollider.center.z), speed);
-                DOTween.To(() => boxCollider.size, x => boxCollider.size = x, new Vector3(currentScale.x, boxCollider.size.y, boxCollider.size.z), speed);
-
+                DOTween.To(() => boxCollider.size, x => boxCollider.size = x, new Vector3(currentScale.x, boxCollider.size.y, boxCollider.size.z), speed)
+                       .OnComplete(() => DOTween.KillAll());
                 break;
 
             case ScaleDir.Y:
@@ -86,8 +86,8 @@ public class CubeBoneScaler : MonoBehaviour
                     t.DOMoveY(currentScale.y - offset, speed);
 
                 DOTween.To(() => boxCollider.center, x => boxCollider.center = x, new Vector3(boxCollider.center.x, currentScale.y / 2f, boxCollider.center.z), speed);
-                DOTween.To(() => boxCollider.size, x => boxCollider.size = x, new Vector3(boxCollider.size.x, currentScale.y, boxCollider.size.z), speed);
-
+                DOTween.To(() => boxCollider.size, x => boxCollider.size = x, new Vector3(boxCollider.size.x, currentScale.y, boxCollider.size.z), speed)
+                       .OnComplete(() => DOTween.KillAll());
                 break;
 
             case ScaleDir.Z:
@@ -98,8 +98,8 @@ public class CubeBoneScaler : MonoBehaviour
                     t.DOMoveZ(currentScale.z - offset, speed);
 
                 DOTween.To(() => boxCollider.center, x => boxCollider.center = x, new Vector3(boxCollider.center.x, boxCollider.center.y, currentScale.y / 2f), speed);
-                DOTween.To(() => boxCollider.size, x => boxCollider.center = x, new Vector3(boxCollider.size.x, boxCollider.size.y, currentScale.y), speed);
-
+                DOTween.To(() => boxCollider.size, x => boxCollider.center = x, new Vector3(boxCollider.size.x, boxCollider.size.y, currentScale.y), speed)
+                       .OnComplete(() => DOTween.KillAll());
                 break;
         }
     }
