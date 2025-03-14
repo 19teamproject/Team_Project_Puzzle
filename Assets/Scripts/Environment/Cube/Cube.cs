@@ -1,35 +1,121 @@
-using StarterAssets;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-public enum CubeType
-{
-    Scalable,
-    Jumpable,
-    Teleportable
-}
-public class Cube : EnvironmentObject
-{
-    public string cubeType; // 큐브 타입을 지정하기 위한 변수
+using cakeslice;
+using StarterAssets;
+using NaughtyAttributes;
 
-    private Interaction interaction;
-    protected virtual void Start()
+public class Cube : MonoBehaviour, IInteractable
+{
+    [Header("Data")]
+    [SerializeField] protected CubeData data;
+    [SerializeField] protected Outline outline;
+
+    [Space(10f)]
+    [Header("Teleport Cube Only")]
+    [SerializeField] private GameObject target;
+    [SerializeField] private Vector3 offset = Vector3.up;
+
+    private GameObject player;
+    private bool isTrigger;
+
+    private void Start()
     {
-        transform.localScale = Vector3.one; //기본적인 큐브의 사이즈
-        // 필요시 큐브 초기화로직
+        player = CharacterManager.Instance.Player.gameObject;
     }
-    public override bool OnInteract()
+
+    public string GetInteractPrompt()
     {
-        HandleInteraction(CharacterManager.Instance.Player.gameObject);
+        string str = $"<font=\"GmarketSansMedium SDF\" material=\"GmarketSansMedium SDF Glow Blue\">{data.displayName}</font> - {data.description}";
+        return str;
+    }
+
+    public virtual void SetOutline(bool show)
+    {
+        if (outline != null) outline.color = show ? 0 : 1;
+    }
+
+
+#region Interact
+
+    public bool OnInteract()
+    {
+        // if (!isTrigger) return false;
+
+        switch (data.type)
+        {
+            case CubeType.Scale:
+                Scale(); break;
+
+            case CubeType.Teleport:
+                Teleport(); break;
+
+            case CubeType.Jump:
+                Jump(); break;
+        }
+
         return false;
     }
-    public virtual void HandleInteraction(GameObject player)
+
+    // 크기 조절
+    private void Scale()
     {
-        Debug.Log($"{gameObject.name}은 {cubeType}의 Cube입니다.");
+        if (TryGetComponent(out CubeBoneScaler scaler))
+        {
+            scaler.ChangeScale(data.scaleDir);
+        }
+        else
+        {
+            Debug.LogWarning($"{gameObject}: CubeBoneScaler 스크립트가 없습니다.");
+        }
     }
+
+    // 텔레포트
+    private void Teleport()
+    {
+        if (target != null) //이동할 큐브가 존재한다면
+        {
+            CharacterController controller = player.GetComponent<CharacterController>();
+
+            controller.enabled = false;
+            player.transform.position = target.transform.position + offset; //큐브타겟 목표지점의 위에 텔레포트하여 충돌 방지
+            controller.enabled = true;
+
+            Debug.Log($"플레이어 이동 완료: {gameObject} => {target}");
+        }
+        else
+        {
+            Debug.LogWarning($"{gameObject}: 연결된 큐브가 없습니다.");
+        }
+    }
+
+    // 점프
+    private void Jump()
+    {
+        if (player.TryGetComponent(out ThirdPersonController thirdPersonController))
+        {
+            thirdPersonController.AddJumpForce(data.jumpForce);
+        }
+    }
+
+#endregion
+
+
+#region Trigger
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isTrigger = true;
+        }
+    }
+
+    private void OTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isTrigger = false;
+        }
+    }
+
+#endregion
 }
-
-
-
-
-
