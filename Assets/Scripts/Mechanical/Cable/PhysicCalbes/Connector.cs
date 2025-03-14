@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using NaughtyAttributes;
+using cakeslice;
 
 namespace HPhysic
 {
@@ -24,7 +25,7 @@ namespace HPhysic
         [SerializeField] private bool hideInteractableWhenIsConnected = false;
         [SerializeField] private bool allowConnectDifrentCollor = false;
 
-        // 연결할 오브젝트의 Connector
+        // 연결한 오브젝트의 Connector
         [field: SerializeField] public Connector ConnectedTo { get; private set; }
 
         
@@ -33,10 +34,11 @@ namespace HPhysic
         [SerializeField, Required] private Transform connectionPoint;
         [SerializeField] private MeshRenderer collorRenderer;
         [SerializeField] private ParticleSystem sparksParticle;
+        [SerializeField] private Outline outline;
 
 
         private FixedJoint _fixedJoint;
-        public Rigidbody Rigidbody { get; private set; }
+        public Rigidbody rb { get; private set; }
 
         public Vector3 ConnectionPosition => connectionPoint ? connectionPoint.position : transform.position;
         public Quaternion ConnectionRotation => connectionPoint ? connectionPoint.rotation : transform.rotation;
@@ -50,7 +52,7 @@ namespace HPhysic
 
         private void Awake()
         {
-            Rigidbody = gameObject.GetComponent<Rigidbody>();
+            rb = gameObject.GetComponent<Rigidbody>();
         }
 
         private void Start()
@@ -69,11 +71,11 @@ namespace HPhysic
 
         private void OnDisable() => Disconnect();
 
-        // 연결되어 있는 곳에 연결한다
+        // 연결할 곳에 연결한다
         public void SetAsConnectedTo(Connector secondConnector)
         {
             ConnectedTo = secondConnector;
-            _wasConnectionKinematic = secondConnector.Rigidbody.isKinematic;
+            _wasConnectionKinematic = secondConnector.rb.isKinematic;
             UpdateInteractableWhenIsConnected();
         }
 
@@ -91,17 +93,17 @@ namespace HPhysic
             if (IsConnected)
                 Disconnect(secondConnector);
 
-            // 연결할 오브젝트의 회전값을 
+            // 연결할 오브젝트의 회전값을 설정
             secondConnector.transform.rotation = ConnectionRotation * secondConnector.RotationOffset;
             secondConnector.transform.position = ConnectionPosition - (secondConnector.ConnectionPosition - secondConnector.transform.position);
 
             _fixedJoint = gameObject.AddComponent<FixedJoint>();
-            _fixedJoint.connectedBody = secondConnector.Rigidbody;
+            _fixedJoint.connectedBody = secondConnector.rb;
 
             secondConnector.SetAsConnectedTo(this);
-            _wasConnectionKinematic = secondConnector.Rigidbody.isKinematic;
+            _wasConnectionKinematic = secondConnector.rb.isKinematic;
             if (makeConnectionKinematic)
-                secondConnector.Rigidbody.isKinematic = true;
+                secondConnector.rb.isKinematic = true;
             ConnectedTo = secondConnector;
 
             // 잘못된 연결에서 발생하는 스파크
@@ -111,7 +113,6 @@ namespace HPhysic
                 StartCoroutine(incorrectSparksC);
             }
 
-            // 윤곽선 비활성화
             UpdateInteractableWhenIsConnected();
         }
         
@@ -127,7 +128,7 @@ namespace HPhysic
             Connector toDisconect = ConnectedTo;
             ConnectedTo = null;
             if (makeConnectionKinematic)
-                toDisconect.Rigidbody.isKinematic = _wasConnectionKinematic;
+                toDisconect.rb.isKinematic = _wasConnectionKinematic;
             toDisconect.Disconnect(this);
 
             // 잘못된 연결에서 발생하는 스파크
@@ -137,13 +138,11 @@ namespace HPhysic
                 sparksParticle.Clear();
             }
 
-            // 윤곽선 활성화
             UpdateInteractableWhenIsConnected();
         }
 
         private void UpdateInteractableWhenIsConnected()
         {
-            // 연결된 경우 윤곽선 제거
             if (hideInteractableWhenIsConnected)
             {
                 if (TryGetComponent(out Collider collider))
@@ -197,5 +196,13 @@ namespace HPhysic
             && !this.IsConnected && !secondConnector.IsConnected
             && this.ConnectionType != secondConnector.ConnectionType
             && (this.allowConnectDifrentCollor || secondConnector.allowConnectDifrentCollor || this.ConnectionColor == secondConnector.ConnectionColor);
+
+        public void SetOutline(bool show)
+        {
+            if (outline != null)
+            {
+                outline.color = show ? 0 : 1;
+            }
+        }
     }
 }
