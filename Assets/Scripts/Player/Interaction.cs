@@ -201,7 +201,7 @@ public class Interaction : MonoBehaviour, IObjectHolder
     {
         if (obj == null)
         {
-            Debug.LogWarning($"{nameof(PlayerInteractions)}: Attempted to pick up null object!");
+            Debug.LogWarning($"{nameof(Interaction)}: Attempted to pick up null object!");
             return;
         }
 
@@ -213,7 +213,7 @@ public class Interaction : MonoBehaviour, IObjectHolder
     {
         if (obj == null)
         {
-            Debug.LogWarning($"{nameof(PlayerInteractions)}: Attempted to drop null object!");
+            Debug.LogWarning($"{nameof(Interaction)}: Attempted to drop null object!");
             return;
         }
 

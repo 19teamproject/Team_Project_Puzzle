@@ -79,6 +79,9 @@ namespace StarterAssets
         
         public PlayerInput PlayerInput => playerInput;
 
+        // 포트 연결할 때 실행
+        //public static Action OnPlayerEnterPortal;
+
         private void Awake()
         {
             // get a reference to our main camera
