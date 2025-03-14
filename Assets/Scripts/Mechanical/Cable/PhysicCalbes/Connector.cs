@@ -35,7 +35,10 @@ namespace HPhysic
         [SerializeField] private MeshRenderer collorRenderer;
         [SerializeField] private ParticleSystem sparksParticle;
         [SerializeField] private Outline outline;
-
+        [SerializeField] private bool isCharger = false;        // 충전기인지
+        [SerializeField] private float energy = 0f;             // 현재 에너지
+        [SerializeField] private float maxEnergy = 1f;          // 최대 에너지
+        [SerializeField] private bool isCharging = false;       // 충전 중인지
 
         private FixedJoint _fixedJoint;
         public Rigidbody rb { get; private set; }
