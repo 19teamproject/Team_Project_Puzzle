@@ -5,24 +5,20 @@ using UnityEngine;
 
 public class Fire : MonoBehaviour
 {
-    public GameObject fireEffect;  // ºÒÀÌ ºÙÀ» ÀÌÆåÆ®
+    public GameObject fireEffect;  // ë¶ˆì´ ë¶™ì„ ì´í™íŠ¸
+    public bool isFireActive = true;
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Flammable")) // °¡¿¬¼º ¿ÀºêÁ§Æ®(ex.woodBlock)
-        {
+        if (!isFireActive) return;  // ì´ë¯¸ êº¼ì§„ ë¶ˆì´ë©´ ì•„ë¬´ ê²ƒë„ í•˜ì§€ ì•ŠìŒ
 
-            Destroy(other.gameObject);
-        }
-        else if(other.CompareTag("Ice"))  // ¾óÀ½À» ³ìÀÓ
+        if (other.CompareTag("Flammable")) // ê°€ì—°ì„± ì˜¤ë¸Œì íŠ¸(ex.woodBlock)
         {
             Destroy(other.gameObject);
         }
-        else if(other.CompareTag("Torch"))  // È¶ºÒ¿¡ ºÒ ºÙÀÌ±â
+        else if (other.CompareTag("Ice"))  // ì–¼ìŒì„ ë…¹ì„
         {
-            other.GetComponent<Torch>().Ignite();
+            Destroy(other.gameObject);
         }
-
     }
-
 }
