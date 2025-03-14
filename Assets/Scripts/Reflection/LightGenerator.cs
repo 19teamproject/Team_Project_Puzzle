@@ -88,8 +88,18 @@ public class LightGenerator : MonoBehaviour
                         beamColor = mirror.MixColor(beamColor);
                     }
 
-                    direction = mirror.Reflect(direction, hit.normal);
-                    startPosition = hit.point;
+                    Vector3 newDirection;
+
+                    // Reflect가 true 반환하면 반사, false면 x
+                    if (mirror.Reflect(direction, hit.normal, out newDirection))
+                    {
+                        direction = newDirection;
+                        startPosition = hit.point;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
                 else
                 {
@@ -124,6 +134,13 @@ public class LightGenerator : MonoBehaviour
 
         // 위치 설정
         beam.transform.position = (start + end) / 2;
+
+        Vector3 direction = end - start;
+        if (direction == Vector3.zero)
+        {
+            Debug.LogWarning("빛의 시작점과 끝점이 같아서 LookRotation 오류 방지");
+            direction = Vector3.forward;
+        }
 
         // 빛의 방향 설정
         Quaternion rotation = Quaternion.LookRotation(end - start);

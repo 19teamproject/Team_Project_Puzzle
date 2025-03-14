@@ -80,22 +80,23 @@ public class MirrorCameraScript : MonoBehaviour
 
     private void UpdateCameraProperties(Camera src, Camera dest)
     {
-        dest.clearFlags = src.clearFlags;
-        dest.backgroundColor = src.backgroundColor;
-        if (src.clearFlags == CameraClearFlags.Skybox)
-        {
-            Skybox sky = src.GetComponent<Skybox>();
-            Skybox mysky = dest.GetComponent<Skybox>();
-            if (!sky || !sky.material)
-            {
-                mysky.enabled = false;
-            }
-            else
-            {
-                mysky.enabled = true;
-                mysky.material = sky.material;
-            }
-        }
+        dest.clearFlags = CameraClearFlags.SolidColor;
+        dest.backgroundColor = Color.black;
+        //dest.backgroundColor = src.backgroundColor;
+        //if (src.clearFlags == CameraClearFlags.Skybox)
+        //{
+        //    Skybox sky = src.GetComponent<Skybox>();
+        //    Skybox mysky = dest.GetComponent<Skybox>();
+        //    if (!sky || !sky.material)
+        //    {
+        //        mysky.enabled = false;
+        //    }
+        //    else
+        //    {
+        //        mysky.enabled = true;
+        //        mysky.material = sky.material;
+        //    }
+        //}
 
         dest.orthographic = src.orthographic;
         dest.orthographicSize = src.orthographicSize;
@@ -158,7 +159,7 @@ public class MirrorCameraScript : MonoBehaviour
                 float oldclip = cameraObject.farClipPlane;
                 Vector3 newpos = reflectionMatrix.MultiplyPoint(oldpos);
 
-				Matrix4x4 worldToCameraMatrix = cameraLookingAtThisMirror.worldToCameraMatrix;
+                Matrix4x4 worldToCameraMatrix = cameraLookingAtThisMirror.worldToCameraMatrix;
 
 				if (VRMode)
                 {

@@ -33,9 +33,20 @@ public class Mirror : MonoBehaviour
     }
 
     // 반사각 계산
-    public Vector3 Reflect(Vector3 incomingDirection, Vector3 normal)
+    public bool Reflect(Vector3 incomingDirection, Vector3 normal, out Vector3 reflectedDirection)
     {
-        return Vector3.Reflect(incomingDirection, normal);
+        Vector3 mirrorForward = -transform.forward;
+
+        // 뒤로 빛이 들어왔으면 반사 x
+        if (Vector3.Dot(incomingDirection, mirrorForward) > 0)
+        {
+            reflectedDirection = Vector3.zero;
+            return false;
+        }
+
+        // 반사각 계산
+        reflectedDirection = Vector3.Reflect(incomingDirection, normal);
+        return true;
     }
 
     // 거울 색상 반환
