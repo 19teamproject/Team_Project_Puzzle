@@ -15,6 +15,6 @@ MonoBehaviour:
   displayName: "\uB178\uB780 \uD050\uBE0C"
   description: "[E]\uD0A4\uB97C \uB20C\uB7EC \uB2E4\uB978 \uB178\uB780 \uD050\uBE0C\uB85C
     \uC774\uB3D9\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
-  type: 1
+  type: 2
   scaleDir: 0
   jumpForce: {x: 0, y: 0, z: 0}
