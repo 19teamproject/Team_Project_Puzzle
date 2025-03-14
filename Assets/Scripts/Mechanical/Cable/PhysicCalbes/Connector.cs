@@ -4,9 +4,11 @@ using NaughtyAttributes;
 
 namespace HPhysic
 {
+    // Rigidbody 없으면 자동 추가
     [RequireComponent(typeof(Rigidbody))]
     public class Connector : MonoBehaviour
     {
+        // 플러그인지 콘센트인지 구분
         public enum ConType { Plug, Outlet }
         public enum CableColor { White, Red, Green, Yellow, Blue, Cyan, Magenta }
 
@@ -14,6 +16,7 @@ namespace HPhysic
 
         [field: SerializeField] public ConType ConnectionType { get; private set; } = ConType.Plug;
         [field: SerializeField, OnValueChanged(nameof(UpdateConnectorColor))] public CableColor ConnectionColor { get; private set; } = CableColor.White;
+        // OnValueChanged : 인스펙터에서 값 변경될때 특정 메서드 자동 실행
 
         [SerializeField] private bool makeConnectionKinematic = false;
         private bool _wasConnectionKinematic;
@@ -21,9 +24,11 @@ namespace HPhysic
         [SerializeField] private bool hideInteractableWhenIsConnected = false;
         [SerializeField] private bool allowConnectDifrentCollor = false;
 
+        // 연결할 오브젝트의 Connector
         [field: SerializeField] public Connector ConnectedTo { get; private set; }
 
-
+        
+        // 세팅해야할 오브젝트
         [Header("Object to set")]
         [SerializeField, Required] private Transform connectionPoint;
         [SerializeField] private MeshRenderer collorRenderer;
@@ -52,8 +57,10 @@ namespace HPhysic
         {
             UpdateConnectorColor();
 
+            // 이미 연결되어 있다면
             if (ConnectedTo != null)
             {
+                // 연결된 상태로 세팅
                 Connector t = ConnectedTo;
                 ConnectedTo = null;
                 Connect(t);
@@ -62,23 +69,29 @@ namespace HPhysic
 
         private void OnDisable() => Disconnect();
 
+        // 연결되어 있는 곳에 연결한다
         public void SetAsConnectedTo(Connector secondConnector)
         {
             ConnectedTo = secondConnector;
             _wasConnectionKinematic = secondConnector.Rigidbody.isKinematic;
             UpdateInteractableWhenIsConnected();
         }
+
+        // 연결하기
         public void Connect(Connector secondConnector)
         {
+            // 연결하려는 오브젝트가 없다면 돌아가기
             if (secondConnector == null)
             {
                 Debug.LogWarning("Attempt to connect null");
                 return;
             }
 
+            // 이미 연결되어 있다면 연결 해제
             if (IsConnected)
                 Disconnect(secondConnector);
 
+            // 연결할 오브젝트의 회전값을 
             secondConnector.transform.rotation = ConnectionRotation * secondConnector.RotationOffset;
             secondConnector.transform.position = ConnectionPosition - (secondConnector.ConnectionPosition - secondConnector.transform.position);
 
@@ -91,16 +104,18 @@ namespace HPhysic
                 secondConnector.Rigidbody.isKinematic = true;
             ConnectedTo = secondConnector;
 
-            // sparks on inncretc connection
+            // 잘못된 연결에서 발생하는 스파크
             if (incorrectSparksC == null && sparksParticle && IsConnected && !IsConnectedRight)
             {
                 incorrectSparksC = IncorrectSparks();
                 StartCoroutine(incorrectSparksC);
             }
 
-            // disable outline on select
+            // 윤곽선 비활성화
             UpdateInteractableWhenIsConnected();
         }
+        
+        // 연결 해제하기
         public void Disconnect(Connector onlyThis = null)
         {
             if (ConnectedTo == null || onlyThis != null && onlyThis != ConnectedTo)
@@ -108,26 +123,27 @@ namespace HPhysic
 
             Destroy(_fixedJoint);
 
-            // important to dont make recusrion
+            // 재귀를 사용하지 않는 것이 중요하다
             Connector toDisconect = ConnectedTo;
             ConnectedTo = null;
             if (makeConnectionKinematic)
                 toDisconect.Rigidbody.isKinematic = _wasConnectionKinematic;
             toDisconect.Disconnect(this);
 
-            // sparks on inncretc connection
+            // 잘못된 연결에서 발생하는 스파크
             if (sparksParticle)
             {
                 sparksParticle.Stop();
                 sparksParticle.Clear();
             }
 
-            // enable outline on select
+            // 윤곽선 활성화
             UpdateInteractableWhenIsConnected();
         }
 
         private void UpdateInteractableWhenIsConnected()
         {
+            // 연결된 경우 윤곽선 제거
             if (hideInteractableWhenIsConnected)
             {
                 if (TryGetComponent(out Collider collider))
@@ -135,7 +151,7 @@ namespace HPhysic
             }
         }
 
-
+        // 스파크 반복적으로 재생
         private IEnumerator incorrectSparksC;
         private IEnumerator IncorrectSparks()
         {
@@ -148,18 +164,21 @@ namespace HPhysic
             incorrectSparksC = null;
         }
 
+        // Connector 색상 설정
         private void UpdateConnectorColor()
         {
             if (collorRenderer == null)
                 return;
 
             Color color = MaterialColor(ConnectionColor);
+            // Renderer 에 적용된 Material 의 속성 개별적으로 변경
             MaterialPropertyBlock probs = new();
             collorRenderer.GetPropertyBlock(probs);
             probs.SetColor("_Color", color);
             collorRenderer.SetPropertyBlock(probs);
         }
 
+        // 종류에 맞게 색상 반환
         private Color MaterialColor(CableColor cableColor) => cableColor switch
         {
             CableColor.White => Color.white,
@@ -172,7 +191,7 @@ namespace HPhysic
             _ => Color.clear
         };
 
-
+        // 연결할 수 있는지 확인
         public bool CanConnect(Connector secondConnector) =>
             this != secondConnector
             && !this.IsConnected && !secondConnector.IsConnected
