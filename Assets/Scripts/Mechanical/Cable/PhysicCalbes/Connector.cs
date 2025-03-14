@@ -10,6 +10,7 @@ namespace HPhysic
     public class Connector : MonoBehaviour
     {
         // 플러그인지 콘센트인지 구분
+        public enum ObjType { Charger, Trigger }
         public enum ConType { Plug, Outlet }
         public enum CableColor { White, Red, Green, Yellow, Blue, Cyan, Magenta }
 
@@ -35,10 +36,9 @@ namespace HPhysic
         [SerializeField] private MeshRenderer collorRenderer;
         [SerializeField] private ParticleSystem sparksParticle;
         [SerializeField] private Outline outline;
-        [SerializeField] private bool isCharger = false;        // 충전기인지
-        [SerializeField] private float energy = 0f;             // 현재 에너지
-        [SerializeField] private float maxEnergy = 1f;          // 최대 에너지
-        [SerializeField] private bool isCharging = false;       // 충전 중인지
+        public ObjType objType;
+        public Transform triggerObj;
+
 
         private FixedJoint _fixedJoint;
         public Rigidbody rb { get; private set; }
