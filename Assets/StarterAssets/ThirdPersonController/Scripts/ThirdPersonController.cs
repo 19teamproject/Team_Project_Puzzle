@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 namespace StarterAssets
 {
@@ -76,6 +78,9 @@ namespace StarterAssets
         private bool IsCurrentDeviceMouse => playerInput.currentControlScheme == "KeyboardMouse";
         
         public PlayerInput PlayerInput => playerInput;
+
+        // 포트 연결할 때 실행
+        //public static Action OnPlayerEnterPortal;
 
         private void Awake()
         {
