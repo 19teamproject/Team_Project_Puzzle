@@ -3718,6 +3718,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Box_Scale
       objectReference: {fileID: 0}
+    - target: {fileID: 8348868775962471696, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
+      propertyPath: xScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8348868775962471696, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
+      propertyPath: yScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8348868775962471696, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
+      propertyPath: zScale
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
