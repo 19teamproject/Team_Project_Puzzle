@@ -7,6 +7,7 @@ using NaughtyAttributes;
 using System;
 using HPlayer;
 using StarterAssets;
+using HPhysic;
 
 public class Interaction : MonoBehaviour, IObjectHolder
 {
@@ -16,6 +17,7 @@ public class Interaction : MonoBehaviour, IObjectHolder
     [SerializeField] private float selectRange = 10f;
     [SerializeField] private LayerMask selectLayer;
     [field: SerializeField, ReadOnly] public Interactable SelectedObject { get; private set; } = null;
+    [field: SerializeField, ReadOnly] public Connector connector { get; private set; } = null;
 
     // 들고 있는 오브젝트
     [Header("Hold")]
@@ -161,14 +163,19 @@ public class Interaction : MonoBehaviour, IObjectHolder
         if (SelectedObject)
         {
             SelectedObject.Deselect();
+            connector.SetOutline(false);
             OnDeselect?.Invoke();
         }
 
         SelectedObject = foundInteractable;
+        if (SelectedObject)
+            connector = SelectedObject.GetComponent<Connector>();
 
-        if (foundInteractable && foundInteractable.enabled)
+
+        if (foundInteractable && foundInteractable.enabled && foundInteractable != HeldObject)
         {
             foundInteractable.Select();
+            connector.SetOutline(true);
             OnSelect?.Invoke();
         }
     }
@@ -205,6 +212,7 @@ public class Interaction : MonoBehaviour, IObjectHolder
             return;
         }
 
+        connector.SetOutline(false);
         HeldObject = obj;
         obj.PickUp(this, heldObjectLayer);
     }

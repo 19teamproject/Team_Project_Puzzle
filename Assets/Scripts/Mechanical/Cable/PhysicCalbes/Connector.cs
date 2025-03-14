@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using NaughtyAttributes;
+using cakeslice;
 
 namespace HPhysic
 {
@@ -33,6 +34,7 @@ namespace HPhysic
         [SerializeField, Required] private Transform connectionPoint;
         [SerializeField] private MeshRenderer collorRenderer;
         [SerializeField] private ParticleSystem sparksParticle;
+        [SerializeField] private Outline outline;
 
 
         private FixedJoint _fixedJoint;
@@ -91,7 +93,7 @@ namespace HPhysic
             if (IsConnected)
                 Disconnect(secondConnector);
 
-            // 연결할 오브젝트의 회전값을 
+            // 연결할 오브젝트의 회전값을 설정
             secondConnector.transform.rotation = ConnectionRotation * secondConnector.RotationOffset;
             secondConnector.transform.position = ConnectionPosition - (secondConnector.ConnectionPosition - secondConnector.transform.position);
 
@@ -111,7 +113,6 @@ namespace HPhysic
                 StartCoroutine(incorrectSparksC);
             }
 
-            // 윤곽선 비활성화
             UpdateInteractableWhenIsConnected();
         }
         
@@ -137,13 +138,11 @@ namespace HPhysic
                 sparksParticle.Clear();
             }
 
-            // 윤곽선 활성화
             UpdateInteractableWhenIsConnected();
         }
 
         private void UpdateInteractableWhenIsConnected()
         {
-            // 연결된 경우 윤곽선 제거
             if (hideInteractableWhenIsConnected)
             {
                 if (TryGetComponent(out Collider collider))
@@ -197,5 +196,13 @@ namespace HPhysic
             && !this.IsConnected && !secondConnector.IsConnected
             && this.ConnectionType != secondConnector.ConnectionType
             && (this.allowConnectDifrentCollor || secondConnector.allowConnectDifrentCollor || this.ConnectionColor == secondConnector.ConnectionColor);
+
+        public void SetOutline(bool show)
+        {
+            if (outline != null)
+            {
+                outline.color = show ? 0 : 1;
+            }
+        }
     }
 }
