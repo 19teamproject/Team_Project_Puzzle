@@ -5,34 +5,10 @@ using UnityEngine.InputSystem;
 
 public class RotateObject : MonoBehaviour
 {
-    // 임시로 사용할 오브젝트 회전, 나중에 변경 할 수도 있음
+    public float rotationSpeed = 100f;
 
-    private Vector3 lastMousePosition;
-    private bool isDragging = false;
-    public float rotationSpeed = 0.5f;
-
-    void OnMouseDown()
+    public void Rotate(float direction)
     {
-        isDragging = true;
-        lastMousePosition = Input.mousePosition;
-    }
-
-    void OnMouseUp()
-    {
-        isDragging = false;
-    }
-
-    void Update()
-    {
-        if (isDragging)
-        {
-            Vector3 currentMousePosition = Input.mousePosition;
-            Vector3 mouseDelta = currentMousePosition - lastMousePosition;
-
-            float rotationAmount = mouseDelta.x * rotationSpeed * Time.deltaTime;
-            transform.Rotate(Vector3.up, -rotationAmount, Space.World);
-
-            lastMousePosition = currentMousePosition;
-        }
+        transform.Rotate(Vector3.up, direction * rotationSpeed * Time.deltaTime, Space.World);
     }
 }

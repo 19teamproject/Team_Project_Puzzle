@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 7641270922348483867}
   - component: {fileID: 2590735688154144851}
   - component: {fileID: 8942300256663920289}
-  m_Layer: 0
+  - component: {fileID: 7089667404083012314}
+  m_Layer: 11
   m_Name: LightGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,13 +120,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec08c37368ff3d4b8d3c049e7c4fe28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: b10fd3d903b83764c9af1d0bb58f2efa, type: 2}
+  outline: {fileID: 7089667404083012314}
   lightBeamPrefab: {fileID: 2593520404676234993, guid: 33824e7a448f8c14cb0d9abd82eda860, type: 3}
   reflectableLayer:
     serializedVersion: 2
     m_Bits: 4096
   blockLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 2305
   maxDistance: 100
   contactTime: 2
   targetTag: TargetPoint
@@ -142,4 +145,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c0627ac45a8f124e9980fc5f2b7b9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 4
+  rotationSpeed: 30
+--- !u!114 &7089667404083012314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5369592249082999047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 1
+  eraseRenderer: 0
