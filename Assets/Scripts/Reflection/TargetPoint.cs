@@ -79,10 +79,13 @@ public class TargetPoint : EnvironmentObject
     // 목표 색상을 업데이트
     private void UpdateTargetColor()
     {
-        targetRenderer.GetPropertyBlock(propertyBlock);
-        propertyBlock.SetColor("_Color", targetColor);
-        propertyBlock.SetColor("_EmissionColor", targetColor);
-        targetRenderer.SetPropertyBlock(propertyBlock);
+        if (targetRenderer == null) return;
+
+        // 새로운 머티리얼을 생성하여 개별 적용
+        targetRenderer.material = new Material(targetRenderer.sharedMaterial);
+
+        targetRenderer.material.SetColor("_Color", targetColor);
+        targetRenderer.material.SetColor("_EmissionColor", targetColor);
     }
 
     // 목표지점 색상과 빛 색상 체크

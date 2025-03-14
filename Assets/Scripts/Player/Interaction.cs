@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using cakeslice;
 
 public class Interaction : MonoBehaviour
 {
@@ -52,9 +53,9 @@ public class Interaction : MonoBehaviour
                         curInteractGameObject.GetComponent<IInteractable>().SetOutline(false);
                     }
 
+
                     curInteractGameObject = hit.collider.gameObject;
                     curInteractable = hit.collider.GetComponent<IInteractable>();
-                    Debug.Log($"[확인] curInteractable 타입: {curInteractable.GetType().Name}");
                     curInteractable.SetOutline(true);
                     AnimatePromptText(true);
                     SetPromptText();

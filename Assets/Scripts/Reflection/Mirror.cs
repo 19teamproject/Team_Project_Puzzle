@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mirror : EnvironmentObject
+public class Mirror : MonoBehaviour
 {
     [SerializeField] private Color mirrorColor;     // 거울 색상
 
@@ -22,24 +22,14 @@ public class Mirror : EnvironmentObject
         UpdateMirrorColor();
     }
 
-    public override bool OnInteract()
-    {
-        HandleInteraction(CharacterManager.Instance.Player.gameObject);
-        return true;
-    }
-    public virtual void HandleInteraction(GameObject player)
-    {
-        Debug.Log($"{gameObject.name} 입니다.");
-    }
-
-    // 거울 색상 업데이트
+    //거울 색상 업데이트
     private void UpdateMirrorColor()
     {
-        if (mirrorRenderer == null || propertyBlock == null) return;
+        if (mirrorRenderer == null) return;
 
-        mirrorRenderer.GetPropertyBlock(propertyBlock);
-        propertyBlock.SetColor("_Color", mirrorColor);
-        mirrorRenderer.SetPropertyBlock(propertyBlock);
+        // 기존 머티리얼을 복사하여 새 머티리얼을 생성 (개별 오브젝트 적용)
+        mirrorRenderer.material = new Material(mirrorRenderer.sharedMaterial);
+        mirrorRenderer.material.SetColor("_Color", mirrorColor);
     }
 
     // 반사각 계산

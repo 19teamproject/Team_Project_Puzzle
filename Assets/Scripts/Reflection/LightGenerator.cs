@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
 
-public class LightGenerator : EnvironmentObject
+public class LightGenerator : MonoBehaviour
 {
     [Header("Light")]
     [SerializeField] private GameObject lightBeamPrefab; // Cylinder 프리팹
@@ -24,16 +24,6 @@ public class LightGenerator : EnvironmentObject
     {
         GenerateLight();
     }
-    public override bool OnInteract()
-    {
-        HandleInteraction(CharacterManager.Instance.Player.gameObject);
-        return true;
-    }
-    public virtual void HandleInteraction(GameObject player)
-    {
-        Debug.Log($"{gameObject.name} 입니다.");
-    }
-
 
     void GenerateLight()
     {

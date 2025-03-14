@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7951490172299886359}
   - component: {fileID: 146095683323737505}
   - component: {fileID: 6896749177013807408}
-  - component: {fileID: 142498775075272895}
   m_Layer: 11
   m_Name: TargetPoint
   m_TagString: TargetPoint
@@ -120,23 +119,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: d8f130a6250e59549adfee0b3f0b4366, type: 2}
-  outline: {fileID: 142498775075272895}
+  outline: {fileID: 0}
   targetColor: {r: 0.5019608, g: 0, b: 0.5019608, a: 1}
   objectToMove: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
   lerpTime: 50
   elapsedTime: 0
---- !u!114 &142498775075272895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7049389584026139109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color: 1
-  eraseRenderer: 0

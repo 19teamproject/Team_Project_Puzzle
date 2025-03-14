@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1034752203659113421}
   - component: {fileID: 812689769796591696}
   - component: {fileID: 6777867802198211533}
-  - component: {fileID: 1899462612559468244}
   m_Layer: 12
   m_Name: Mirror
   m_TagString: Untagged
@@ -122,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 64d951145908b14459081e805c36a5f4, type: 2}
-  outline: {fileID: 1899462612559468244}
+  outline: {fileID: 0}
   mirrorColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &6777867802198211533
 MonoBehaviour:
@@ -137,20 +136,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 30
---- !u!114 &1899462612559468244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3177347395143386347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color: 1
-  eraseRenderer: 0
 --- !u!1 &5614504688621162697
 GameObject:
   m_ObjectHideFlags: 0
