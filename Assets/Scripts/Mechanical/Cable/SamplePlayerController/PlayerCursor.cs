@@ -4,18 +4,20 @@ using HInteractions;
 
 namespace HPlayer
 {
-    [RequireComponent(typeof(PlayerInteractions))]
+    // PlayerInteractions 없으면 자동 추가
+    [RequireComponent(typeof(Interaction))]
     public class PlayerCursor : MonoBehaviour
     {
+        // 임시 에임
         [SerializeField] private GameObject cursorCanvas;
         [SerializeField, Min(0)] private float minShowDistance;
 
-        private PlayerInteractions playerInteractions;
+        private Interaction playerInteractions;
         private IEnumerator cursorUpdater;
 
         private void OnEnable()
         {
-            playerInteractions = GetComponent<PlayerInteractions>();
+            playerInteractions = GetComponent<Interaction>();
             if (playerInteractions == null)
                 return;
 
@@ -31,17 +33,21 @@ namespace HPlayer
             DesactiveCursor();
         }
 
+        // 커서 활성화
         private void ActiveCursor()
         {
             if (playerInteractions == null)
                 return;
 
+            // 바라보는 오브젝트가 Interactable 타입이고, 에임이 표시되어 있다면
             if (playerInteractions.SelectedObject is Interactable interactable && interactable.ShowPointerOnInterract)
             {
                 cursorUpdater = UpdateCursor();
                 StartCoroutine(cursorUpdater);
             }
         }
+
+        // 커서 비활성화
         private void DesactiveCursor()
         {
             cursorCanvas?.SetActive(false);
@@ -53,7 +59,7 @@ namespace HPlayer
             }
         }
 
-
+        // 0.2초마다 커서 업데이트
         private IEnumerator UpdateCursor()
         {
             if (cursorCanvas == null)
