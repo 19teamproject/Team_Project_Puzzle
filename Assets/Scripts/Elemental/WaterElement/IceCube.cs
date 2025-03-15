@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IceCube : Cube
+public class IceCube : MonoBehaviour
 {
     private Renderer iceRenderer; // 투명도 조절할 Renderer
     public Rigidbody rigid;
@@ -43,7 +43,8 @@ public class IceCube : Cube
 
     private IEnumerator MeltIce()
     {
-        rigid.isKinematic = true;  // 오브젝트가 마구 움직이지 않게 고정
+        if (rigid != null) rigid.isKinematic = true;  // 오브젝트가 마구 움직이지 않게 고정
+        
         isMelting = true;
 
         while (elapsedTime < meltingDuration && isMelting)  // duration 동안 실행
