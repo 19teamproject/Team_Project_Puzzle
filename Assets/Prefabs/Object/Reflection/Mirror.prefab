@@ -286,6 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mirrorColor: {r: 1, g: 0, b: 0, a: 0}
+  reflector: {fileID: 4956406166590971583}
 --- !u!114 &5988201489534602009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,3 +302,4 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 64d951145908b14459081e805c36a5f4, type: 2}
   outline: {fileID: 2885322906350645943}
   rotationSpeed: 30
+  lightGenerator: {fileID: 0}

@@ -146,6 +146,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: b10fd3d903b83764c9af1d0bb58f2efa, type: 2}
   outline: {fileID: 7089667404083012314}
   rotationSpeed: 30
+  lightGenerator: {fileID: 5369592249082999047}
 --- !u!114 &7089667404083012314
 MonoBehaviour:
   m_ObjectHideFlags: 0

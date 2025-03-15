@@ -5,9 +5,11 @@ using UnityEngine;
 public class Mirror : MonoBehaviour
 {
     [SerializeField] private Color mirrorColor;     // 거울 색상
+    [SerializeField] private GameObject reflector;
 
     private Renderer mirrorRenderer;
     private MaterialPropertyBlock propertyBlock;
+    private Coroutine disableCoroutine;
 
     private void Awake()
     {
@@ -20,6 +22,52 @@ public class Mirror : MonoBehaviour
 
         propertyBlock = new MaterialPropertyBlock();
         UpdateMirrorColor();
+    }
+
+    public void SetReflectorActive(bool state)
+    {
+        if (reflector == null)
+        {
+            Debug.LogWarning($"{gameObject.name}의 Reflector가 설정되지 않았습니다!");
+            return;
+        }
+
+        // 현재 상태와 동일하면 중복 호출 방지
+        if (reflector.activeSelf == state)
+        {
+            return;
+        }
+
+        Debug.Log($"{gameObject.name} Reflector 활성화: {state}");
+
+        reflector.SetActive(state);
+        Debug.Log($"Reflector 현재 상태: {reflector.activeSelf}");
+
+        if (state)
+        {
+            if (disableCoroutine != null)
+            {
+                StopCoroutine(disableCoroutine);
+                disableCoroutine = null;
+            }
+        }
+        else
+        {
+            if (disableCoroutine == null)
+            {
+                disableCoroutine = StartCoroutine(DisableReflectorAfterDelay());
+            }
+        }
+    }
+
+    public void Clear()
+    {
+        SetReflectorActive(false);
+    }
+
+    public bool IsReflectorActive()
+    {
+        return reflector != null && reflector.activeSelf;
     }
 
     //거울 색상 업데이트
@@ -65,5 +113,12 @@ public class Mirror : MonoBehaviour
         );
 
         return mix;
+    }
+
+    private IEnumerator DisableReflectorAfterDelay()
+    {
+        yield return new WaitForSeconds(1.0f); // 0.2초 유지 후 꺼짐
+        reflector.SetActive(false);
+        disableCoroutine = null;
     }
 }

@@ -15,14 +15,19 @@ public class LightGenerator : MonoBehaviour
     [SerializeField] private Color startLightColor;
 
     private List<GameObject> lightBeams = new List<GameObject>();
+    private List<Mirror> activeMirrors = new List<Mirror>();
     
     private float contactStartTime = 0f;
     private bool isContactingTarget = false;
     private bool isClear = false;
+    private bool isGeneratingLight = false;
 
     void Update()
     {
-        GenerateLight();
+        if (isGeneratingLight)
+        {
+            GenerateLight();
+        }
     }
 
     void GenerateLight()
@@ -33,6 +38,8 @@ public class LightGenerator : MonoBehaviour
             Destroy(beam);
         }
         lightBeams.Clear();
+
+        List<Mirror> stillActiveMirrors = new List<Mirror>(); // 반사되는 거울 목록
 
         Vector3 direction = transform.forward;
         Vector3 startPosition = transform.position;
@@ -47,7 +54,7 @@ public class LightGenerator : MonoBehaviour
             RaycastHit hit;
 
             // 지정한 레이어와 hit 되었을때
-            if (Physics.Raycast(startPosition, direction, out hit, maxDistance - currentLightDistance, reflectableLayer | blockLayer))
+            if (!isClear && Physics.Raycast(startPosition, direction, out hit, maxDistance - currentLightDistance, reflectableLayer | blockLayer))
             {
                 float segmentLength = Vector3.Distance(startPosition, hit.point);
                 CreateLightBeam(startPosition, hit.point, beamColor);
@@ -76,6 +83,21 @@ public class LightGenerator : MonoBehaviour
                 Mirror mirror = hit.collider.GetComponent<Mirror>();
                 if (mirror != null)
                 {
+                    if (!mirror.IsReflectorActive())
+                    {
+                        mirror.SetReflectorActive(true);
+                    }
+
+                    if (!activeMirrors.Contains(mirror))
+                    {
+                        activeMirrors.Add(mirror);
+                    }
+
+                    if (!stillActiveMirrors.Contains(mirror))  // 현재 프레임에서 반사된 거울 추가!
+                    {
+                        stillActiveMirrors.Add(mirror);
+                    }
+
                     // 첫 반사에는 믹스가 안되게 함
                     if (beamColor == startLightColor)
                     {
@@ -122,6 +144,15 @@ public class LightGenerator : MonoBehaviour
             contactStartTime = 0f;
             isContactingTarget = false;
         }
+
+        for (int i = activeMirrors.Count - 1; i >= 0; i--)
+        {
+            if (!stillActiveMirrors.Contains(activeMirrors[i]))
+            {
+                activeMirrors[i].SetReflectorActive(false);
+                activeMirrors.RemoveAt(i); // 리스트에서 제거
+            }
+        }
     }
 
     // 빛 기둥 생성
@@ -162,7 +193,7 @@ public class LightGenerator : MonoBehaviour
         }
     }
 
-    void ClearLightBeams()
+    void ClearObjects()
     {
         foreach (GameObject beam in lightBeams)
         {
@@ -172,6 +203,12 @@ public class LightGenerator : MonoBehaviour
             }
         }
         lightBeams.Clear();
+
+        foreach (Mirror mirror in activeMirrors)
+        {
+            mirror.Clear();
+        }
+        activeMirrors.Clear();
     }
 
     IEnumerator FadeOutAndDestroy(GameObject beam)
@@ -210,6 +247,16 @@ public class LightGenerator : MonoBehaviour
         Destroy(beam); // 완전히 사라진 후 오브젝트 삭제
     }
 
+    public void ToggleLightGeneration(bool state)
+    {
+        isGeneratingLight = state;
+
+        if (!state)
+        {
+            ClearObjects(); // 빛 끄기
+        }
+    }
+
     // 목표 지점 hit 되었을때
     void OnLightHitTarget(RaycastHit hit, Color beamColor)
     {
@@ -221,7 +268,7 @@ public class LightGenerator : MonoBehaviour
 
             if (isClear) 
             {
-                ClearLightBeams();
+                ClearObjects();
             }
         }
     }
