@@ -242,9 +242,9 @@ public class Interaction : MonoBehaviour, IObjectHolder
         promptTextPlus.text = curInteractable.GetInteractPrompt();
     }
 
-    public void OnInteract(InputValue value)
+    public void OnInteractInput(InputAction.CallbackContext context)
     {
-        if (value.isPressed && curInteractable != null)
+        if (context.phase == InputActionPhase.Performed && curInteractable != null)
         {
             if (curCube != null) Debug.Log($"{curCube}");
             if (!curInteractable.OnInteract()) return;
