@@ -71,7 +71,7 @@ public class CubeBoneScaler : MonoBehaviour
                 currentScale.x = Mathf.Clamp(currentScale.x, 1f, maxScale);
                 
                 foreach (Transform t in xBones)
-                    t.DOMoveX(currentScale.x - offset, speed);
+                    t.DOLocalMoveX(currentScale.x - offset, speed);
 
                 DOTween.To(() => boxCollider.center, x => boxCollider.center = x, new Vector3(currentScale.x / 2f, boxCollider.center.y, boxCollider.center.z), speed);
                 DOTween.To(() => boxCollider.size, x => boxCollider.size = x, new Vector3(currentScale.x, boxCollider.size.y, boxCollider.size.z), speed);
@@ -83,7 +83,7 @@ public class CubeBoneScaler : MonoBehaviour
                 currentScale.y = Mathf.Clamp(currentScale.y, 1f, maxScale);
 
                 foreach (Transform t in yBones)
-                    t.DOMoveY(currentScale.y - offset, speed);
+                    t.DOLocalMoveY(currentScale.y - offset, speed);
 
                 DOTween.To(() => boxCollider.center, x => boxCollider.center = x, new Vector3(boxCollider.center.x, currentScale.y / 2f, boxCollider.center.z), speed);
                 DOTween.To(() => boxCollider.size, x => boxCollider.size = x, new Vector3(boxCollider.size.x, currentScale.y, boxCollider.size.z), speed);
@@ -95,7 +95,7 @@ public class CubeBoneScaler : MonoBehaviour
                 currentScale.z = Mathf.Clamp(currentScale.z, 1f, maxScale);
 
                 foreach (Transform t in zBones)
-                    t.DOMoveZ(currentScale.z - offset, speed);
+                    t.DOLocalMoveZ(currentScale.z - offset, speed);
 
                 DOTween.To(() => boxCollider.center, x => boxCollider.center = x, new Vector3(boxCollider.center.x, boxCollider.center.y, currentScale.y / 2f), speed);
                 DOTween.To(() => boxCollider.size, x => boxCollider.center = x, new Vector3(boxCollider.size.x, boxCollider.size.y, currentScale.y), speed);
