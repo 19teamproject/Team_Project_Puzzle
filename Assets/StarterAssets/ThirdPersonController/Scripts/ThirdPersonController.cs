@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using Cinemachine;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -36,7 +39,9 @@ namespace StarterAssets
         [SerializeField] private LayerMask groundLayers;
 
         [Header("Cinemachine")]
+        [SerializeField] private List<CinemachineVirtualCamera> vCams;
         [SerializeField] private GameObject cinemachineCameraTarget;
+        [SerializeField] private GameObject hat;
         [SerializeField] private float topClamp = 70.0f;
         [SerializeField] private float bottomClamp = -30.0f;
         [SerializeField] private float cameraAngleOverride = 0.0f;
@@ -65,11 +70,16 @@ namespace StarterAssets
         private int animIDFreeFall;
         private int animIDMotionSpeed;
 
+        private int camIndex = 0;
+
         private PlayerInput playerInput;
+        private Interaction interaction;
         private Animator animator;
+        private Tween delayedCall;
         private CharacterController controller;
         private StarterAssetsInputs input;
         private GameObject mainCamera;
+        private CinemachineBrain mainCam;
 
         private const float Threshold = 0.01f;
 
@@ -84,11 +94,12 @@ namespace StarterAssets
 
         private void Awake()
         {
-            // get a reference to our main camera
             if (mainCamera == null)
             {
-                mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+                mainCamera = Camera.main.gameObject;
             }
+
+            mainCam = mainCamera.GetComponent<CinemachineBrain>();
         }
 
         private void Start()
@@ -99,6 +110,7 @@ namespace StarterAssets
             controller = GetComponent<CharacterController>();
             input = GetComponent<StarterAssetsInputs>();
             playerInput = GetComponent<PlayerInput>();
+            interaction = GetComponent<Interaction>();
 
             AssignAnimationIDs();
 
@@ -361,9 +373,31 @@ namespace StarterAssets
                 animator.SetBool(animIDJump, true);
             }
         }
-        private void HandleInteraction()
+
+        public void OnToggleViewInput(InputAction.CallbackContext context)
         {
-            
+            if (context.phase == InputActionPhase.Performed && vCams.Count > 0 && !mainCam.IsBlending)
+            {
+                vCams[camIndex].Priority = 0;
+
+                camIndex = (camIndex + 1) % vCams.Count;
+
+                vCams[camIndex].Priority = 10;
+
+                Cinemachine3rdPersonFollow cinemachine3rdPersonFollow = vCams[camIndex].GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+
+                if (cinemachine3rdPersonFollow != null)
+                {
+                    delayedCall.Kill();
+                    hat.SetActive(true);
+                    interaction.CheckDistanceBonus = cinemachine3rdPersonFollow.CameraDistance;
+                }
+                else
+                {
+                    delayedCall = DOVirtual.DelayedCall(mainCam.m_DefaultBlend.BlendTime, () => hat.SetActive(false));
+                    interaction.CheckDistanceBonus = 0f;
+                }
+            }
         }
     }
 }
