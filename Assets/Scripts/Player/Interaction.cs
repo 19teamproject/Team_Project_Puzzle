@@ -131,7 +131,7 @@ public class Interaction : MonoBehaviour, IObjectHolder
     private void UpdateInput()
     {
         // 마우스 좌클릭하면 상호작용 시작
-        bool interacting = Input.GetKeyDown(KeyCode.E);
+        bool interacting = Input.GetMouseButton(0);
         if (interacting != Interacting)
         {
             Interacting = interacting;
