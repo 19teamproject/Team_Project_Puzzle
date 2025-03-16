@@ -3,24 +3,26 @@ using UnityEngine;
 
 namespace HPhysic
 {
-    public class DoorSystem : MechanicSystem
+    public class DoorSystem : MonoBehaviour, IMechanicHolder
     {
-        public MechanicSystem mechanicSystem { get; }
-
         [SerializeField] private PhysicCable redCable;      // 케이블일 경우
         [SerializeField] private PhysicCable blueCable;
+        [SerializeField] protected Vector3 targetPos;       // 목표 위치
+        [SerializeField] protected float duration;          // 이동 시간
+        protected Vector3 startPos;
+        protected bool isActive = false;
 
-        protected override void Awake()
+        protected virtual void Awake()
         {
-            base.Awake();
+            startPos = transform.position;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            CableSystem();
+            MechanicSystem();
         }
 
-        private void CableSystem()
+        public void MechanicSystem()
         {
             if (redCable != null && blueCable != null)
             {

@@ -2,6 +2,6 @@ namespace HPhysic
 {
     public interface IMechanicHolder
     {
-        MechanicSystem mechanicSystem { get; }
+        public void MechanicSystem();
     }
 }
