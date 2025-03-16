@@ -106,10 +106,11 @@ MonoBehaviour:
   blockLayer:
     serializedVersion: 2
     m_Bits: 6144
+  startLightColor: {r: 1, g: 1, b: 0.5019608, a: 0}
   maxDistance: 100
   contactTime: 2
+  maxReflections: 0
   targetTag: TargetPoint
-  startLightColor: {r: 1, g: 1, b: 0.5019608, a: 0}
 --- !u!114 &2347719898528056134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,8 +125,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: b10fd3d903b83764c9af1d0bb58f2efa, type: 2}
   outline: {fileID: 5248485876346281342}
-  rotationSpeed: 30
+  targetPoint: {fileID: 0}
   lightGenerator: {fileID: 1127046178879580942}
+  rotationSpeed: 30
+  isRotating: 0
 --- !u!114 &5248485876346281342
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -61,8 +61,8 @@ public class LightGenerator : MonoBehaviour
             {
                 if (hit.collider.gameObject == gameObject)
                 {
-                    Debug.Log(" 자기 자신을 감지함 → 무시");
-                    continue; // 다음 루프로 넘어감
+                    Debug.Log("자기 자신을 감지");
+                    continue;
                 }
 
                 float segmentLength = Vector3.Distance(startPosition, hit.point);
