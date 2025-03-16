@@ -7,17 +7,17 @@ namespace HPhysic
     {
         [SerializeField] private PhysicCable redCable;      // 케이블일 경우
         [SerializeField] private PhysicCable blueCable;
-        [SerializeField] protected Vector3 targetPos;       // 목표 위치
-        [SerializeField] protected float duration;          // 이동 시간
-        protected Vector3 startPos;
-        protected bool isActive = false;
+        [SerializeField] private Vector3 targetPos;       // 목표 위치
+        [SerializeField] private float duration;          // 이동 시간
+        private Vector3 startPos;
+        private bool isActive = false;
 
-        protected virtual void Awake()
+        private void Awake()
         {
             startPos = transform.position;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             MechanicSystem();
         }
