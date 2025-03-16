@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
-using System.Collections;
-using JetBrains.Annotations;
 
 namespace HPhysic
 {
@@ -28,10 +26,6 @@ namespace HPhysic
         [SerializeField, Required] private GameObject end;
         [SerializeField, Required] private GameObject connector0;
         [SerializeField, Required] private GameObject point0;
-
-        public float energy = 0f;
-        public float maxEnergy = 1f;
-        public bool isCharging = false;
 
 
         private List<Transform> points;
@@ -262,96 +256,8 @@ namespace HPhysic
                     timeToBrake = minBrakeTime;
                 }
             }
-
-            if ((startConnector.IsConnectedRight || endConnector.IsConnectedRight)
-                && energy < maxEnergy && !isCharging)
-            {
-                StartCharge();
-            }
         }
 
-        public void StartCharge()
-        {
-            if (startConnector.ConnectedTo == null)
-            {
-                // 충전기에 연결했을 때
-                if (endConnector.ConnectedTo.objType == Connector.ObjType.Charger)
-                {
-                    isCharging = true;
-                    StopCoroutine(ChargeEnergy());
-                    StartCoroutine(ChargeEnergy());
-                }
-                else if (endConnector.ConnectedTo.objType == Connector.ObjType.Trigger)
-                {
-                    isCharging = true;
-                    StopCoroutine(OpenGate());
-                    StartCoroutine(OpenGate());
-                }
-            }
-            else if (endConnector.ConnectedTo == null)
-            {
-                // 충전기에 연결했을 때
-                if (startConnector.ConnectedTo.objType == Connector.ObjType.Charger)
-                {
-                    isCharging = true;
-                    StopCoroutine(ChargeEnergy());
-                    StartCoroutine(ChargeEnergy());
-                }
-                else if (startConnector.ConnectedTo.objType == Connector.ObjType.Trigger)
-                {
-                    isCharging = true;
-                    StopCoroutine(OpenGate());
-                    StartCoroutine(OpenGate());
-                }
-            }
-        }
-
-        IEnumerator ChargeEnergy()
-        {
-            while (true)
-            {
-                if (energy >= maxEnergy)
-                {
-                    energy = maxEnergy;
-                    isCharging = false;
-                    yield break;
-                }
-
-                if (!startConnector.IsConnectedRight && !endConnector.IsConnectedRight)
-                {
-                    isCharging = false;
-                    yield break;
-                }
-
-                yield return new WaitForSeconds(1f);
-                energy += 0.1f;
-            }
-        }
-
-        IEnumerator OpenGate()
-        {
-            Transform obj = startConnector.ConnectedTo.triggerObj;
-            while (true)
-            {
-                if (energy <= 0)
-                {
-                    energy = 0;
-                    isCharging = false;
-                    yield break;
-                }
-
-                if (!startConnector.IsConnectedRight && !endConnector.IsConnectedRight)
-                {
-                    isCharging = false;
-                    yield break;
-                }
-
-                obj.transform.position += Vector3.right * -0.01f;
-                yield return new WaitForSeconds(0.1f);
-                energy -= 0.01f;
-            }
-            isCharging = false;
-        }
 
         private Vector3 CountConPos(Vector3 start, Vector3 end) => (start + end) / 2f;
         private Vector3 CountSizeOfCon(Vector3 start, Vector3 end) => new Vector3(size, size, (start - end).magnitude / 2f);
@@ -394,5 +300,6 @@ namespace HPhysic
         public Connector StartConnector => startConnector;
         public Connector EndConnector => endConnector;
         public IReadOnlyList<Transform> Points => points;
+        public bool IsAllConnectedRight => startConnector.IsConnectedRight && endConnector.IsConnectedRight;
     }
 }

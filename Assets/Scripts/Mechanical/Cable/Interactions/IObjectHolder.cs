@@ -1,6 +1,7 @@
-
-public interface IObjectHolder
+namespace HInteractions
 {
-    // 바라보고 있는 오브젝트
-    Interactable SelectedObject { get; }
+    public interface IObjectHolder
+    {
+        Interactable SelectedObject { get; }
+    }
 }
