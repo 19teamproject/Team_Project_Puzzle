@@ -47,9 +47,9 @@ ReflectionProbe:
   m_TimeSlicingMode: 2
   m_Resolution: 128
   m_UpdateFrequency: 0
-  m_BoxSize: {x: 0.1, y: 1, z: 1}
-  m_BoxOffset: {x: 0, y: 0, z: 0}
-  m_NearClip: 0.3
+  m_BoxSize: {x: 0.3, y: 2, z: 1}
+  m_BoxOffset: {x: 0.15, y: 0, z: 0}
+  m_NearClip: 0.2
   m_FarClip: 100
   m_ShadowDistance: 100
   m_ClearFlags: 1
@@ -60,7 +60,7 @@ ReflectionProbe:
   m_IntensityMultiplier: 1
   m_BlendDistance: 1
   m_HDR: 1
-  m_BoxProjection: 0
+  m_BoxProjection: 1
   m_RenderDynamicObjects: 0
   m_UseOcclusionCulling: 1
   m_Importance: 1
@@ -82,7 +82,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8917780491268209273
 Transform:
   m_ObjectHideFlags: 0
@@ -301,5 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 64d951145908b14459081e805c36a5f4, type: 2}
   outline: {fileID: 2885322906350645943}
-  rotationSpeed: 30
+  targetPoint: {fileID: 0}
   lightGenerator: {fileID: 0}
+  rotationSpeed: 30
+  isRotating: 0

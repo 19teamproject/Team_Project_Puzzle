@@ -6,11 +6,10 @@ using UnityEngine.InputSystem;
 
 public class RotateObject : EnvironmentObject
 {
-    public float rotationSpeed = 100f;
-
-    public GameObject lightGenerator; // LightGenerator 오브젝트
-
-    private bool isRotating = false; // E 키로 회전 활성화 여부
+    [SerializeField] private TargetPoint targetPoint;
+    [SerializeField] private GameObject lightGenerator; // LightGenerator 오브젝트
+    [SerializeField] private float rotationSpeed = 100f; 
+    [SerializeField] private bool isRotating = false; // E 키로 회전 활성화 여부
 
     public void Rotate(float direction)
     {
@@ -33,6 +32,11 @@ public class RotateObject : EnvironmentObject
         }
 
         return true;
+    }
+
+    public bool IsClear()
+    {
+        return targetPoint != null && targetPoint.isTargetClear();
     }
 
     public virtual void HandleInteraction(GameObject player)

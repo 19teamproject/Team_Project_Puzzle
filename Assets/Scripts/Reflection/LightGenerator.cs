@@ -9,16 +9,18 @@ public class LightGenerator : MonoBehaviour
     [SerializeField] private GameObject lightBeamPrefab; // Cylinder 프리팹
     [SerializeField] private LayerMask reflectableLayer;
     [SerializeField] private LayerMask blockLayer;
+    [SerializeField] private Color startLightColor;
     [SerializeField] private float maxDistance = 100f;
     [SerializeField] private float contactTime = 2f;
+    [SerializeField] private int maxReflections = 1;
     [SerializeField] private string targetTag = "TargetPoint";
-    [SerializeField] private Color startLightColor;
 
     private List<GameObject> lightBeams = new List<GameObject>();
     private List<Mirror> activeMirrors = new List<Mirror>();
     
     private float contactStartTime = 0f;
     private bool isContactingTarget = false;
+    private bool firstActivated = false;
     private bool isClear = false;
     private bool isGeneratingLight = false;
 
@@ -45,6 +47,7 @@ public class LightGenerator : MonoBehaviour
         Vector3 startPosition = transform.position + Vector3.up * 1.26f; ;
 
         float currentLightDistance = 0f;        // 현재 빛의 사거리
+        int currentReflections = 0;             // 현재 반사 횟수
         bool stillHittingTarget = false;        // 빛이 타겟을 컨택하고 있는 중인지 체크
 
         Color beamColor = startLightColor;        // 빛 색상 시작 색상으로 지정
@@ -65,6 +68,11 @@ public class LightGenerator : MonoBehaviour
                 float segmentLength = Vector3.Distance(startPosition, hit.point);
                 CreateLightBeam(startPosition, hit.point, beamColor);
                 currentLightDistance += segmentLength;
+
+                if (!firstActivated)
+                {
+                    firstActivated = true;
+                }
 
                 // 목표지점 태그 되었을때
                 if (hit.collider.CompareTag(targetTag))
@@ -119,7 +127,7 @@ public class LightGenerator : MonoBehaviour
                     Vector3 newDirection;
 
                     // Reflect가 true 반환하면 반사, false면 x
-                    if (mirror.Reflect(direction, hit.normal, out newDirection))
+                    if (mirror.Reflect(direction, hit.normal, out newDirection, ref currentReflections, maxReflections))
                     {
                         direction = newDirection;
                         startPosition = hit.point;
@@ -139,6 +147,12 @@ public class LightGenerator : MonoBehaviour
             {
                 // 최대 사거리까지 빛 기둥 생성
                 Vector3 endPosition = startPosition + direction * (maxDistance - currentLightDistance);
+
+                if (!firstActivated) // 첫 활성화만 허용
+                {
+                    firstActivated = true; // 첫 활성화 완료
+                }
+
                 CreateLightBeam(startPosition, endPosition, beamColor);
                 break;
             }
@@ -164,7 +178,16 @@ public class LightGenerator : MonoBehaviour
     // 빛 기둥 생성
     void CreateLightBeam(Vector3 start, Vector3 end, Color beamColor)
     {
-        if (isClear) return;
+        if (isClear)
+        {
+            firstActivated = false;  // 클리어 시 다시 활성화 가능하도록 리셋
+            return;
+        }
+
+        if (!firstActivated)
+        {
+            firstActivated = true; // 첫 활성화 설정
+        }
 
         GameObject beam = Instantiate(lightBeamPrefab);
         lightBeams.Add(beam);
@@ -255,6 +278,8 @@ public class LightGenerator : MonoBehaviour
 
     public void ToggleLightGeneration(bool state)
     {
+        if (firstActivated && !state) return;
+
         isGeneratingLight = state;
 
         if (!state)

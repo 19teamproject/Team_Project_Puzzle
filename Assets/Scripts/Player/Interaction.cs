@@ -54,6 +54,7 @@ public class Interaction : MonoBehaviour, IObjectHolder
     private bool isRotating = false;
     private float lastInputTime;
     private float rotationTimeout = 2f;
+    private bool firstActivated = false;
     public float CheckDistanceBonus { get; set; }
 
     private void Start()
@@ -274,6 +275,16 @@ public class Interaction : MonoBehaviour, IObjectHolder
 
         if (selectedRotatableObject != null)
         {
+            if (!firstActivated && !selectedRotatableObject.IsClear())
+            {
+                firstActivated = true;
+            }
+
+            if (selectedRotatableObject.IsClear())
+            {
+                firstActivated = false;
+            }          
+
             isRotating = !isRotating; // 토글 방식으로 설정 (켜기/끄기)
 
             if (isRotating)

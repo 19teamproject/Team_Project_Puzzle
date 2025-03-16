@@ -81,7 +81,7 @@ public class Mirror : MonoBehaviour
     }
 
     // 반사각 계산
-    public bool Reflect(Vector3 incomingDirection, Vector3 normal, out Vector3 reflectedDirection)
+    public bool Reflect(Vector3 incomingDirection, Vector3 normal, out Vector3 reflectedDirection, ref int currentReflections, int maxReflections)
     {
         Vector3 mirrorForward = -transform.forward;
 
@@ -92,8 +92,17 @@ public class Mirror : MonoBehaviour
             return false;
         }
 
+        // 최대 반사 횟수 초과 시 반사 X
+        if (currentReflections >= maxReflections)
+        {
+            reflectedDirection = Vector3.zero;
+            return false;
+        }
+
         // 반사각 계산
         reflectedDirection = Vector3.Reflect(incomingDirection, normal);
+        currentReflections++; // 반사 횟수 증가
+
         return true;
     }
 
