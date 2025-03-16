@@ -7,8 +7,7 @@ public class SwitchManager : MonoBehaviour
 {
     private Renderer switchRenderer;
     public GameObject[] blocks; // 사라질 블록들
-    public Color activeColor = Color.green; // 활성화된 스위치 색상
-    public Color defaultColor = Color.red; // 기본 스위치 색상
+    public Material secondMat;
 
     private void Awake()
     {
@@ -20,15 +19,17 @@ public class SwitchManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("무언가 스위치에 닿음: " + other.gameObject.name);
         if (other.CompareTag("Water"))  // 스위치가 물에 닿으면
         {
+            Debug.Log("물이 닿았음!");
             SwitchOn(); // 스위치 활성화
         }
     }
 
     void SwitchOn()
     {
-        switchRenderer.material.color = activeColor;  // 빨간색에서 초록색으로 바뀜
+        switchRenderer.material = secondMat;  // 빨간색에서 초록색으로 바뀜
 
         ActivateBlocks(); 
     }

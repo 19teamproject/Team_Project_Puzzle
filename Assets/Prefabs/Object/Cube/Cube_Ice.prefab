@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigid: {fileID: 0}
   minSize: 0.2
-  meltingDuration: 2.5
+  meltingDuration: 0.5
   waterPuddlePrefab: {fileID: 0}
 --- !u!114 &8659155070547378034
 MonoBehaviour:

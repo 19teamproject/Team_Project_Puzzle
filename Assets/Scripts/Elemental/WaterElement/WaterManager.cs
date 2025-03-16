@@ -36,11 +36,11 @@ public class WaterManager : MonoBehaviour
         
         if (meltingNum >= meltMinNum)  // MeltingNum이 MelitngMinNum 이상일 때면 물이 올라감
         {
-            if (waterObj.transform.position.y < 1.1f)  // 물이 1.5f에 도달하면 더 이상 상승하지 않음
+            if (waterObj.transform.position.y < 1.25f)  // 물이 1.5f에 도달하면 더 이상 상승하지 않음
             {
                 waterObj.SetActive(true);
                 Vector3 currentPos = waterObj.transform.position;
-                currentPos.y += 0.05f;  // 0.05f씩 물의 수위 증가
+                currentPos.y += 0.051f;  // 물의 수위 증가
 
                 waterObj.transform.position = currentPos;
             }
