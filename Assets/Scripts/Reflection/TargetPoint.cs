@@ -9,8 +9,8 @@ public class TargetPoint : EnvironmentObject
     [SerializeField] private Vector3 targetPosition;  // 목표 위치
     [SerializeField] private float lerpTime;    // 러프 시간
     [SerializeField] private float elapsedTime;     // 경과 시간
-
-    private bool isClear = false;
+    [SerializeField] private float fadeDuration;    // 색상 변경 지속 시간
+    [SerializeField] private bool isClear = false;
 
     private Renderer targetRenderer;
     private MaterialPropertyBlock propertyBlock;
@@ -67,7 +67,9 @@ public class TargetPoint : EnvironmentObject
             {
                 isClear = true;
                 Debug.Log("목표 색상과 일치! 퍼즐 성공!");
-                MoveObject();  
+                MoveObject();
+
+                StartCoroutine(ChangeToGrayAndDisable());
             }
             else
             {
@@ -114,5 +116,29 @@ public class TargetPoint : EnvironmentObject
             // 문이 바라보는 방향 기준 왼쪽으로 5m 이동
             targetPosition = objectToMove.position + leftDirection * 5f;
         }
+    }
+
+    IEnumerator ChangeToGrayAndDisable()
+    {
+        Material mat = targetRenderer.material;
+        Color startColor = mat.color;             // 원래 색상
+        Color targetColor = Color.gray;   // 어두운 회색
+        Color startEmission = mat.GetColor("_EmissionColor");  // 원래 에미션 색상
+        Color targetEmission = targetColor * 0.5f; // 어두운 회색 기반으로 에미션 감소
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeDuration)
+        {
+            float t = elapsedTime / fadeDuration;
+            mat.color = Color.Lerp(startColor, targetColor, t);
+            mat.SetColor("_EmissionColor", Color.Lerp(startEmission, targetEmission, t)); // 에미션도 점점 어두워짐
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        mat.color = targetColor;
+        mat.SetColor("_EmissionColor", targetEmission); // 최종적으로 어두운 회색으로 설정
     }
 }

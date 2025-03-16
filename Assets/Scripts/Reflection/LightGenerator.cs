@@ -42,7 +42,7 @@ public class LightGenerator : MonoBehaviour
         List<Mirror> stillActiveMirrors = new List<Mirror>(); // 반사되는 거울 목록
 
         Vector3 direction = transform.forward;
-        Vector3 startPosition = transform.position;
+        Vector3 startPosition = transform.position + Vector3.up * 1.26f; ;
 
         float currentLightDistance = 0f;        // 현재 빛의 사거리
         bool stillHittingTarget = false;        // 빛이 타겟을 컨택하고 있는 중인지 체크
@@ -56,6 +56,12 @@ public class LightGenerator : MonoBehaviour
             // 지정한 레이어와 hit 되었을때
             if (!isClear && Physics.Raycast(startPosition, direction, out hit, maxDistance - currentLightDistance, reflectableLayer | blockLayer))
             {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    Debug.Log(" 자기 자신을 감지함 → 무시");
+                    continue; // 다음 루프로 넘어감
+                }
+
                 float segmentLength = Vector3.Distance(startPosition, hit.point);
                 CreateLightBeam(startPosition, hit.point, beamColor);
                 currentLightDistance += segmentLength;
@@ -163,13 +169,13 @@ public class LightGenerator : MonoBehaviour
         GameObject beam = Instantiate(lightBeamPrefab);
         lightBeams.Add(beam);
 
+
         // 위치 설정
         beam.transform.position = (start + end) / 2;
 
         Vector3 direction = end - start;
         if (direction == Vector3.zero)
         {
-            Debug.LogWarning("빛의 시작점과 끝점이 같아서 LookRotation 오류 방지");
             direction = Vector3.forward;
         }
 
