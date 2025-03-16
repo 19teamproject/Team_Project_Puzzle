@@ -30,15 +30,15 @@ public class WoodCube : MonoBehaviour
     {
         if (rigid != null) rigid.isKinematic = true;  // 오브젝트가 마구 움직이지 않게 고정
 
-        isBurning = true;
-        GameObject[] flame = new GameObject[4];
-        for (int i = 0; i < 4; i++)
+        if(isBurning)
         {
-            Vector3 myPos = transform.position;
-            flame[i] = Instantiate(flameEffect,myPos,Quaternion.identity);
-            flame[i].transform.SetParent(transform); // 불꽃이 오브젝트 따라다니게 함
-            flame[i].transform.position = new Vector3(myPos.x + Random.Range(0f, 1f), myPos.y + Random.Range(0f, 1f), myPos.z + Random.Range(0f, 1f));
+            yield break;
         }
+
+        isBurning = true;
+        GameObject flame = Instantiate(flameEffect, transform.position, Quaternion.identity);
+        flame.transform.SetParent(transform);
+        flame.transform.position = transform.position;
 
         float elapsedTime = 0f;  // 경과 시간 초기화
 
@@ -51,8 +51,6 @@ public class WoodCube : MonoBehaviour
 
         targetRenderer.material.color = endColor;
         Instantiate(endEffect, transform.position, Quaternion.identity);
-        Destroy(transform.parent.gameObject);
+        Destroy(gameObject);
     }
-
-
 }

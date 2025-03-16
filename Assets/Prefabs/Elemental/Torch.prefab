@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4444844899782684580}
   - component: {fileID: 8634302959660100464}
   - component: {fileID: 6799048902375177044}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 5496719270627801228}
   - component: {fileID: 1862530608398632688}
   - component: {fileID: 7965398570731751049}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 6676548238640159414}
   - component: {fileID: 5189136213398950732}
   - component: {fileID: 8101670129728385823}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 6299909469249829177}
   - component: {fileID: 1559416021362948593}
   - component: {fileID: 4242197446344701017}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,6 +450,8 @@ GameObject:
   - component: {fileID: 7576872949865518377}
   - component: {fileID: 4338506543983885138}
   - component: {fileID: 4645911109607739213}
+  - component: {fileID: -2940276262199761556}
+  - component: {fileID: 4633062966288998049}
   m_Layer: 11
   m_Name: Torch
   m_TagString: Fire
@@ -509,6 +511,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: cdec031076ecbbf45a160feb1ac2ea86, type: 2}
   outline: {fileID: 4242197446344701017}
+--- !u!114 &-2940276262199761556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8629108606236483858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce75b032819097f4cbb8faa56b0d9b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &4633062966288998049
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8629108606236483858}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8903452332057657788
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,7 +553,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2417508406975123230}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -554,11 +589,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1519634131729303806, guid: 52519c84fd140e74e8b7f6f7d014bad7, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1519634131729303806, guid: 52519c84fd140e74e8b7f6f7d014bad7, type: 3}
+      propertyPath: m_TagString
+      value: Flammable
       objectReference: {fileID: 0}
     - target: {fileID: 3991999029511988384, guid: 52519c84fd140e74e8b7f6f7d014bad7, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991999029511988384, guid: 52519c84fd140e74e8b7f6f7d014bad7, type: 3}
+      propertyPath: m_TagString
+      value: Flammable
       objectReference: {fileID: 0}
     - target: {fileID: 4667960644342376739, guid: 52519c84fd140e74e8b7f6f7d014bad7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -602,15 +645,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5646178234901734203, guid: 52519c84fd140e74e8b7f6f7d014bad7, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5646178234901734203, guid: 52519c84fd140e74e8b7f6f7d014bad7, type: 3}
+      propertyPath: m_TagString
+      value: Flammable
       objectReference: {fileID: 0}
     - target: {fileID: 5728519112941861637, guid: 52519c84fd140e74e8b7f6f7d014bad7, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5728519112941861637, guid: 52519c84fd140e74e8b7f6f7d014bad7, type: 3}
+      propertyPath: m_TagString
+      value: Flammable
       objectReference: {fileID: 0}
     - target: {fileID: 6662299219794931110, guid: 52519c84fd140e74e8b7f6f7d014bad7, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8403567874040351975, guid: 52519c84fd140e74e8b7f6f7d014bad7, type: 3}
       propertyPath: m_Name
@@ -618,7 +669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8403567874040351975, guid: 52519c84fd140e74e8b7f6f7d014bad7, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

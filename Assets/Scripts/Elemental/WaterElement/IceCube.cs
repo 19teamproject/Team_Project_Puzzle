@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class IceCube : MonoBehaviour
@@ -10,13 +9,13 @@ public class IceCube : MonoBehaviour
 
     private bool isMelting = false;  // 얼음이 녹는 중인지 여부
 
-    public float minSize = 0.1f; // 최소 크기 제한
+    public float minSize = 0.2f; // 최소 크기 제한
     private Vector3 currentScale;
     private float elapsedTime = 0f; // 얼음이 불에 닿은 후 경과된 시간
     public float meltingDuration = 5f;  // 녹는 데 걸리는 총 시간
 
     public GameObject waterPuddlePrefab;  // 물 웅덩이 프리팹
-     
+
     public void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -33,18 +32,19 @@ public class IceCube : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Fire"))
-        {
-            isMelting = false;
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Fire"))
+    //    {
+    //        isMelting = false;
+    //    }
+    //}
 
     private IEnumerator MeltIce()
     {
-        if (rigid != null) rigid.isKinematic = true;  // 오브젝트가 마구 움직이지 않게 고정
         
+        if (rigid != null) rigid.isKinematic = true;  // 오브젝트가 마구 움직이지 않게 고정
+
         isMelting = true;
 
         while (elapsedTime < meltingDuration && isMelting)  // duration 동안 실행
@@ -68,12 +68,10 @@ public class IceCube : MonoBehaviour
 
         if (transform.localScale.x <= minSize)  // 얼음이 다 녹으면
         {
-            Instantiate(waterPuddlePrefab, transform.position, Quaternion.identity);  // 현재 위치에 물 웅덩이 생성
-            Destroy(transform.parent.gameObject);
+            WaterManager.instance.Melt();
+            Destroy(gameObject);
         }
 
     }
 
 }
-
-

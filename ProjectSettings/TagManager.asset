@@ -11,6 +11,7 @@ TagManager:
   - Flammable
   - Ice
   - TargetPoint
+  - Water
   layers:
   - Default
   - TransparentFX
