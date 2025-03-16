@@ -212,14 +212,34 @@ public class UIInventory : MonoBehaviour
     }
 
 
-#region Input
+    #region Input
 
     /// <summary>
     /// 아이템 선택 [마우스 휠]
     /// </summary>
-    public void Scroll()
+    /// <param name="context"></param>
+    public void OnScrollInput(InputAction.CallbackContext context)
     {
-        selectedItemIndex = 1 - selectedItemIndex;
+        float scrollInput = context.ReadValue<float>();
+
+        if (scrollInput > 0)
+        {
+            selectedItemIndex--;
+        }
+        else if (scrollInput < 0)
+        {
+            selectedItemIndex++;
+        }
+
+        if (selectedItemIndex < 0)
+        {
+            selectedItemIndex = Mathf.Min(slots.Length - 1, 8);
+        }
+        else if (selectedItemIndex > Mathf.Min(slots.Length - 1, 8))
+        {
+            selectedItemIndex = 0;
+        }
+        selectedItemIndex = Mathf.Clamp(selectedItemIndex, 0, Mathf.Min(slots.Length - 1, 9));
     }
 
     /// <summary>

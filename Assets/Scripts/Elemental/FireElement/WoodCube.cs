@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class WoodCube : Cube
+public class WoodCube : MonoBehaviour
 {
     public Renderer targetRenderer; // 불에 타는 동안 색을 변경할 Renderer
     public Rigidbody rigid;
@@ -28,7 +28,8 @@ public class WoodCube : Cube
 
     private IEnumerator BurnWood()
     {
-        rigid.isKinematic = true;  //   // 오브젝트가 마구 움직이지 않게 고정
+        if (rigid != null) rigid.isKinematic = true;  // 오브젝트가 마구 움직이지 않게 고정
+
         isBurning = true;
         GameObject[] flame = new GameObject[4];
         for (int i = 0; i < 4; i++)

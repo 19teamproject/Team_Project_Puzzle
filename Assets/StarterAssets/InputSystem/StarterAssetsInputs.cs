@@ -24,40 +24,42 @@ namespace StarterAssets
 		public UIInventory Inventory { get; set; }
 
 #if ENABLE_INPUT_SYSTEM
-		public void OnMove(InputValue value)
+		public void OnMoveInput(InputAction.CallbackContext context)
 		{
-			MoveInput(value.Get<Vector2>());
+			MoveInput(context.ReadValue<Vector2>());
 		}
 
-		public void OnLook(InputValue value)
+		public void OnLookInput(InputAction.CallbackContext context)
 		{
 			if(cursorInputForLook)
 			{
-				LookInput(value.Get<Vector2>());
+				LookInput(context.ReadValue<Vector2>());
 			}
 		}
 
-		public void OnJump(InputValue value)
+		public void OnJumpInput(InputAction.CallbackContext context)
 		{
-			JumpInput(value.isPressed);
-		}
-
-		public void OnSprint(InputValue value)
-		{
-			SprintInput(value.isPressed);
-		}
-
-		public void OnScroll(InputValue value)
-		{
-			if (value.Get<Vector2>().y != 0)
+			if (context.phase == InputActionPhase.Started)
 			{
-				Inventory.Scroll();
+				JumpInput(true);
+			}
+			else if (context.phase == InputActionPhase.Canceled)
+			{
+				JumpInput(false);
 			}
 		}
-        //public void OnInteraction(InputValue value)
-        //{
-        //    InteractionInput(value.isPressed);
-        //}
+
+		public void OnSprintInput(InputAction.CallbackContext context)
+		{
+			if (context.phase == InputActionPhase.Started)
+			{
+				SprintInput(true);
+			}
+			else if (context.phase == InputActionPhase.Canceled)
+			{
+				SprintInput(false);
+			}
+		}
 #endif
 
 
@@ -90,11 +92,5 @@ namespace StarterAssets
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
-        //public void InteractionInput(bool newInteractionState)
-        //{
-        //    interaction = newInteractionState;
-        //    Debug.Log($"interaction 상태 변경: {interaction}"); 
-        //}
     }
-	
 }
