@@ -62,7 +62,7 @@ public class LightGenerator : MonoBehaviour
                 if (hit.collider.gameObject == gameObject)
                 {
                     Debug.Log("자기 자신을 감지");
-                    continue;
+                    break;
                 }
 
                 float segmentLength = Vector3.Distance(startPosition, hit.point);
@@ -130,7 +130,7 @@ public class LightGenerator : MonoBehaviour
                     if (mirror.Reflect(direction, hit.normal, out newDirection, ref currentReflections, maxReflections))
                     {
                         direction = newDirection;
-                        startPosition = hit.point;
+                        startPosition = hit.point + direction * 0.01f; ;
                     }
                     else
                     {
