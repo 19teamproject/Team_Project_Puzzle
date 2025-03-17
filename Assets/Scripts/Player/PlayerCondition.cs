@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public interface IDamagable
 {
@@ -73,7 +74,7 @@ public class PlayerCondition : MonoBehaviour, IDamagable
 
         isDead = true;
         OnDeath?.Invoke();
-        UIManager.Instance.ShowUI<GameOverUI>();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void TakePhysicalDamage(int damageAmount)

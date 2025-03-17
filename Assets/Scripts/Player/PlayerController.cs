@@ -132,8 +132,9 @@ public class PlayerController : MonoBehaviour
 
         if (isSprinting)
         {
+            Debug.Log("달리기 중! 스태미나 감소 실행");
             if (stamina.CurValue > 0)
-            {
+            {            
                 if (movementInput != Vector2.zero) stamina.Subtract(30f * Time.fixedDeltaTime);
             }
             else

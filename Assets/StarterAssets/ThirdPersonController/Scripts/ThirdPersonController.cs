@@ -80,6 +80,7 @@ namespace StarterAssets
         private StarterAssetsInputs input;
         private GameObject mainCamera;
         private CinemachineBrain mainCam;
+        private UICondition condition;
 
         private const float Threshold = 0.01f;
 
@@ -111,6 +112,7 @@ namespace StarterAssets
             input = GetComponent<StarterAssetsInputs>();
             playerInput = GetComponent<PlayerInput>();
             interaction = GetComponent<Interaction>();
+            condition = CharacterManager.Instance.Player.Condition.UICondition;
 
             AssignAnimationIDs();
 
@@ -184,7 +186,18 @@ namespace StarterAssets
             float targetSpeed = input.sprint ? sprintSpeed : moveSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
-
+            if (input.sprint)
+            {
+                Debug.Log("달리기 중! 스태미나 감소 실행");
+                if (condition.Stamina.CurValue > 0)
+                {
+                    if (input.move != Vector2.zero) condition.Stamina.Subtract(10f * Time.fixedDeltaTime);
+                }
+                else
+                {
+                    input.sprint = false;
+                }
+            }
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
             if (input.move == Vector2.zero) targetSpeed = 0.0f;
