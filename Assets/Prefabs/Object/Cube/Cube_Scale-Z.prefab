@@ -846,6 +846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2dd81443fd070f478c572fbcfdd0b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  armature: {fileID: 7264204086820289181}
   xBones:
   - {fileID: 8256855189274971777}
   - {fileID: 8895780074879269626}
@@ -882,5 +883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 111372aee3303a94190a5cce387e3847, type: 2}
   outline: {fileID: 6575722249432836588}
+  audioClips: []
+  audioVolume: 0
   target: {fileID: 0}
   offset: {x: 0, y: 1, z: 0}

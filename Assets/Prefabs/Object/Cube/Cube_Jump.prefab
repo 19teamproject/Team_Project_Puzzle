@@ -849,6 +849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2dd81443fd070f478c572fbcfdd0b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  armature: {fileID: 572946459719150067}
   xBones:
   - {fileID: 4536855333251413678}
   - {fileID: 8074151642283808365}
@@ -913,7 +914,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
