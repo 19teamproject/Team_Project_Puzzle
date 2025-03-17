@@ -285,6 +285,7 @@ public class UIInventory : MonoBehaviour
             // 장비 아이템 -> 장착
             if (canEquip)
             {
+
                 if (slots[curEquipIndex].Equipped)
                 {
                     UnEquip(curEquipIndex);

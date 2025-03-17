@@ -20,6 +20,7 @@ public class Interaction : MonoBehaviour, IObjectHolder
     // 들고 있는 오브젝트
     [Header("Hold")]
     [SerializeField, Required] private Transform handTransform;
+    [SerializeField] private Transform handTransform2;
     [SerializeField, Min(1)] private float holdingForce = 0.5f;
     [SerializeField] private int heldObjectLayer;
     [SerializeField][Range(0f, 90f)] private float heldClamXRotation = 45f;
@@ -189,9 +190,19 @@ public class Interaction : MonoBehaviour, IObjectHolder
     // 들고있는 오브젝트 위치 업데이트
     private void UpdateHeldObjectPosition()
     {
-        HeldObject.rb.velocity = (handTransform.position - HeldObject.transform.position) * holdingForce;
+        Vector3 handRot;
+        if (HeldObject.tag == "ElectricBox")
+        {
+            HeldObject.rb.velocity = Vector3.zero;
+            HeldObject.transform.position = handTransform2.position;
+            handRot = handTransform2.rotation.eulerAngles;
+        }
+        else
+        {
+            HeldObject.rb.velocity = (handTransform.position - HeldObject.transform.position) * holdingForce;
+            handRot = handTransform.rotation.eulerAngles;
+        }
 
-        Vector3 handRot = handTransform.rotation.eulerAngles;
         if (handRot.x > 180f)
             handRot.x -= 360f;
         handRot.x = Mathf.Clamp(handRot.x, -heldClamXRotation, heldClamXRotation);

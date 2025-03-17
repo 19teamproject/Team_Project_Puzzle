@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Object/Cube/Box_Design.prefab.meta
+guid: df8146c4a17bdeb4b839f3c5083246d9
+========
 guid: 68e1a53c6f0a4a340a14fc813cb67adb
+>>>>>>>> develop:Assets/Prefabs/Object/Cube/Cube+.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
