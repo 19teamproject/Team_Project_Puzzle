@@ -7,7 +7,8 @@ namespace HPhysic
     {
         Cable,
         Button,
-        Pressure
+        Pressure,
+        CableBoth,
     }
 
     public class MechanicSystem : EnvironmentObject
@@ -30,6 +31,8 @@ namespace HPhysic
         {
             if (type == MechanicType.Cable)
                 CableSystem();
+            else if (type == MechanicType.CableBoth)
+                CableBothSystem();
         }
 
         public new string GetInteractPrompt()
@@ -93,6 +96,25 @@ namespace HPhysic
         }
 
         public void CableSystem()
+        {
+            if (redCable != null && blueCable != null)
+            {
+                if (redCable.StartConnector.IsConnectedRight && blueCable.StartConnector.IsConnectedRight && !isActive)
+                {
+                    isActive = true;
+                    movingObj.transform.DOKill();
+                    movingObj.transform.DOMove(startPos + targetPos, duration);
+                }
+                else if (!redCable.StartConnector.IsConnectedRight || !blueCable.StartConnector.IsConnectedRight)
+                {
+                    isActive = false;
+                    movingObj.transform.DOKill();
+                    movingObj.transform.DOMove(startPos, duration);
+                }
+            }
+        }
+
+        public void CableBothSystem()
         {
             if (redCable != null && blueCable != null)
             {
