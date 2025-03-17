@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624f7c65553c5314884ddc0ee35a4447, type: 3}
   m_Name: Object_LightGenerator
   m_EditorClassIdentifier: 
-  displayName: "\uBE5B \uC0DD\uC131\uAE30"
-  description: "\uBE5B\uC744 \uC0DD\uC131\uD558\uACE0 \uC788\uC2B5\uB2C8\uB2E4."
-  type: 1
+  displayName: "\uBE5B \uC0DD\uC131 \uD050\uBE0C"
+  description: "[E]\uD0A4\uB97C \uB20C\uB7EC \uBE5B\uC744 \uC0DD\uC131\uD560 \uC218
+    \uC788\uC2B5\uB2C8\uB2E4."

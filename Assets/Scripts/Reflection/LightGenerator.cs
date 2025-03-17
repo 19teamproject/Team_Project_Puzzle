@@ -44,7 +44,7 @@ public class LightGenerator : MonoBehaviour
         List<Mirror> stillActiveMirrors = new List<Mirror>(); // 반사되는 거울 목록
 
         Vector3 direction = transform.forward;
-        Vector3 startPosition = transform.position + Vector3.up * 1.26f; ;
+        Vector3 startPosition = transform.position;
 
         float currentLightDistance = 0f;        // 현재 빛의 사거리
         int currentReflections = 0;             // 현재 반사 횟수
@@ -222,6 +222,26 @@ public class LightGenerator : MonoBehaviour
         }
     }
 
+    public void ToggleLightMaterial()
+    {
+        Renderer renderer = GetComponent<Renderer>();
+        if (renderer == null) return;
+
+        Material material = renderer.material;
+        bool isEmitting = material.IsKeywordEnabled("_EMISSION");
+
+        if (isEmitting)
+        {
+            material.DisableKeyword("_EMISSION");
+            material.SetColor("_EmissionColor", Color.black);
+        }
+        else
+        {
+            material.EnableKeyword("_EMISSION");
+            material.SetColor("_EmissionColor", Color.white * 1.5f); // 밝기 조절
+        }
+    }
+
     void ClearObjects()
     {
         foreach (GameObject beam in lightBeams)
@@ -242,12 +262,19 @@ public class LightGenerator : MonoBehaviour
 
     IEnumerator FadeOutAndDestroy(GameObject beam)
     {
+        Renderer rendrer = GetComponent<Renderer>();
         Renderer beamRenderer = beam.GetComponent<Renderer>();
-        if (beamRenderer == null) yield break;
 
-        Material material = beamRenderer.material;
-        Color startColor = material.color;
-        Color startEmission = material.GetColor("_EmissionColor"); // 초기 Emission 색상 저장
+        if (rendrer == null || beamRenderer == null) yield break;
+
+        Material cubeMaterial = rendrer.material;
+        Material beamMaterial = beamRenderer.material;
+
+        Color startCubColor = cubeMaterial.color;
+        Color startBeamColor = beamMaterial.color;
+        Color startCubeEmission = cubeMaterial.GetColor("_EmissionColor");
+        Color startBeamEmission = beamMaterial.GetColor("_EmissionColor"); // 초기 Emission 색상 저장
+
         Vector3 startScale = beam.transform.localScale; // 초기 크기 저장
         float duration = 1.5f; // 서서히 사라지는 시간 (초)
         float elapsed = 0f;
@@ -258,11 +285,15 @@ public class LightGenerator : MonoBehaviour
             float fadeAmount = Mathf.Lerp(1f, 0f, elapsed / duration); // 1 → 0으로 점점 감소
 
             // 색상 투명도 적용
-            material.color = new Color(startColor.r, startColor.g, startColor.b, fadeAmount);
+            cubeMaterial.color = new Color(startCubColor.r, startCubColor.g, startCubColor.b, fadeAmount);
+            beamMaterial.color = new Color(startBeamColor.r, startBeamColor.g, startBeamColor.b, fadeAmount);
 
             // Emission 강도 감소
-            Color newEmission = startEmission * fadeAmount;
-            material.SetColor("_EmissionColor", newEmission);
+            Color newCubeEmission = startCubeEmission * fadeAmount;
+            Color newBeamEmission = startBeamEmission * fadeAmount;
+
+            cubeMaterial.SetColor("_EmissionColor", newCubeEmission);
+            beamMaterial.SetColor("_EmissionColor", newBeamEmission);
 
             beam.transform.localScale = new Vector3(
                 startScale.x * fadeAmount,  // 가로 크기 줄이기

@@ -257,6 +257,13 @@ public class Interaction : MonoBehaviour, IObjectHolder
 
             CheckRotatable();
 
+            LightGenerator lightGenerator = selectedRotatableObject.GetComponent<LightGenerator>();
+
+            if (lightGenerator != null)
+            {
+                lightGenerator.ToggleLightMaterial();
+            }
+
             curInteractGameObject = null;
             curInteractable = null;
             AnimatePromptText(false);
@@ -271,7 +278,6 @@ public class Interaction : MonoBehaviour, IObjectHolder
         }
 
         selectedRotatableObject = curInteractGameObject.GetComponent<RotateObject>();
-
 
         if (selectedRotatableObject != null)
         {

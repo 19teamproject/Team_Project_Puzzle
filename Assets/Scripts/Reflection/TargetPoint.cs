@@ -69,7 +69,7 @@ public class TargetPoint : EnvironmentObject
                 Debug.Log("목표 색상과 일치! 퍼즐 성공!");
                 MoveObject();
 
-                StartCoroutine(ChangeToGrayAndDisable());
+                StartCoroutine(ChangeToDisable());
             }
             else
             {
@@ -118,9 +118,10 @@ public class TargetPoint : EnvironmentObject
         }
     }
 
-    IEnumerator ChangeToGrayAndDisable()
+    IEnumerator ChangeToDisable()
     {
         Material mat = targetRenderer.material;
+
         Color startColor = mat.color;             // 원래 색상
         Color targetColor = Color.gray;   // 어두운 회색
         Color startEmission = mat.GetColor("_EmissionColor");  // 원래 에미션 색상
