@@ -27,7 +27,7 @@ public class Equipment : MonoBehaviour
     {
         UnEquip();
         CurEquip = Instantiate(data.equipPrefab, equipParent).GetComponent<Equip>();
-        if(data.displayName == "횃불")
+        if (data.displayName == "횃불")
         {
             equipItemToHand.EquipTorchToHand();
         }

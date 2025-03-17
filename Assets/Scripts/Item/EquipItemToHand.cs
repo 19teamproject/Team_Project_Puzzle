@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class EquipItemToHand : MonoBehaviour
@@ -24,6 +23,4 @@ public class EquipItemToHand : MonoBehaviour
         Debug.Log("Torch 장착 완료");
 
     }
-
-
 }
