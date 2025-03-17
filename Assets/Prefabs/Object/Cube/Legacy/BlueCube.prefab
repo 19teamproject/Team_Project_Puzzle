@@ -99,9 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b8d4423f13000045b23c862f2b92104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 6e76a77b6bd2d0942bce156c178ec866, type: 2}
+  data: {fileID: 11400000, guid: db44927a7be5485458f481c9c91fff2a, type: 2}
   outline: {fileID: -8755239636995028997}
-  cubeType: 1
+  target: {fileID: 0}
+  offset: {x: 0, y: 1, z: 0}
   jumpForce: 20
 --- !u!135 &3170736728335758546
 SphereCollider:

@@ -56,7 +56,7 @@ public class Cube : MonoBehaviour, IInteractable
     }
 
     // 크기 조절
-    private void Scale()
+    public void Scale()
     {
         if (TryGetComponent(out CubeBoneScaler scaler))
         {

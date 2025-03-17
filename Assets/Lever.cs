@@ -8,9 +8,10 @@ public class Lever : MonoBehaviour, IInteractable
     [Header("Data")]
     [SerializeField] protected CubeData data;
     [SerializeField] protected Outline outline;
-    [SerializeField] 
 
     private Cube cube;
+    private bool isPull = false;
+    private Animator animator;
 
     private bool isMove = false;
 
@@ -22,9 +23,13 @@ public class Lever : MonoBehaviour, IInteractable
 
     public bool OnInteract()
     {
+        if (isMove) return false;
+
         if(cube != null)
         {
-            cube.OnInteract(); //여기에 상호작용시 하고싶은 메서드 입력
+            isMove = true;
+            animator.SetBool("IsPull", true);
+            cube.Scale(); //여기에 상호작용시 하고싶은 메서드 입력
             return true;
         }
         Debug.Log("Cube가 연결되지 않았습니다.");
