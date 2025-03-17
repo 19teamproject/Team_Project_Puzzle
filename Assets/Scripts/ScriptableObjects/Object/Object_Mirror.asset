@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624f7c65553c5314884ddc0ee35a4447, type: 3}
   m_Name: Object_Mirror
   m_EditorClassIdentifier: 
-  displayName: "\uAC70\uC6B8"
-  description: "\uBE5B\uC774 \uB9C8\uC8FC\uCE58\uBA74 \uBC18\uC0AC\uB429\uB2C8\uB2E4."
-  type: 1
+  displayName: "\uAC70\uC6B8 \uD050\uBE0C"
+  description: "[E]\uD0A4\uB97C \uB20C\uB7EC \uD68C\uC804\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.
+    \uBE5B\uC774 \uBD80\uB52A\uD788\uBA74 \uBC18\uC0AC\uB429\uB2C8\uB2E4."

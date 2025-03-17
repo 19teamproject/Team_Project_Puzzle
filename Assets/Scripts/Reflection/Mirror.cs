@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mirror : EnvironmentObject
+public class Mirror : MonoBehaviour
 {
     [SerializeField] private Color mirrorColor;     // 거울 색상
+    [SerializeField] private GameObject reflector;
 
     private Renderer mirrorRenderer;
     private MaterialPropertyBlock propertyBlock;
+    private Coroutine disableCoroutine;
 
     private void Awake()
     {
@@ -22,30 +24,86 @@ public class Mirror : EnvironmentObject
         UpdateMirrorColor();
     }
 
-    public override bool OnInteract()
+    public void SetReflectorActive(bool state)
     {
-        HandleInteraction(CharacterManager.Instance.Player.gameObject);
-        return true;
-    }
-    public virtual void HandleInteraction(GameObject player)
-    {
-        Debug.Log($"{gameObject.name} 입니다.");
+        if (reflector == null)
+        {
+            Debug.LogWarning($"{gameObject.name}의 Reflector가 설정되지 않았습니다!");
+            return;
+        }
+
+        // 현재 상태와 동일하면 중복 호출 방지
+        if (reflector.activeSelf == state)
+        {
+            return;
+        }
+
+        Debug.Log($"{gameObject.name} Reflector 활성화: {state}");
+
+        reflector.SetActive(state);
+        Debug.Log($"Reflector 현재 상태: {reflector.activeSelf}");
+
+        if (state)
+        {
+            if (disableCoroutine != null)
+            {
+                StopCoroutine(disableCoroutine);
+                disableCoroutine = null;
+            }
+        }
+        else
+        {
+            if (disableCoroutine == null)
+            {
+                disableCoroutine = StartCoroutine(DisableReflectorAfterDelay());
+            }
+        }
     }
 
-    // 거울 색상 업데이트
+    public void Clear()
+    {
+        SetReflectorActive(false);
+    }
+
+    public bool IsReflectorActive()
+    {
+        return reflector != null && reflector.activeSelf;
+    }
+
+    //거울 색상 업데이트
     private void UpdateMirrorColor()
     {
-        if (mirrorRenderer == null || propertyBlock == null) return;
+        if (mirrorRenderer == null) return;
 
-        mirrorRenderer.GetPropertyBlock(propertyBlock);
-        propertyBlock.SetColor("_Color", mirrorColor);
-        mirrorRenderer.SetPropertyBlock(propertyBlock);
+        // 기존 머티리얼을 복사하여 새 머티리얼을 생성 (개별 오브젝트 적용)
+        mirrorRenderer.material = new Material(mirrorRenderer.sharedMaterial);
+        mirrorRenderer.material.SetColor("_Color", mirrorColor);
     }
 
     // 반사각 계산
-    public Vector3 Reflect(Vector3 incomingDirection, Vector3 normal)
+    public bool Reflect(Vector3 incomingDirection, Vector3 normal, out Vector3 reflectedDirection, ref int currentReflections, int maxReflections)
     {
-        return Vector3.Reflect(incomingDirection, normal);
+        Vector3 mirrorForward = -transform.forward;
+
+        // 뒤로 빛이 들어왔으면 반사 x
+        if (Vector3.Dot(incomingDirection, mirrorForward) > 0)
+        {
+            reflectedDirection = Vector3.zero;
+            return false;
+        }
+
+        // 최대 반사 횟수 초과 시 반사 X
+        if (currentReflections >= maxReflections)
+        {
+            reflectedDirection = Vector3.zero;
+            return false;
+        }
+
+        // 반사각 계산
+        reflectedDirection = Vector3.Reflect(incomingDirection, normal);
+        currentReflections++; // 반사 횟수 증가
+
+        return true;
     }
 
     // 거울 색상 반환
@@ -64,5 +122,12 @@ public class Mirror : EnvironmentObject
         );
 
         return mix;
+    }
+
+    private IEnumerator DisableReflectorAfterDelay()
+    {
+        yield return new WaitForSeconds(1.0f); // 0.2초 유지 후 꺼짐
+        reflector.SetActive(false);
+        disableCoroutine = null;
     }
 }
