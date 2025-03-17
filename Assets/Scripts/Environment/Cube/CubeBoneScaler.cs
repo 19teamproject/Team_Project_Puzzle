@@ -22,9 +22,9 @@ public class CubeBoneScaler : MonoBehaviour
     private List<Transform> yNegBones;
     private List<Transform> zNegBones;
 
-    private int xDir;
-    private int yDir;
-    private int zDir;
+    private int xDir = 1;
+    private int yDir = 1;
+    private int zDir = 1;
 
     private Vector3 currentScale = Vector3.one;
 
@@ -65,9 +65,9 @@ public class CubeBoneScaler : MonoBehaviour
             allBones.Add(armature.GetChild(i));
         }
 
-        xNegBones = xBones.Except(allBones).ToList();
-        yNegBones = yBones.Except(allBones).ToList();
-        zNegBones = zBones.Except(allBones).ToList();
+        xNegBones = allBones.Except(xBones).ToList();
+        yNegBones = allBones.Except(yBones).ToList();
+        zNegBones = allBones.Except(zBones).ToList();
     }
 
     private void Update()
@@ -193,7 +193,7 @@ public class CubeBoneScaler : MonoBehaviour
                     t.DOLocalMoveZ(currentScale.z - offset, speed);
 
                 DOTween.To(() => boxCollider.center, x => boxCollider.center = x, new Vector3(boxCollider.center.x, boxCollider.center.y, currentScale.z / 2f), speed);
-                DOTween.To(() => boxCollider.size, x => boxCollider.center = x, new Vector3(boxCollider.size.x, boxCollider.size.y, currentScale.z), speed);
+                DOTween.To(() => boxCollider.size, x => boxCollider.size = x, new Vector3(boxCollider.size.x, boxCollider.size.y, currentScale.z), speed);
                 break;
 
             case ScaleDir.Minus_Z:
@@ -214,7 +214,7 @@ public class CubeBoneScaler : MonoBehaviour
                     t.DOLocalMoveZ(1f - (currentScale.z - offset), speed);
 
                 DOTween.To(() => boxCollider.center, x => boxCollider.center = x, new Vector3(boxCollider.center.x, boxCollider.center.y, 1f - (currentScale.z / 2f)), speed);
-                DOTween.To(() => boxCollider.size, x => boxCollider.center = x, new Vector3(boxCollider.size.x, boxCollider.size.y, currentScale.z), speed);
+                DOTween.To(() => boxCollider.size, x => boxCollider.size = x, new Vector3(boxCollider.size.x, boxCollider.size.y, currentScale.z), speed);
                 break;
         }
     }
