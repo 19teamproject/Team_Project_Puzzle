@@ -819,6 +819,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8760713259338756034}
   m_SourcePrefab: {fileID: 100100000, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
+--- !u!65 &3297919146104235382 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: -7752624715705920563, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
+  m_PrefabInstance: {fileID: 4156166154709104315}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3522586424675684232 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 670779782384302387, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
@@ -843,24 +848,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armature: {fileID: 818566930155052730}
   xBones:
-  - {fileID: 8171553395467923188, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
-  - {fileID: 3854446083862715470, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
-  - {fileID: 7265684616013326154, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
-  - {fileID: 4721803302185219840, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
+  - {fileID: 168797186746863524}
+  - {fileID: 1547961240376715489}
+  - {fileID: 7635657949299324885}
+  - {fileID: 6030533338863734786}
   yBones:
-  - {fileID: 8847116774728572220, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
-  - {fileID: 7265684616013326154, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
-  - {fileID: 6954593889379972428, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
-  - {fileID: 4721803302185219840, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
+  - {fileID: 6184527166339499958}
+  - {fileID: 7635657949299324885}
+  - {fileID: 6173322678354505622}
+  - {fileID: 6030533338863734786}
   zBones:
-  - {fileID: 5714563306735203440, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
-  - {fileID: 3854446083862715470, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
-  - {fileID: 6954593889379972428, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
-  - {fileID: 4721803302185219840, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
+  - {fileID: 1462640928298637419}
+  - {fileID: 1547961240376715489}
+  - {fileID: 6173322678354505622}
+  - {fileID: 6030533338863734786}
   maxScale: 4
   offset: 0.08
   speed: 0.5
-  boxCollider: {fileID: 3297919146104235382, guid: 3561304b404f9be47aaffcc9ad94bba9, type: 3}
+  boxCollider: {fileID: 3297919146104235382}
   xScale: 1
   yScale: 1
   zScale: 1
