@@ -27,6 +27,7 @@ namespace HPhysic
         [SerializeField, Required] private GameObject connector0;
         [SerializeField, Required] private GameObject point0;
 
+
         private List<Transform> points;
         private List<Transform> connectors;
 
@@ -257,6 +258,7 @@ namespace HPhysic
             }
         }
 
+
         private Vector3 CountConPos(Vector3 start, Vector3 end) => (start + end) / 2f;
         private Vector3 CountSizeOfCon(Vector3 start, Vector3 end) => new Vector3(size, size, (start - end).magnitude / 2f);
         private Quaternion CountRoationOfCon(Vector3 start, Vector3 end) => Quaternion.LookRotation(end - start, Vector3.right);
@@ -298,5 +300,6 @@ namespace HPhysic
         public Connector StartConnector => startConnector;
         public Connector EndConnector => endConnector;
         public IReadOnlyList<Transform> Points => points;
+        public bool IsAllConnectedRight => startConnector.IsConnectedRight && endConnector.IsConnectedRight;
     }
 }

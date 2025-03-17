@@ -995,7 +995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ConnectionType>k__BackingField: 0
-  <ConnectionColor>k__BackingField: 1
+  <ConnectionColor>k__BackingField: 4
   makeConnectionKinematic: 0
   hideInteractableWhenIsConnected: 0
   allowConnectDifrentCollor: 0
@@ -1120,7 +1120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ConnectionType>k__BackingField: 0
-  <ConnectionColor>k__BackingField: 0
+  <ConnectionColor>k__BackingField: 4
   makeConnectionKinematic: 0
   hideInteractableWhenIsConnected: 0
   allowConnectDifrentCollor: 0

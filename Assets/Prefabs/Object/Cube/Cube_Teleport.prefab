@@ -836,6 +836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2dd81443fd070f478c572fbcfdd0b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  armature: {fileID: 3648092344390229950}
   xBones:
   - {fileID: 8351343719285711302}
   - {fileID: 1702152282786224711}
@@ -872,6 +873,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 3830e60afbc892443962231fbf443493, type: 2}
   outline: {fileID: 7538286122111715309}
+  audioClips: []
+  audioVolume: 0
   target: {fileID: 0}
   offset: {x: 0, y: 1, z: 0}
 --- !u!65 &7357660360537370490 stripped

@@ -227,13 +227,6 @@ public class Interaction : MonoBehaviour, IObjectHolder
         obj.Drop();
     }
 
-    // 들고있는 오브젝트가 있다면 놓기
-    private void CheckHeldObjectOnTeleport()
-    {
-        if (HeldObject != null)
-            DropObject(HeldObject);
-    }
-
     #endregion
 
     private void SetPromptText()
