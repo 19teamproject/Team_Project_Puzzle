@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624f7c65553c5314884ddc0ee35a4447, type: 3}
   m_Name: Object_TargetPoint
   m_EditorClassIdentifier: 
-  displayName: "\uBE5B \uD761\uC218\uAE30"
+  displayName: "\uBE5B \uD761\uC218 \uD050\uBE0C"
   description: "\uBE5B\uC744 \uD761\uC218\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
-  type: 1
