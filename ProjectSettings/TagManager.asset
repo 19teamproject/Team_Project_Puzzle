@@ -12,6 +12,7 @@ TagManager:
   - Ice
   - TargetPoint
   - Water
+  - ElectricBox
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,7 @@ TagManager:
   - 
   - 
   - Holdable
-  - 
+  - Outlet
   - 
   - 
   - 
