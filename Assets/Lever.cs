@@ -15,14 +15,17 @@ public class Lever : MonoBehaviour, IInteractable
     [SerializeField] private float cubeMovsSpeed = 2f; //큐브의 이동속도
     
     private Cube cube;
-    private bool isPull;
     private Animator animator;
 
     private bool isMove = false;
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInParent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator가 할당되지 않았습니다! GameObject에 Animator 컴포넌트가 있는지 확인하세요.");
+        }
         cube = cubeTransform.GetComponent<Cube>();
     }
     public string GetInteractPrompt()
@@ -37,8 +40,8 @@ public class Lever : MonoBehaviour, IInteractable
 
         if(cube != null)
         {
-            isMove = true;
-            animator.SetBool("IsPull", true);
+            animator.SetBool("IsPull",true);
+            Debug.Log("애니메이션 시작");
 
 
             StartCoroutine(WaitForAnimation());// 애니메이션이 실행될 때까지 기다렸다가 이후 큐브 이동
@@ -50,13 +53,20 @@ public class Lever : MonoBehaviour, IInteractable
     }
     private IEnumerator WaitForAnimation()
     {
+        Debug.Log("레버를 당겼습니다. 애니메이션 시작");
         float aniLength = animator.GetCurrentAnimatorStateInfo(0).length; // 애니메이션의 이벤트를 활용하여 애니메이션의 정보를 가져오는 메서드
+        Debug.Log($"애니메이션 길이 {aniLength}초");
+
+        if (aniLength <= 0f)
+        {
+            Debug.Log("애니메이션이 없음.");
+            yield break;
+        }
         yield return new WaitForSeconds(aniLength); //애니메이션이 끝날때까지 대기
+        Debug.Log("애니메이션 종료 큐브 이동 시작");
+        
 
         StartCoroutine(MoveCube());// 애니메이션이 끝이나면 큐브가 이동되도록
-
-        isPull = false;
-
     }
     public virtual void SetOutline(bool show)
     {
@@ -68,14 +78,22 @@ public class Lever : MonoBehaviour, IInteractable
     }
     private IEnumerator MoveCube()
     {
-        Vector3 startPosition = cube.transform.position; //시작지점이 큐브의 위치
+        Debug.Log("큐브 이동 시작됨");
 
+        if(cube == null)
+        {
+            Debug.Log("큐브가 할당되지 않음");
+        }
         while (cube.transform.position != targetPosition)
         {
-            cube.transform.position = Vector3.MoveTowards(startPosition, targetPosition, cubeMovsSpeed*Time.deltaTime); // 시간단위로 원하는 목표지점까지 Lerp가 아닌 MoveTowards()를 통해 일정 속도로 이동
-                                                                                                          // 속도 조절에 용이
+            // Debug.Log($"{startPosition}, {targetPosition},{cubeMovsSpeed * Time.deltaTime}");
+            cube.transform.position = Vector3.MoveTowards(cubeTransform.position, targetPosition, cubeMovsSpeed*Time.deltaTime); // 시간단위로 원하는 목표지점까지 Lerp가 아닌 MoveTowards()를 통해 일정 속도로 이동
+                                                                                                                        // 속도 조절에 용이
+            Debug.Log(cube.transform.position);
             yield return null; // 한 프레임을 대기
         }
+        Debug.Log("큐비 이동 완료!");
         isMove = false; //큐브가 모두 움직였다면 다시 상호작용이 가능하도록 세팅
+        animator.SetBool("IsPull", false);
     }
 }
