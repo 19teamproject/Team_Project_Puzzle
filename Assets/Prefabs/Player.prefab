@@ -1921,6 +1921,7 @@ GameObject:
   - component: {fileID: 1874577825505516933}
   - component: {fileID: 8198246594871879012}
   - component: {fileID: 60618754307522885}
+  - component: {fileID: 8349269777685625956}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -2346,6 +2347,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipParent: {fileID: 3132719687861689901}
   equipItemToHand: {fileID: 0}
+--- !u!114 &8349269777685625956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5762862791526918599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a3b7801cd376743a48f7039eb78f9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 0}
+  stamina: {fileID: 0}
 --- !u!1 &5781127535303399821
 GameObject:
   m_ObjectHideFlags: 0

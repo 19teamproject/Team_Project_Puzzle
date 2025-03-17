@@ -188,7 +188,6 @@ namespace StarterAssets
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
             if (input.sprint)
             {
-                Debug.Log("달리기 중! 스태미나 감소 실행");
                 if (condition.Stamina.CurValue > 0)
                 {
                     if (input.move != Vector2.zero) condition.Stamina.Subtract(10f * Time.fixedDeltaTime);
