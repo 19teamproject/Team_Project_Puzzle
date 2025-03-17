@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,6 +18,7 @@ public class ObstacleCube : MonoBehaviour
     private CapsuleCollider capsuleCollider;
     private Coroutine disappearCoroutine;
     private MeshRenderer meshRenderer;
+    private float targetWeight;
 
     private void Start()
     {
@@ -34,7 +36,7 @@ public class ObstacleCube : MonoBehaviour
             warningText.gameObject.SetActive(true);
             if(DamageIndicator != null )
             {
-                DamageIndicator.weight = 1f;
+                DOTween.To(() => DamageIndicator.weight, x => DamageIndicator.weight = x, 1f, 1f); 
             }
             isPlayOnCube = true;
 
@@ -54,7 +56,7 @@ public class ObstacleCube : MonoBehaviour
             boxCollider.enabled = false;
             meshRenderer.enabled = false;
             warningText.gameObject.SetActive(false);
-            DamageIndicator.weight = 0f;
+            DOTween.To(() => DamageIndicator.weight, x => DamageIndicator.weight = x, 0f, 1f);
 
             yield return new WaitForSeconds(respawnTime); // 일정 시간 후 다시 등장하도록 설정
 

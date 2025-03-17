@@ -100,6 +100,19 @@ public class Interaction : MonoBehaviour, IObjectHolder
 
             if (Physics.Raycast(ray, out RaycastHit hit, maxCheckDistance + CheckDistanceBonus, layerMask))
             {
+                int hitLayer = hit.collider.gameObject.layer;
+                if (hitLayer == LayerMask.NameToLayer("Default"))
+                {
+                    if (curInteractGameObject == null && curInteractable == null) return;
+
+                    curInteractable.SetOutline(false);
+                    AnimatePromptText(false);
+
+                    curInteractGameObject = null;
+                    curInteractable = null;
+
+                    return;
+                }
                 if (hit.collider.gameObject != curInteractGameObject)
                 {
                     if (curInteractGameObject != null)
