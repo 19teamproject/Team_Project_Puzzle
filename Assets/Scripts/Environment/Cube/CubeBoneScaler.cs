@@ -65,9 +65,9 @@ public class CubeBoneScaler : MonoBehaviour
             allBones.Add(armature.GetChild(i));
         }
 
-        xNegBones = xBones.Except(allBones).ToList();
-        yNegBones = yBones.Except(allBones).ToList();
-        zNegBones = zBones.Except(allBones).ToList();
+        xNegBones = allBones.Except(xBones).ToList();
+        yNegBones = allBones.Except(yBones).ToList();
+        zNegBones = allBones.Except(zBones).ToList();
     }
 
     private void Update()
