@@ -11,6 +11,7 @@ TagManager:
   - Flammable
   - Ice
   - TargetPoint
+  - ElectricBox
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - 
   - 
   - Holdable
-  - 
+  - Outlet
   - 
   - 
   - 
