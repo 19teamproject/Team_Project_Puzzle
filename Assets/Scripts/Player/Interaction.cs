@@ -51,10 +51,9 @@ public class Interaction : MonoBehaviour, IObjectHolder
     private Camera cam;
     private Cube curCube;
     private RotateObject selectedRotatableObject;
-    private bool isRotating = false;
-    private float lastInputTime;
-    private float rotationTimeout = 2f;
     private bool firstActivated = false;
+    private float rotationInputX = 0f;
+    private float rotationInputY = 0f;
     public float CheckDistanceBonus { get; set; }
 
     private void Start()
@@ -127,9 +126,8 @@ public class Interaction : MonoBehaviour, IObjectHolder
             }
         }
 
-        if (!isRotating) return;
-
-        RotateInput();
+        if (selectedRotatableObject != null && selectedRotatableObject.isRotating)
+            HandleRotation(rotationInputX, rotationInputY);
     }
 
     #region -input-
@@ -250,27 +248,92 @@ public class Interaction : MonoBehaviour, IObjectHolder
 
             CheckRotatable();
 
-            LightGenerator lightGenerator = selectedRotatableObject.GetComponent<LightGenerator>();
-
-            if (lightGenerator != null)
-            {
-                lightGenerator.ToggleLightMaterial();
-            }
-
             curInteractGameObject = null;
             curInteractable = null;
             AnimatePromptText(false);
         }
     }
 
-    public void CheckRotatable()
+    public void OnRotate(InputAction.CallbackContext context)
     {
-        if (selectedRotatableObject != null && selectedRotatableObject != curInteractGameObject.GetComponent<RotateObject>())
+        if (selectedRotatableObject.isRotating && context.phase == InputActionPhase.Performed)
         {
-            isRotating = false;  // 기존 선택 해제
+            // 방향키 입력만 기록
+            Vector2 input = context.ReadValue<Vector2>();
+
+            // 좌우 (X)
+            if (input.x != 0f)
+            {
+                rotationInputX = input.x;
+            }
+            // 상하 (Y)
+            if (input.y != 0f)
+            {
+                rotationInputY = input.y;
+            }
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            rotationInputX = 0f;  // 방향 초기화
+            rotationInputY = 0f;  // 방향 초기화
+        }
+    }
+
+    private void HandleRotation(float rotationInputX, float rotationInputY)
+    {
+        Vector3 rotationAxis = Vector3.zero;
+
+        // 좌우 회전 처리
+        if (rotationInputX != 0f)
+        {
+            rotationAxis = transform.up;  // Y축 기준 좌우 회전
+            selectedRotatableObject.Rotate(rotationInputX * selectedRotatableObject.rotationSpeed * Time.deltaTime, rotationAxis);
         }
 
-        selectedRotatableObject = curInteractGameObject.GetComponent<RotateObject>();
+        // 상하 회전 처리
+        if (rotationInputY != 0f)
+        {
+            rotationAxis = selectedRotatableObject.transform.right; // X축 기준 상하 회전
+            selectedRotatableObject.Rotate(rotationInputY * selectedRotatableObject.rotationSpeed * Time.deltaTime, rotationAxis);
+        }
+
+        if (rotationInputX != 0f || rotationInputY != 0f)
+        {
+            selectedRotatableObject.lastInputTime = Time.time;
+        }
+
+        selectedRotatableObject.RotateTimeOutCheck();
+
+        Vector3 eulerAngles = selectedRotatableObject.transform.rotation.eulerAngles;
+        eulerAngles.z = 0f;  // Z축 회전 방지
+        selectedRotatableObject.transform.rotation = Quaternion.Euler(eulerAngles);
+    }
+
+    public void CheckRotatable()
+    {
+        RotateObject newSelectedObject = curInteractGameObject.GetComponent<RotateObject>();
+
+        if (selectedRotatableObject != null && selectedRotatableObject != newSelectedObject)
+        {
+            selectedRotatableObject.isRotating = false;
+        }
+
+        if(newSelectedObject != null)
+        {
+            // 이전과 같은 오브젝트를 선택했을 때만 토글
+            if (selectedRotatableObject == newSelectedObject)
+            {
+                selectedRotatableObject.isRotating = !selectedRotatableObject.isRotating;
+            }
+            else
+            {
+                // 다른 오브젝트를 선택하면 기본적으로 회전 활성화
+                selectedRotatableObject = newSelectedObject;
+                selectedRotatableObject.isRotating = true;
+            }
+        }
+
+        selectedRotatableObject.lastInputTime = Time.time;
 
         if (selectedRotatableObject != null)
         {
@@ -282,46 +345,14 @@ public class Interaction : MonoBehaviour, IObjectHolder
             if (selectedRotatableObject.IsClear())
             {
                 firstActivated = false;
-            }          
-
-            isRotating = !isRotating; // 토글 방식으로 설정 (켜기/끄기)
-
-            if (isRotating)
-            {
-                lastInputTime = Time.time; // 선택 시 타이머 리셋
             }
 
-            Debug.Log($"회전 가능 상태: {isRotating} ({curInteractGameObject.name})");
-        }
-    }
-
-    public void RotateInput()
-    {
-        if (isRotating && selectedRotatableObject != null)
-        {
-            float rotationInput = 0f;
-
-            if (Mouse.current.leftButton.isPressed)
+            if (!selectedRotatableObject.isRotating)
             {
-                rotationInput = -1f;
-            }
-            else if (Mouse.current.rightButton.isPressed)
-            {
-                rotationInput = 1f;
+                selectedRotatableObject.isRotating = true;
             }
 
-            if (rotationInput != 0f) // 입력이 있을 때만 회전
-            {
-                Vector3 rotationAxis = selectedRotatableObject.transform.right;
-                selectedRotatableObject.Rotate(rotationInput);
-                lastInputTime = Time.time;
-            }
-        }
-
-        if (Time.time - lastInputTime > rotationTimeout)
-        {
-            isRotating = false;
-            Debug.Log("입력 시간 초과로 회전 모드 해제");
+            Debug.Log($"회전 가능 상태: {selectedRotatableObject.isRotating} ({curInteractGameObject.name})");
         }
     }
 

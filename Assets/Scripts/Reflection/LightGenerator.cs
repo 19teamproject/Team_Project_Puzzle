@@ -180,7 +180,7 @@ public class LightGenerator : MonoBehaviour
     {
         if (isClear)
         {
-            firstActivated = false;  // 클리어 시 다시 활성화 가능하도록 리셋
+            firstActivated = false;
             return;
         }
 
