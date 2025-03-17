@@ -1,13 +1,17 @@
 using UnityEngine;
 using cakeslice;
 using StarterAssets;
+using DG.Tweening;
 using NaughtyAttributes;
 
 public class Cube : MonoBehaviour, IInteractable
 {
     [Header("Data")]
-    [SerializeField] protected CubeData data;
-    [SerializeField] protected Outline outline;
+    [SerializeField] private CubeData data;
+    [SerializeField] private Outline outline;
+    [SerializeField] private AudioClip[] audioClips;
+    [Range(0, 1)]
+    [SerializeField] private float audioVolume;
 
     [Space(10f)]
     [Header("Teleport Cube Only")]
@@ -38,8 +42,6 @@ public class Cube : MonoBehaviour, IInteractable
 
     public bool OnInteract()
     {
-        // if (!isTrigger) return false;
-
         switch (data.type)
         {
             case CubeType.Scale:
@@ -49,7 +51,7 @@ public class Cube : MonoBehaviour, IInteractable
                 Teleport(); break;
 
             case CubeType.Jump:
-                Jump(); break;
+                if (isTrigger) Jump(); break;
         }
 
         return false;
@@ -58,6 +60,12 @@ public class Cube : MonoBehaviour, IInteractable
     // 크기 조절
     public void Scale()
     {
+        if (audioClips.Length > 0)
+        {
+            var index = Random.Range(0, audioClips.Length);
+            AudioSource.PlayClipAtPoint(audioClips[index], transform.position, audioVolume);
+        }
+
         if (TryGetComponent(out CubeBoneScaler scaler))
         {
             scaler.ChangeScale(data.scaleDir);
@@ -71,6 +79,12 @@ public class Cube : MonoBehaviour, IInteractable
     // 텔레포트
     private void Teleport()
     {
+        if (audioClips.Length > 0)
+        {
+            var index = Random.Range(0, audioClips.Length);
+            AudioSource.PlayClipAtPoint(audioClips[index], transform.position, audioVolume);
+        }
+        
         if (target != null) //이동할 큐브가 존재한다면
         {
             CharacterController controller = player.GetComponent<CharacterController>();
@@ -90,9 +104,18 @@ public class Cube : MonoBehaviour, IInteractable
     // 점프
     private void Jump()
     {
+        if (audioClips.Length > 0)
+        {
+            var index = Random.Range(0, audioClips.Length);
+            AudioSource.PlayClipAtPoint(audioClips[index], transform.position, audioVolume);
+        }
+        
         if (player.TryGetComponent(out ThirdPersonController thirdPersonController))
         {
-            thirdPersonController.AddJumpForce(data.jumpForce);
+            DOVirtual.DelayedCall(0.1f, () =>
+            {
+                thirdPersonController.AddJumpForce(data.jumpForce);
+            });
         }
     }
 

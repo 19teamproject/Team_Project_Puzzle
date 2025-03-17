@@ -227,13 +227,6 @@ public class Interaction : MonoBehaviour, IObjectHolder
         obj.Drop();
     }
 
-    // 들고있는 오브젝트가 있다면 놓기
-    private void CheckHeldObjectOnTeleport()
-    {
-        if (HeldObject != null)
-            DropObject(HeldObject);
-    }
-
     #endregion
 
     private void SetPromptText()
@@ -242,9 +235,9 @@ public class Interaction : MonoBehaviour, IObjectHolder
         promptTextPlus.text = curInteractable.GetInteractPrompt();
     }
 
-    public void OnInteract(InputValue value)
+    public void OnInteractInput(InputAction.CallbackContext context)
     {
-        if (value.isPressed && curInteractable != null)
+        if (context.phase == InputActionPhase.Performed && curInteractable != null)
         {
             if (curCube != null) Debug.Log($"{curCube}");
             if (!curInteractable.OnInteract()) return;

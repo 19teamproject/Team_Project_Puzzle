@@ -16,5 +16,5 @@ MonoBehaviour:
   description: "[E]\uD0A4\uB97C \uB20C\uB7EC \uC815\uD574\uC9C4 \uBC29\uD5A5\uC73C\uB85C
     \uB298\uB9B4 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
   type: 1
-  scaleDir: 1
+  scaleDir: 3
   jumpForce: {x: 0, y: 0, z: 0}
