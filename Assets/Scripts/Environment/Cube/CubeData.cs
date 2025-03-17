@@ -11,7 +11,9 @@ public enum CubeType
 
 public enum ScaleDir
 {
-    X, Y, Z
+    X, Minus_X,  // +X, -X
+    Y, Minus_Y,  // +Y, -Y
+    Z, Minus_Z   // +Z, -Z
 }
 
 [CreateAssetMenu(fileName = "Cube", menuName = "Scriptable Object/Cube Data", order = 1)]

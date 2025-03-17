@@ -730,7 +730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5463841238141181159, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_Name
-      value: Cube_Scale-X
+      value: Cube_Scale+X
       objectReference: {fileID: 0}
     - target: {fileID: 5463841238141181159, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_Layer
