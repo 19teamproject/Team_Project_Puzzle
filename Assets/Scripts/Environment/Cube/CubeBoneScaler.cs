@@ -22,9 +22,9 @@ public class CubeBoneScaler : MonoBehaviour
     private List<Transform> yNegBones;
     private List<Transform> zNegBones;
 
-    private int xDir;
-    private int yDir;
-    private int zDir;
+    private int xDir = 1;
+    private int yDir = 1;
+    private int zDir = 1;
 
     private Vector3 currentScale = Vector3.one;
 
