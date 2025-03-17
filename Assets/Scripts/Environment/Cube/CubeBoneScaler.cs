@@ -193,7 +193,7 @@ public class CubeBoneScaler : MonoBehaviour
                     t.DOLocalMoveZ(currentScale.z - offset, speed);
 
                 DOTween.To(() => boxCollider.center, x => boxCollider.center = x, new Vector3(boxCollider.center.x, boxCollider.center.y, currentScale.z / 2f), speed);
-                DOTween.To(() => boxCollider.size, x => boxCollider.center = x, new Vector3(boxCollider.size.x, boxCollider.size.y, currentScale.z), speed);
+                DOTween.To(() => boxCollider.size, x => boxCollider.size = x, new Vector3(boxCollider.size.x, boxCollider.size.y, currentScale.z), speed);
                 break;
 
             case ScaleDir.Minus_Z:
@@ -214,7 +214,7 @@ public class CubeBoneScaler : MonoBehaviour
                     t.DOLocalMoveZ(1f - (currentScale.z - offset), speed);
 
                 DOTween.To(() => boxCollider.center, x => boxCollider.center = x, new Vector3(boxCollider.center.x, boxCollider.center.y, 1f - (currentScale.z / 2f)), speed);
-                DOTween.To(() => boxCollider.size, x => boxCollider.center = x, new Vector3(boxCollider.size.x, boxCollider.size.y, currentScale.z), speed);
+                DOTween.To(() => boxCollider.size, x => boxCollider.size = x, new Vector3(boxCollider.size.x, boxCollider.size.y, currentScale.z), speed);
                 break;
         }
     }
