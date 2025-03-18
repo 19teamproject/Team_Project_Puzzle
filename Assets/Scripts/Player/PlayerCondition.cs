@@ -85,7 +85,7 @@ public class PlayerCondition : MonoBehaviour, IDamagable
 
         Health.Subtract(damageAmount);
         OnTakeDamage?.Invoke();
-        SoundManager.PlayClip(audioClip);
+        SoundManager.Instance.PlayClip(audioClip);
 
         if (Health.CurValue <= 0f)
         {

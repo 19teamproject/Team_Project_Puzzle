@@ -1,46 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
 {
-    private static bool shuttingDown = false;
-    private static object locker = new object();
-
     private static T instance;
+    private static readonly object lockObject = new();
+    private static bool isShuttingDown = false;
+
     public static T Instance
     {
         get
         {
-            if (shuttingDown)
+            if (isShuttingDown)
             {
+                Debug.LogWarning($"[MonoSingleton] {typeof(T)}의 인스턴스가 이미 삭제되었습니다. null을 반환합니다.");
                 return null;
             }
 
-            lock (locker)
+            lock (lockObject)
             {
+                // 유니티 버전에 따라 적절한 메서드 사용
                 if (instance == null)
                 {
-                    instance = (T)FindObjectOfType(typeof(T));
+#if UNITY_2023_1_OR_NEWER
+                    instance = FindFirstObjectByType<T>();
+#else
+                    instance = FindObjectOfType<T>();
+#endif
+
                     if (instance == null)
                     {
-                        GameObject temp = new GameObject(typeof(T).ToString());
-                        instance = temp.AddComponent<T>();
+                        GameObject singletonObject = new GameObject(typeof(T).Name);
+                        instance = singletonObject.AddComponent<T>();
+                        DontDestroyOnLoad(singletonObject);
                     }
-                    DontDestroyOnLoad(instance);
                 }
                 return instance;
             }
         }
     }
 
+    protected virtual void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this as T;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void OnApplicationQuit()
     {
-        shuttingDown = true;
+        isShuttingDown = true;
     }
 
     private void OnDestroy()
     {
-        shuttingDown = true;
+        if (instance == this)
+        {
+            isShuttingDown = true;
+        }
     }
 }

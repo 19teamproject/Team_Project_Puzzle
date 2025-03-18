@@ -108,7 +108,7 @@ public class TargetPoint : EnvironmentObject
     // 움직일 오브젝트의 목표 지점 설정
     private void MoveObject()
     {
-        SoundManager.PlayClip(audioClips[0]);
+        SoundManager.Instance.PlayClip(audioClips[0]);
         if (objectToMove != null)
         {
             // 문이 바라보는 방향을 기준으로 왼쪽 방향 계산
@@ -121,7 +121,7 @@ public class TargetPoint : EnvironmentObject
 
     IEnumerator ChangeToDisable()
     {
-        SoundManager.PlayClip(audioClips[1]);
+        SoundManager.Instance.PlayClip(audioClips[1]);
         Material mat = targetRenderer.material;
 
         Color startColor = mat.color;             // 원래 색상

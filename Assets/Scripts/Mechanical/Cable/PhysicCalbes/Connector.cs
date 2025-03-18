@@ -111,13 +111,13 @@ namespace HPhysic
             // 잘못된 연결에서 발생하는 스파크
             if (incorrectSparksC == null && sparksParticle && IsConnected && !IsConnectedRight)
             {
-                SoundManager.PlayClip(clips[0]);
+                SoundManager.Instance.PlayClip(clips[0]);
                 incorrectSparksC = IncorrectSparks();
                 StartCoroutine(incorrectSparksC);
             }
             else
             {
-                SoundManager.PlayClip(clips[1]);
+                SoundManager.Instance.PlayClip(clips[1]);
             }
 
             UpdateInteractableWhenIsConnected();
