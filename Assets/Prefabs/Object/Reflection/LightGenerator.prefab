@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 710472318919007519}
   m_Layer: 11
   m_Name: LightGenerator
-  m_TagString: Untagged
+  m_TagString: LightGenerator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,7 +105,7 @@ MonoBehaviour:
     m_Bits: 4096
   blockLayer:
     serializedVersion: 2
-    m_Bits: 6145
+    m_Bits: 6401
   startLightColor: {r: 1, g: 1, b: 0.5019608, a: 0}
   maxDistance: 100
   contactTime: 2

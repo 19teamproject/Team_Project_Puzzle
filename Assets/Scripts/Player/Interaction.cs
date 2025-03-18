@@ -316,8 +316,16 @@ public class Interaction : MonoBehaviour, IObjectHolder
         // 상하 회전 처리
         if (rotationInputY != 0f)
         {
-            rotationAxis = selectedRotatableObject.transform.right; // X축 기준 상하 회전
-            selectedRotatableObject.Rotate(rotationInputY * selectedRotatableObject.rotationSpeed * Time.deltaTime, rotationAxis);
+            if (selectedRotatableObject.CompareTag("LightGenerator"))
+            {
+                rotationAxis = selectedRotatableObject.transform.right;
+                selectedRotatableObject.Rotate(-rotationInputY * selectedRotatableObject.rotationSpeed * Time.deltaTime, rotationAxis);
+            }
+            else
+            {
+                rotationAxis = selectedRotatableObject.transform.right;
+                selectedRotatableObject.Rotate(rotationInputY * selectedRotatableObject.rotationSpeed * Time.deltaTime, rotationAxis);
+            }
         }
 
         if (rotationInputX != 0f || rotationInputY != 0f)
