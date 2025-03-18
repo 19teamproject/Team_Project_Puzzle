@@ -8,7 +8,6 @@ public class Title : MonoBehaviour
 {
     [Header("Anim")]
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private CanvasGroup textGroup;
     [SerializeField] private Material blurMaterial;
     [SerializeField] private float duration = 0.5f;
     [SerializeField] private Ease ease = Ease.OutCubic;
@@ -19,6 +18,11 @@ public class Title : MonoBehaviour
     [SerializeField] private Button continueGameButton;
     [SerializeField] private Button selectStageButton;
 
+    [Header("Canvas Group")]
+    [SerializeField] private CanvasGroup titleGroup;
+    [SerializeField] private CanvasGroup mainGroup;
+    [SerializeField] private CanvasGroup stageGroup;
+
     [Header("Stage")]
     [SerializeField] private StageManager stageManager;
     [SerializeField] private GameObject loadPanel;
@@ -28,9 +32,13 @@ public class Title : MonoBehaviour
     private void Start()
     {
         canvasGroup.alpha = 0f;
-        textGroup.alpha = 1f;
+        titleGroup.alpha = 1f;
+        mainGroup.alpha = 0f;
+        stageGroup.alpha = 0f;
+
         blurMaterial.SetFloat("_BlurRadius", 0f);
 
+        fullscreenButton.gameObject.SetActive(true);
         fullscreenButton.onClick.AddListener(PlayAnim);
     }
 
@@ -39,7 +47,7 @@ public class Title : MonoBehaviour
         canvasGroup.DOFade(1f, duration)
             .SetEase(ease);
             
-        blurMaterial.DOFloat(15f, "_BlurRadius", duration)
+        blurMaterial.DOFloat(15f, "_BlurRadius", duration * 4f)
             .SetEase(ease)
             .OnComplete(() => {
                 fullscreenButton.onClick.RemoveListener(PlayAnim);
@@ -49,13 +57,18 @@ public class Title : MonoBehaviour
 
     private void MainMenu()
     {
+        fullscreenButton.gameObject.SetActive(false);
+
         if (stageManager == null)
         {
             Debug.LogWarning("스테이지 매니저가 등록되지 않았습니다.");
             return;
         }
 
-        textGroup.DOFade(0f, duration)
+        titleGroup.DOFade(0f, duration)
+            .SetEase(ease);
+
+        mainGroup.DOFade(1f, duration)
             .SetEase(ease);
 
         if (newGameButton != null)
@@ -70,6 +83,12 @@ public class Title : MonoBehaviour
 
     private void SelectStage()
     {
+        mainGroup.DOFade(0f, duration)
+            .SetEase(ease);
+
+        stageGroup.DOFade(1f, duration)
+            .SetEase(ease);
+
         foreach (Transform child in buttonContainer)
         {
             Destroy(child.gameObject);
