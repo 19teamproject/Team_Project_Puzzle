@@ -14,15 +14,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 670779782384302387, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 670779782384302387, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.014
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 670779782384302387, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.949
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 670779782384302387, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_LocalRotation.w
@@ -112,6 +112,7 @@ MonoBehaviour:
   respawnTime: 3
   warningText: {fileID: 0}
   DamageIndicator: {fileID: 0}
+  clip: {fileID: 8300000, guid: 766392a6d992dc6439583cda684cec05, type: 3}
 --- !u!136 &3835984880405707868
 CapsuleCollider:
   m_ObjectHideFlags: 0

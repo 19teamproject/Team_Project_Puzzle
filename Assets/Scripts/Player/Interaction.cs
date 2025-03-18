@@ -205,6 +205,7 @@ public class Interaction : MonoBehaviour, IObjectHolder
         Vector3 handRot;
         if (HeldObject.tag == "ElectricBox")
         {
+            HeldObject.rb.velocity = (handTransform2.position - HeldObject.transform.position) * holdingForce;
             HeldObject.transform.position = handTransform2.position;
             handRot = handTransform2.rotation.eulerAngles;
         }
