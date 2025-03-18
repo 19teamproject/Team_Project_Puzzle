@@ -16,12 +16,22 @@ public class IceCube : MonoBehaviour
 
     public GameObject waterPuddlePrefab;  // 물 웅덩이 프리팹
 
+    public AudioSource audioSource;
+    public AudioClip meltingSound; // 녹는 소리 추가
+
     public void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         currentScale = transform.localScale;
         iceRenderer = GetComponent<Renderer>();
         boxCollider = GetComponent<BoxCollider>();
+
+        if (audioSource == null)
+        {
+            Debug.LogError("AudioSource가 없습니다! 컴포넌트를 추가하세요.");
+            audioSource = gameObject.AddComponent<AudioSource>(); // 자동으로 추가
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,20 +42,25 @@ public class IceCube : MonoBehaviour
         }
     }
 
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Fire"))
-    //    {
-    //        isMelting = false;
-    //    }
-    //}
-
     private IEnumerator MeltIce()
     {
         
         if (rigid != null) rigid.isKinematic = true;  // 오브젝트가 마구 움직이지 않게 고정
 
         isMelting = true;
+
+        if (audioSource != null && meltingSound != null)
+        {
+            Debug.Log("소리 재생 시작");
+            audioSource.clip = meltingSound;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogError("AudioSource 또는 meltingSound가 없습니다!");
+        }
+
 
         while (elapsedTime < meltingDuration && isMelting)  // duration 동안 실행
         {
@@ -69,7 +84,13 @@ public class IceCube : MonoBehaviour
         if (transform.localScale.x <= minSize)  // 얼음이 다 녹으면
         {
             WaterManager.instance.Melt();
-            Destroy(gameObject);
+
+            if (audioSource != null)
+            {
+                audioSource.Stop();
+            }
+
+            Destroy(gameObject, 1f);
         }
 
     }
