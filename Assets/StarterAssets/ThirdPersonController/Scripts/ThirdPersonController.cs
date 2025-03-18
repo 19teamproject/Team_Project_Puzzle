@@ -18,6 +18,7 @@ namespace StarterAssets
         [Range(0.0f, 0.3f)]
         [SerializeField] private float rotationSmoothTime = 0.12f;
         [SerializeField] private float speedChangeRate = 10.0f;
+        [SerializeField] private Material material;
 
         [SerializeField] private AudioClip landingAudioClip;
         [SerializeField] private AudioClip[] footstepAudioClips;
@@ -119,6 +120,8 @@ namespace StarterAssets
             // reset our timeouts on start
             jumpTimeoutDelta = jumpTimeout;
             fallTimeoutDelta = fallTimeout;
+
+            ChangeRenderMode(false);
         }
 
         private void Update()
@@ -398,18 +401,62 @@ namespace StarterAssets
 
                 Cinemachine3rdPersonFollow cinemachine3rdPersonFollow = vCams[camIndex].GetCinemachineComponent<Cinemachine3rdPersonFollow>();
 
-                if (cinemachine3rdPersonFollow != null)
+                if (camIndex < 2)
                 {
                     delayedCall.Kill();
                     hat.SetActive(true);
+                    ChangeRenderMode(false);
                     interaction.CheckDistanceBonus = cinemachine3rdPersonFollow.CameraDistance;
                 }
                 else
                 {
-                    delayedCall = DOVirtual.DelayedCall(mainCam.m_DefaultBlend.BlendTime, () => hat.SetActive(false));
+                    delayedCall = DOVirtual.DelayedCall(mainCam.m_DefaultBlend.BlendTime, () => {
+                        hat.SetActive(false);
+                        ChangeRenderMode(true);
+                    });
                     interaction.CheckDistanceBonus = 0f;
                 }
             }
+        }
+
+        private void ChangeRenderMode(bool isChanged)
+        {
+            if (material != null)
+            {
+                if (isChanged)
+                {
+                    Debug.Log("Transparent Mode");
+                    material.SetFloat("_Mode", 2);
+                    material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                    material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                    material.SetInt("_ZWrite", 0);
+                    material.DisableKeyword("_ALPHATEST_ON");
+                    material.EnableKeyword("_ALPHABLEND_ON");
+                    material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                    material.renderQueue = 3000;
+                    SetAlpa(0f);
+                }
+                else if(!isChanged)
+                {
+                    Debug.Log("Opaque Mode");
+                    material.SetFloat("_Mode", 0);
+                    material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+                    material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+                    material.SetInt("_ZWrite", 1);
+                    material.EnableKeyword("_ALPHATEST_ON");
+                    material.DisableKeyword("_ALPHABLEND_ON");
+                    material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                    material.renderQueue = -1;
+                    SetAlpa(1f);
+                }
+            }
+        }
+
+        private void SetAlpa(float alpa)
+        {
+            Color color = material.color;
+            color.a = alpa;
+            material.color = color;
         }
     }
 }
