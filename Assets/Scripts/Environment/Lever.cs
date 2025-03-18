@@ -44,7 +44,7 @@ public class Lever : MonoBehaviour, IInteractable
 
         if(cube != null)
         {
-            SoundManager.PlayClip(clips[0]);
+           // SoundManager.PlayClip(clips[0]);
             isPull = !isPull;
             animator.SetBool("IsPull", isPull);
             Debug.Log("애니메이션 시작");
@@ -101,7 +101,7 @@ public class Lever : MonoBehaviour, IInteractable
         // }
         // cube.transform.DOMove(cube.transform.position + targetPosition, cubeMovsSpeed);
         cube.GetComponent<Rigidbody>().AddForce(-Vector3.forward * (isPull ? 3f : -3f), ForceMode.Impulse);
-        SoundManager.PlayClip(clips[1]);
+        //SoundManager.PlayClip(clips[1]);
         yield return new WaitForSeconds(5f);
         Debug.Log("큐비 이동 완료!");
         isMove = false; //큐브가 모두 움직였다면 다시 상호작용이 가능하도록 세팅
