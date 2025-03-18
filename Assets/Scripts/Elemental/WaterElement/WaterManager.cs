@@ -12,7 +12,6 @@ public class WaterManager : MonoBehaviour
     private int meltingNum;
     [SerializeField]
     private int meltMinNum = 0;  // 물의 수위 초기화
-    
 
     private void Awake()
     {
@@ -43,6 +42,7 @@ public class WaterManager : MonoBehaviour
                 currentPos.y += 0.051f;  // 물의 수위 증가
 
                 waterObj.transform.position = currentPos;
+
             }
         }
 

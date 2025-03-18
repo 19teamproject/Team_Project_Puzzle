@@ -6,6 +6,9 @@ public class WoodCube : MonoBehaviour
     public Renderer targetRenderer; // 불에 타는 동안 색을 변경할 Renderer
     public Rigidbody rigid;
     public GameObject flameEffect,endEffect;  // 화염 효과, 마무리 효과 Prefab
+    public AudioSource audioSource;  // 오디오 소스 추가
+    public AudioClip burnSound;
+
     private bool isBurning = false;  // 불이 이미 붙었는지 확인하는 값 (중복 실행방지)
     public Color startColor = new Vector4(1,1,1,1);
     public Color endColor = new Vector4(0,0,0, 1);
@@ -16,6 +19,7 @@ public class WoodCube : MonoBehaviour
     {
         targetRenderer = GetComponent<Renderer>();
         rigid = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -38,7 +42,11 @@ public class WoodCube : MonoBehaviour
         isBurning = true;
         GameObject flame = Instantiate(flameEffect, transform.position, Quaternion.identity);
         flame.transform.SetParent(transform);
-        flame.transform.position = transform.position;
+
+        if (audioSource != null && burnSound != null)
+        {
+            audioSource.PlayOneShot(burnSound);
+        }
 
         float elapsedTime = 0f;  // 경과 시간 초기화
 
@@ -50,6 +58,7 @@ public class WoodCube : MonoBehaviour
         }
 
         targetRenderer.material.color = endColor;
+
         Instantiate(endEffect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

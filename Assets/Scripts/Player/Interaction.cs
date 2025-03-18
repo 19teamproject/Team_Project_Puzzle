@@ -357,7 +357,7 @@ public class Interaction : MonoBehaviour, IObjectHolder
             }
         }
 
-        selectedRotatableObject.lastInputTime = Time.time;
+        //selectedRotatableObject.lastInputTime = Time.time;
 
         if (selectedRotatableObject != null)
         {
