@@ -129,7 +129,7 @@ public class Cube : MonoBehaviour, IInteractable
     // 세이브
     private void SavePoint()
     {
-        
+        StageManager.Instance.CompleteStage();
     }
 
 #endregion
