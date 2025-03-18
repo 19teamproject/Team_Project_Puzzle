@@ -1,7 +1,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using NaughtyAttributes;
 
 public class StageManager : MonoSingleton<StageManager>
 {
@@ -13,6 +13,14 @@ public class StageManager : MonoSingleton<StageManager>
     private bool isClear;
     private float time;
     private readonly string timeKey;
+
+    [Button]
+    private void DebugStageReset()
+    {
+        SaveSystem.ResetGame(); // 기존 세이브 데이터 삭제
+        saveData = new SaveData(); // 새로운 세이브 데이터 생성
+        SaveSystem.SaveGame(saveData);
+    }
 
     private void Start()
     {
