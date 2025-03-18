@@ -356,10 +356,11 @@ public class Interaction : MonoBehaviour, IObjectHolder
             }
         }
 
-        selectedRotatableObject.lastInputTime = Time.time;
 
         if (selectedRotatableObject != null)
         {
+            selectedRotatableObject.lastInputTime = Time.time;
+            
             if (!firstActivated && !selectedRotatableObject.IsClear())
             {
                 firstActivated = true;
