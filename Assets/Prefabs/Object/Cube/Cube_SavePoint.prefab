@@ -53,7 +53,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 09989696e93a0964fb4ddf16dd7a7ad7, type: 2}
+  - {fileID: 2100000, guid: 822f5617cb862fb4c865b8566bc1f727, type: 2}
   - {fileID: 6524843967714326363, guid: 623672a0312ae1c418ffe6ec7ef3783c, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -730,7 +730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5463841238141181159, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_Name
-      value: Cube_Jump
+      value: Cube_SavePoint
       objectReference: {fileID: 0}
     - target: {fileID: 5463841238141181159, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
       propertyPath: m_Layer
@@ -884,18 +884,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea73928969ec5ff42ae18cc3a3671d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: db44927a7be5485458f481c9c91fff2a, type: 2}
+  data: {fileID: 11400000, guid: bb5061fed3142e641b5daa9991e298e8, type: 2}
   outline: {fileID: 1892954102333085849}
-  audioClips:
-  - {fileID: 8300000, guid: 57654437918a75148a8d70a89940c9cf, type: 3}
-  - {fileID: 8300000, guid: a9afa85d18f13d24fb5792fcbbbce3c1, type: 3}
-  - {fileID: 8300000, guid: fc058476a13241d488d71eb9cf525afa, type: 3}
-  - {fileID: 8300000, guid: 01385ae8d4657db47a4b4f0a5361d6f2, type: 3}
-  - {fileID: 8300000, guid: 246ef9fccc66a1a4b81fe2c05a7a9607, type: 3}
-  - {fileID: 8300000, guid: 5284bbd34e2d2124392e223509a078c9, type: 3}
-  - {fileID: 8300000, guid: 9eea9f2a8d2ed0d4a9867565b1135f1a, type: 3}
-  - {fileID: 8300000, guid: 2458e08a70cc4be4fb2d9dbb73db2c5a, type: 3}
-  - {fileID: 8300000, guid: e57c4e6b4ba17bd4bb19bbdaf34fd7af, type: 3}
+  audioClips: []
   audioVolume: 1
   target: {fileID: 0}
   offset: {x: 0, y: 1, z: 0}

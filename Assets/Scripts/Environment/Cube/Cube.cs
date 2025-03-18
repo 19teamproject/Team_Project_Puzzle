@@ -18,6 +18,10 @@ public class Cube : MonoBehaviour, IInteractable
     [SerializeField] private GameObject target;
     [SerializeField] private Vector3 offset = Vector3.up;
 
+    [Space(10f)]
+    [Header("SavePoint Cube Only")]
+    [SerializeField] private int StageId;
+
     private GameObject player;
     private bool isTrigger;
 
