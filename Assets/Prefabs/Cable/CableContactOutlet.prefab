@@ -74,6 +74,9 @@ MonoBehaviour:
   collorRenderer: {fileID: 2984435156750506378}
   sparksParticle: {fileID: 3348753985280812002}
   outline: {fileID: 6746103681262514445}
+  clips:
+  - {fileID: 8300000, guid: 6933cdd69b5c9ee42a5379090f126257, type: 3}
+  - {fileID: 8300000, guid: 80032e10451be1849b5dad21fb086fd8, type: 3}
 --- !u!54 &3704292238334986575
 Rigidbody:
   m_ObjectHideFlags: 0
