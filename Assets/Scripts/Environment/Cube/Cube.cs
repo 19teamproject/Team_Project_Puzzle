@@ -52,6 +52,9 @@ public class Cube : MonoBehaviour, IInteractable
 
             case CubeType.Jump:
                 if (isTrigger) Jump(); break;
+            
+            case CubeType.SavePoint:
+                if (isTrigger) SavePoint(); break;
         }
 
         return false;
@@ -117,6 +120,12 @@ public class Cube : MonoBehaviour, IInteractable
                 thirdPersonController.AddJumpForce(data.jumpForce);
             });
         }
+    }
+
+    // 세이브
+    private void SavePoint()
+    {
+        
     }
 
 #endregion
