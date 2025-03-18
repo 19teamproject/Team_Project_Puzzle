@@ -6,6 +6,7 @@ using HInteractions;
 using NaughtyAttributes;
 using System;
 using HPhysic;
+using System.Collections;
 
 public class Interaction : MonoBehaviour, IObjectHolder
 {
@@ -29,6 +30,7 @@ public class Interaction : MonoBehaviour, IObjectHolder
     // 상호작용 중인지
     [field: Header("Input")]
     [field: SerializeField, ReadOnly] public bool Interacting { get; private set; } = false;
+    Animator anim;
 
     public event Action OnSelect;           // 커서 활성화
     public event Action OnDeselect;         // 커서 비활성화
@@ -66,6 +68,8 @@ public class Interaction : MonoBehaviour, IObjectHolder
 
         promptTextRect.anchoredPosition = new(0f, 25f);
         promptTextCanvas.alpha = 0f;
+
+        anim = GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -237,6 +241,9 @@ public class Interaction : MonoBehaviour, IObjectHolder
             return;
         }
 
+        if (obj.tag == "ElectricBox")
+            StartCoroutine(CountDownWeight(true));
+
         connector.SetOutline(false);
         HeldObject = obj;
         obj.PickUp(this, heldObjectLayer);
@@ -250,11 +257,39 @@ public class Interaction : MonoBehaviour, IObjectHolder
             return;
         }
 
+        if (HeldObject.tag == "ElectricBox")
+            StartCoroutine(CountDownWeight(false));
+
         HeldObject = null;
         obj.Drop();
     }
 
     #endregion
+
+    IEnumerator CountDownWeight(bool isPicking)
+    {
+        if (isPicking)
+        {
+            float i = 0f;
+            while (i < 1)
+            {
+                i += 0.1f;
+                anim.SetLayerWeight(1, i);
+                yield return null;
+            }
+        }
+        else
+        {
+            float i = 1f;
+            while (i > 0)
+            {
+                i -= 0.1f;
+                anim.SetLayerWeight(1, i);
+                yield return null;
+            }
+        }
+        yield break;
+    }
 
     private void SetPromptText()
     {
