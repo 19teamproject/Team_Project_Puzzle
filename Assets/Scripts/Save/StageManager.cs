@@ -99,32 +99,32 @@ public class StageManager : MonoSingleton<StageManager>
         {
             saveData.currentStage++; // 다음 스테이지로 진행
             SaveSystem.SaveGame(saveData);
+        }
 
-            if (saveData.currentStage < stageList.stageScenes.Count)
-            {
-                LoadStage(saveData.currentStage);
-            }
-            else
-            {
-                Debug.Log("모든 스테이지를 클리어했습니다!");
+        if (saveData.currentStage < stageList.stageScenes.Count)
+        {
+            LoadStage(saveData.currentStage);
+        }
+        else
+        {
+            Debug.Log("모든 스테이지를 클리어했습니다!");
 
-                CanvasGroup timeCG = Instantiate(timeUI);
+            CanvasGroup timeCG = Instantiate(timeUI);
 
-                int minutes = Mathf.FloorToInt(time / 60);
-                int seconds = Mathf.FloorToInt(time % 60);
+            int minutes = Mathf.FloorToInt(time / 60);
+            int seconds = Mathf.FloorToInt(time % 60);
 
-                string timeText = $"<b><color=#fff9>CLEAR</color=#fff9></b>\n{minutes:00}:{seconds:00}";
+            string timeText = $"<b><color=#fff9>CLEAR</color=#fff9></b>\n{minutes:00}:{seconds:00}";
 
-                timeCG.GetComponentInChildren<TextMeshProUGUI>().text = timeText;
+            timeCG.GetComponentInChildren<TextMeshProUGUI>().text = timeText;
 
-                timeCG.DOFade(1f, 0.5f)
-                    .From(0f)
-                    .SetEase(Ease.OutCubic);
+            timeCG.DOFade(1f, 0.5f)
+                .From(0f)
+                .SetEase(Ease.OutCubic);
 
-                isStage = false;
-                isClear = true;
-                time = 0f;
-            }
+            isStage = false;
+            isClear = true;
+            time = 0f;
         }
     }
 
