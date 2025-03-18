@@ -49,6 +49,8 @@ namespace HPhysic
         public bool IsConnectedRight => IsConnected && ConnectionColor == ConnectedTo.ConnectionColor;
 
 
+        [SerializeField] private AudioClip[] clips;
+
 
         private void Awake()
         {
@@ -109,8 +111,13 @@ namespace HPhysic
             // 잘못된 연결에서 발생하는 스파크
             if (incorrectSparksC == null && sparksParticle && IsConnected && !IsConnectedRight)
             {
+                SoundManager.PlayClip(clips[0]);
                 incorrectSparksC = IncorrectSparks();
                 StartCoroutine(incorrectSparksC);
+            }
+            else
+            {
+                SoundManager.PlayClip(clips[1]);
             }
 
             UpdateInteractableWhenIsConnected();
@@ -131,7 +138,6 @@ namespace HPhysic
                 toDisconect.rb.isKinematic = _wasConnectionKinematic;
             toDisconect.Disconnect(this);
 
-            // 잘못된 연결에서 발생하는 스파크
             if (sparksParticle)
             {
                 sparksParticle.Stop();
