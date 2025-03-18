@@ -24,13 +24,18 @@ public class Title : MonoBehaviour
     [SerializeField] private CanvasGroup stageGroup;
 
     [Header("Stage")]
-    [SerializeField] private StageManager stageManager;
+    private StageManager stageManager;
     [SerializeField] private GameObject loadPanel;
     [SerializeField] private Transform buttonContainer;
     [SerializeField] private Button loadButtonPrefab;
 
+    
     private void Start()
     {
+        Debug.Log("게임 다시 시작됨");
+
+        stageManager = StageManager.Instance;
+
         Cursor.lockState = CursorLockMode.None;
         
         canvasGroup.alpha = 0f;
@@ -41,6 +46,7 @@ public class Title : MonoBehaviour
         blurMaterial.SetFloat("_BlurRadius", 0f);
 
         fullscreenButton.gameObject.SetActive(true);
+        fullscreenButton.onClick.RemoveAllListeners();
         fullscreenButton.onClick.AddListener(PlayAnim);
     }
 

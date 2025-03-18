@@ -8,21 +8,23 @@ public class SceneLoader : MonoSingleton<SceneLoader>
     [SerializeField] private CanvasGroup fadeCanvas; // 페이드 효과를 위한 CanvasGroup
     [SerializeField] private float fadeDuration = 0.5f; // 페이드 속도
 
+    private CanvasGroup fadeCanvasInstance;
+
     protected override void Awake()
     {
         base.Awake();
-
-        if (fadeCanvas != null)
-        {
-            DontDestroyOnLoad(fadeCanvas.gameObject);
-        }
     }
 
     private void Start()
     {
-        if (fadeCanvas != null)
+        if (fadeCanvasInstance == null)
         {
-            fadeCanvas.alpha = 1;
+            fadeCanvasInstance = Instantiate(fadeCanvas);
+            DontDestroyOnLoad(fadeCanvasInstance.gameObject);
+        }
+        if (fadeCanvasInstance != null)
+        {
+            fadeCanvasInstance.alpha = 1;
             StartCoroutine(FadeIn());
         }
     }
@@ -53,7 +55,7 @@ public class SceneLoader : MonoSingleton<SceneLoader>
     /// <returns></returns>
     private IEnumerator LoadSceneCoroutine(string sceneName)
     {
-        if (fadeCanvas != null)
+        if (fadeCanvasInstance != null)
             yield return StartCoroutine(FadeOut());
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
@@ -62,7 +64,7 @@ public class SceneLoader : MonoSingleton<SceneLoader>
             yield return null;
         }
 
-        if (fadeCanvas != null)
+        if (fadeCanvasInstance != null)
             yield return StartCoroutine(FadeIn());
     }
 
@@ -75,12 +77,12 @@ public class SceneLoader : MonoSingleton<SceneLoader>
         float time = 0;
         while (time < fadeDuration)
         {
-            fadeCanvas.alpha = Mathf.Lerp(1, 0, time / fadeDuration);
+            fadeCanvasInstance.alpha = Mathf.Lerp(1, 0, time / fadeDuration);
             time += Time.deltaTime;
             yield return null;
         }
-        fadeCanvas.alpha = 0;
-        fadeCanvas.blocksRaycasts = false;
+        fadeCanvasInstance.alpha = 0;
+        fadeCanvasInstance.blocksRaycasts = false;
     }
 
     /// <summary>
@@ -89,14 +91,14 @@ public class SceneLoader : MonoSingleton<SceneLoader>
     /// <returns></returns>
     private IEnumerator FadeOut()
     {
-        fadeCanvas.blocksRaycasts = true;
+        fadeCanvasInstance.blocksRaycasts = true;
         float time = 0;
         while (time < fadeDuration)
         {
-            fadeCanvas.alpha = Mathf.Lerp(0, 1, time / fadeDuration);
+            fadeCanvasInstance.alpha = Mathf.Lerp(0, 1, time / fadeDuration);
             time += Time.deltaTime;
             yield return null;
         }
-        fadeCanvas.alpha = 1;
+        fadeCanvasInstance.alpha = 1;
     }
 }
