@@ -9,6 +9,7 @@ namespace HPhysic
         Button,
         Pressure,
         CableBoth,
+        CallButton
     }
 
     public class MechanicSystem : EnvironmentObject
@@ -19,8 +20,11 @@ namespace HPhysic
         [SerializeField] private Vector3 targetPos;         // 목표 위치
         [SerializeField] private float duration;            // 이동 시간
         [SerializeField] private GameObject movingObj;
+        [SerializeField] private MechanicSystem callBtn;
         private Vector3 startPos;
         private bool isActive = false;
+
+        [SerializeField] private AudioClip[] clips;
 
         private void Awake()
         {
@@ -55,6 +59,8 @@ namespace HPhysic
         {
             if (type == MechanicType.Button)
                 ButtonSystem();
+            else if (type == MechanicType.CallButton)
+                callBtn.ButtonSystem();
 
             return false;
         }
@@ -69,11 +75,13 @@ namespace HPhysic
                 {
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos + targetPos, duration);
+                    SoundManager.PlayClip(clips[0]);
                 }
                 else
                 {
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos, duration);
+                    SoundManager.PlayClip(clips[0]);
                 }
             }
         }
@@ -86,11 +94,13 @@ namespace HPhysic
                 {
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos + targetPos, duration);
+                    SoundManager.PlayClip(clips[0]);
                 }
                 else
                 {
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos, duration);
+                    SoundManager.PlayClip(clips[0]);
                 }
             }
         }
@@ -104,12 +114,14 @@ namespace HPhysic
                     isActive = true;
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos + targetPos, duration);
+                    SoundManager.PlayClip(clips[0]);
                 }
-                else if (!redCable.StartConnector.IsConnectedRight || !blueCable.StartConnector.IsConnectedRight)
+                else if ((!redCable.StartConnector.IsConnectedRight || !blueCable.StartConnector.IsConnectedRight) && isActive)
                 {
                     isActive = false;
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos, duration);
+                    SoundManager.PlayClip(clips[0]);
                 }
             }
         }
@@ -123,12 +135,14 @@ namespace HPhysic
                     isActive = true;
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos + targetPos, duration);
+                    SoundManager.PlayClip(clips[0]);
                 }
-                else if (!redCable.IsAllConnectedRight || !blueCable.IsAllConnectedRight)
+                else if ((!redCable.IsAllConnectedRight || !blueCable.IsAllConnectedRight) && isActive)
                 {
                     isActive = false;
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos, duration);
+                    SoundManager.PlayClip(clips[0]);
                 }
             }
         }

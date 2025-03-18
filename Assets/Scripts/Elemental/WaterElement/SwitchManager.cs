@@ -9,12 +9,17 @@ public class SwitchManager : MonoBehaviour
     public GameObject[] blocks; // 사라질 블록들
     public Material secondMat;
 
+    public AudioSource audioSource;
+    public AudioClip switchSound; 
+
     private void Awake()
     {
         if (switchRenderer == null)
         {
             switchRenderer = GetComponent<Renderer>(); // 현재 오브젝트에서 Renderer 찾기
         }
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,6 +35,11 @@ public class SwitchManager : MonoBehaviour
     void SwitchOn()
     {
         switchRenderer.material = secondMat;  // 빨간색에서 초록색으로 바뀜
+
+        if (audioSource != null && switchSound != null)
+        {
+            audioSource.PlayOneShot(switchSound);
+        }
 
         ActivateBlocks(); 
     }
