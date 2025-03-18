@@ -2012,6 +2012,7 @@ MonoBehaviour:
   sprintSpeed: 5.335
   rotationSmoothTime: 0.12
   speedChangeRate: 10
+  material: {fileID: 2100000, guid: 8bbc505198f98af41873dbb347b1bb7b, type: 2}
   landingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
   footstepAudioClips:
   - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
@@ -2036,6 +2037,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 3221293111
   vCams:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   cinemachineCameraTarget: {fileID: 6058263477833680555}
@@ -2300,6 +2302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fc381d553aabe4095169be45376416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: 7da407172b4e1c441a6cd447d7d062b6, type: 3}
 --- !u!114 &8198246594871879012
 MonoBehaviour:
   m_ObjectHideFlags: 0
