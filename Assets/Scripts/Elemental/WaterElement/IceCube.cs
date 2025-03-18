@@ -25,12 +25,9 @@ public class IceCube : MonoBehaviour
         currentScale = transform.localScale;
         iceRenderer = GetComponent<Renderer>();
         boxCollider = GetComponent<BoxCollider>();
+        audioSource = gameObject.AddComponent<AudioSource>(); // 자동으로 추가
 
-        if (audioSource == null)
-        {
-            Debug.LogError("AudioSource가 없습니다! 컴포넌트를 추가하세요.");
-            audioSource = gameObject.AddComponent<AudioSource>(); // 자동으로 추가
-        }
+        audioSource.volume = 0.3f;
 
     }
 
