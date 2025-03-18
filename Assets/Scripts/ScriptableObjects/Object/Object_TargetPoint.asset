@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Object_TargetPoint
   m_EditorClassIdentifier: 
   displayName: "\uBE5B \uD761\uC218 \uD050\uBE0C"
-  description: "\uBE5B\uC744 \uD761\uC218\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+  description: "\uBE5B\uC744 \uD761\uC218\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.
+    \uD761\uC218\uB41C \uBE5B\uC774 \uBAA9\uD45C \uC0C9\uC0C1\uC774\uBA74 \uC131\uACF5\uC785\uB2C8\uB2E4."
