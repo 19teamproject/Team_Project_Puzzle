@@ -38,7 +38,7 @@ public class SwitchManager : MonoBehaviour
 
         if (audioSource != null && switchSound != null)
         {
-            audioSource.PlayOneShot(switchSound);
+            audioSource.PlayOneShot(switchSound, 0.2f);
         }
 
         ActivateBlocks(); 

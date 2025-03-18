@@ -31,6 +31,8 @@ public class Title : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        
         canvasGroup.alpha = 0f;
         titleGroup.alpha = 1f;
         mainGroup.alpha = 0f;
@@ -103,7 +105,7 @@ public class Title : MonoBehaviour
         foreach (int stage in availableStages)
         {
             Button newButton = Instantiate(loadButtonPrefab, buttonContainer);
-            newButton.GetComponentInChildren<TextMeshProUGUI>().text = stage.ToString();
+            newButton.GetComponentInChildren<TextMeshProUGUI>().text = (stage + 1).ToString();
             newButton.onClick.AddListener(() => stageManager.LoadStage(stage));
         }
     }

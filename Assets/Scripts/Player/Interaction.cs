@@ -205,7 +205,6 @@ public class Interaction : MonoBehaviour, IObjectHolder
         Vector3 handRot;
         if (HeldObject.tag == "ElectricBox")
         {
-            HeldObject.rb.velocity = Vector3.zero;
             HeldObject.transform.position = handTransform2.position;
             handRot = handTransform2.rotation.eulerAngles;
         }
@@ -356,10 +355,11 @@ public class Interaction : MonoBehaviour, IObjectHolder
             }
         }
 
-        selectedRotatableObject.lastInputTime = Time.time;
 
         if (selectedRotatableObject != null)
         {
+            selectedRotatableObject.lastInputTime = Time.time;
+            
             if (!firstActivated && !selectedRotatableObject.IsClear())
             {
                 firstActivated = true;
