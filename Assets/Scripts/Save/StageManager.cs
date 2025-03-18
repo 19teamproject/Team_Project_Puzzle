@@ -1,6 +1,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using NaughtyAttributes;
 
 public class StageManager : MonoSingleton<StageManager>
@@ -11,6 +12,8 @@ public class StageManager : MonoSingleton<StageManager>
 
     private bool isStage;
     private bool isClear;
+    private bool isTransition;
+
 
     [ShowNonSerializedField] private float time;
     private readonly string timeKey;
@@ -22,7 +25,11 @@ public class StageManager : MonoSingleton<StageManager>
         saveData = new SaveData(); // 새로운 세이브 데이터 생성
         SaveSystem.SaveGame(saveData);
     }
-
+    protected override void Awake()
+    {
+        base.Awake();
+        Debug.Log("흠...");
+    }
     private void Start()
     {
         // 게임 데이터를 불러와서 현재 스테이지 설정
@@ -32,10 +39,11 @@ public class StageManager : MonoSingleton<StageManager>
     private void Update()
     {
         if (isStage) time += Time.deltaTime;
-        if (isClear && Input.anyKeyDown)
+        if (isClear && Input.GetMouseButtonDown(0))
         {
             isClear = false;
             SceneLoader.Instance.LoadScene(stageList.titleScene.name);
+            DOVirtual.DelayedCall(0.5f, () => CharacterManager.Instance.Player.Controller.cursorInputForLook = true);
         }
     }
 
@@ -90,6 +98,10 @@ public class StageManager : MonoSingleton<StageManager>
     /// </summary>
     public void CompleteStage()
     {
+        if (isTransition) return;
+
+        isTransition = true;
+
         if (!saveData.clearedStages.Contains(saveData.currentStage))
         {
             saveData.clearedStages.Add(saveData.currentStage);
@@ -104,6 +116,8 @@ public class StageManager : MonoSingleton<StageManager>
         }
         else
         {
+            if (isClear) return;
+
             Debug.Log("모든 스테이지를 클리어했습니다!");
 
             CanvasGroup timeCG = Instantiate(timeUI);
@@ -117,11 +131,15 @@ public class StageManager : MonoSingleton<StageManager>
 
             timeCG.DOFade(1f, 0.5f)
                 .From(0f)
+                .SetUpdate(true)
                 .SetEase(Ease.OutCubic);
 
             isStage = false;
             isClear = true;
             time = 0f;
+            Time.timeScale = 0;
+            CharacterManager.Instance.Player.Controller.cursorInputForLook = false;
+            CharacterManager.Instance.Player.Controller.look = Vector2.zero;
         }
     }
 
@@ -152,5 +170,17 @@ public class StageManager : MonoSingleton<StageManager>
         isStage = false;
         PlayerPrefs.SetFloat(timeKey, time);
         PlayerPrefs.Save();
+    }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        isTransition = false;
     }
 }
