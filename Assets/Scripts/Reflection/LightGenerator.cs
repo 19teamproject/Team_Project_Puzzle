@@ -180,7 +180,7 @@ public class LightGenerator : MonoBehaviour
         if (!firstActivated)
         {
             firstActivated = true; // 첫 활성화 설정
-            SoundManager.PlayClip(audioClips[0]);
+            SoundManager.Instance.PlayClip(audioClips[0]);
         }
 
         if (isClear)
@@ -331,7 +331,7 @@ public class LightGenerator : MonoBehaviour
             if (isClear) 
             {
                 ClearObjects();
-                SoundManager.PlayClip(audioClips[1]);
+                SoundManager.Instance.PlayClip(audioClips[1]);
             }
         }
     }
