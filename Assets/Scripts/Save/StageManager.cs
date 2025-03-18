@@ -28,8 +28,8 @@ public class StageManager : MonoSingleton<StageManager>
     protected override void Awake()
     {
         base.Awake();
-        Debug.Log("흠...");
     }
+
     private void Start()
     {
         // 게임 데이터를 불러와서 현재 스테이지 설정
@@ -137,7 +137,11 @@ public class StageManager : MonoSingleton<StageManager>
             isStage = false;
             isClear = true;
             time = 0f;
-            Time.timeScale = 0;
+
+            DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0f, 0.5f)
+                .SetUpdate(true)
+                .SetEase(Ease.OutCubic);
+                
             CharacterManager.Instance.Player.Controller.cursorInputForLook = false;
             CharacterManager.Instance.Player.Controller.look = Vector2.zero;
         }
