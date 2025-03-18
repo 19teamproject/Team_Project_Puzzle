@@ -52335,6 +52335,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8060473713365736607, guid: 71868c18177877549a2d3fe95c871188, type: 3}
   m_PrefabInstance: {fileID: 1419771018}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &1419771020 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4730407963456777455, guid: 71868c18177877549a2d3fe95c871188, type: 3}
+  m_PrefabInstance: {fileID: 1419771018}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1421353990 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 670779782384302387, guid: 58cb5e8340fe9b64ab4459a4ad42a298, type: 3}
@@ -79596,7 +79601,7 @@ PrefabInstance:
     - target: {fileID: 3456044017701922676, guid: b99027d8800418a4687cf2bb584ac677, type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1419771020}
     - target: {fileID: 4101193518241883018, guid: b99027d8800418a4687cf2bb584ac677, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
