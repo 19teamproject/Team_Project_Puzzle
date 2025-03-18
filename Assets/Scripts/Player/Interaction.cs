@@ -167,8 +167,8 @@ public class Interaction : MonoBehaviour, IObjectHolder
     private void UpdateSelectedObject()
     {
         Interactable foundInteractable = null;
-        // 원형 레이로 주변 오브젝트 감지
-        if (Physics.SphereCast(playerCamera.position, 0.2f, playerCamera.forward, out RaycastHit hit, selectRange, selectLayer))
+        Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+        if (Physics.Raycast(ray, out RaycastHit hit, selectRange, selectLayer))
             foundInteractable = hit.collider.GetComponent<Interactable>();
 
         // 바라보는 오브젝트가 감지된 오브젝트와 같다면 돌아가기
