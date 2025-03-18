@@ -99,10 +99,7 @@ public class StageManager : MonoSingleton<StageManager>
         {
             saveData.currentStage++; // 다음 스테이지로 진행
             SaveSystem.SaveGame(saveData);
-        }
 
-        if (saveData.currentStage < stageList.stageScenes.Count)
-        {
             LoadStage(saveData.currentStage);
         }
         else
