@@ -75,13 +75,13 @@ namespace HPhysic
                 {
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos + targetPos, duration);
-                    SoundManager.PlayClip(clips[0]);
+                    SoundManager.Instance.PlayClip(clips[0]);
                 }
                 else
                 {
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos, duration);
-                    SoundManager.PlayClip(clips[0]);
+                    SoundManager.Instance.PlayClip(clips[0]);
                 }
             }
         }
@@ -94,13 +94,13 @@ namespace HPhysic
                 {
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos + targetPos, duration);
-                    SoundManager.PlayClip(clips[0]);
+                    SoundManager.Instance.PlayClip(clips[0]);
                 }
                 else
                 {
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos, duration);
-                    SoundManager.PlayClip(clips[0]);
+                    SoundManager.Instance.PlayClip(clips[0]);
                 }
             }
         }
@@ -114,14 +114,14 @@ namespace HPhysic
                     isActive = true;
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos + targetPos, duration);
-                    SoundManager.PlayClip(clips[0]);
+                    SoundManager.Instance.PlayClip(clips[0]);
                 }
                 else if ((!redCable.StartConnector.IsConnectedRight || !blueCable.StartConnector.IsConnectedRight) && isActive)
                 {
                     isActive = false;
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos, duration);
-                    SoundManager.PlayClip(clips[0]);
+                    SoundManager.Instance.PlayClip(clips[0]);
                 }
             }
         }
@@ -135,14 +135,14 @@ namespace HPhysic
                     isActive = true;
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos + targetPos, duration);
-                    SoundManager.PlayClip(clips[0]);
+                    SoundManager.Instance.PlayClip(clips[0]);
                 }
                 else if ((!redCable.IsAllConnectedRight || !blueCable.IsAllConnectedRight) && isActive)
                 {
                     isActive = false;
                     movingObj.transform.DOKill();
                     movingObj.transform.DOMove(startPos, duration);
-                    SoundManager.PlayClip(clips[0]);
+                    SoundManager.Instance.PlayClip(clips[0]);
                 }
             }
         }

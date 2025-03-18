@@ -18,6 +18,10 @@ public class Cube : MonoBehaviour, IInteractable
     [SerializeField] private GameObject target;
     [SerializeField] private Vector3 offset = Vector3.up;
 
+    [Space(10f)]
+    [Header("SavePoint Cube Only")]
+    [SerializeField] private int StageId;
+
     private GameObject player;
     private bool isTrigger;
 
@@ -52,6 +56,9 @@ public class Cube : MonoBehaviour, IInteractable
 
             case CubeType.Jump:
                 if (isTrigger) Jump(); break;
+            
+            case CubeType.SavePoint:
+                if (isTrigger) SavePoint(); break;
         }
 
         return false;
@@ -117,6 +124,12 @@ public class Cube : MonoBehaviour, IInteractable
                 thirdPersonController.AddJumpForce(data.jumpForce);
             });
         }
+    }
+
+    // 세이브
+    private void SavePoint()
+    {
+        StageManager.Instance.CompleteStage();
     }
 
 #endregion

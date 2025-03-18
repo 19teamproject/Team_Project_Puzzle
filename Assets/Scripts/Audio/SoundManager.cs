@@ -2,43 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : MonoSingleton<SoundManager>
 {
-    public static SoundManager instance;
 
-    [SerializeField][Range(0f, 1f)] private float soundEffectVolume;
-    [SerializeField][Range(0f, 1f)] private float soundEffectPitchVariance;
+    [SerializeField] private AudioClip musicClip;
     [SerializeField][Range(0f, 1f)] private float musicVolume;
 
-    private AudioSource musicAudioSource;
-    public AudioClip musicClip;
-
-    public SoundSource soundSourcePrefab;
-    private void Awake()
+    private AudioSource audioSource;
+    
+    protected override void Awake()
     {
-        instance = this;
-        musicAudioSource = GetComponent<AudioSource>();
-        musicAudioSource.volume = musicVolume;
-        musicAudioSource.loop = true;
+        base.Awake();
+        
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = musicVolume;
+        audioSource.loop = true;
     }
 
     private void Start()
     {
-        ChangeBackGroundMusic(musicClip);
+        if (musicClip != null) ChangeBackGroundMusic(musicClip);
     }
 
     public void ChangeBackGroundMusic(AudioClip clip)
     {
-        musicAudioSource.Stop();
-        musicAudioSource.clip = clip;
-        musicAudioSource.Play();
+        audioSource.Stop();
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 
-    public static void PlayClip(AudioClip clip)
+    public void PlayClip(AudioClip clip, float volume = 1f)
     {
-        SoundSource obj = Instantiate(instance.soundSourcePrefab);
-        SoundSource soundSource = obj.GetComponent<SoundSource>();
-        soundSource.Play(clip, instance.soundEffectVolume, instance.soundEffectPitchVariance);
+        audioSource.PlayOneShot(clip, volume);
     }
 }
 

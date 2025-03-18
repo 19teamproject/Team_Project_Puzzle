@@ -11,6 +11,7 @@ public class TargetPoint : EnvironmentObject
     [SerializeField] private float elapsedTime;     // 경과 시간
     [SerializeField] private float fadeDuration;    // 색상 변경 지속 시간
     [SerializeField] private bool isClear = false;
+    [SerializeField] private AudioClip[] audioClips;
 
     private Renderer targetRenderer;
     private MaterialPropertyBlock propertyBlock;
@@ -66,7 +67,6 @@ public class TargetPoint : EnvironmentObject
             if (CheckColorMatch(beamColor))
             {
                 isClear = true;
-                Debug.Log("목표 색상과 일치! 퍼즐 성공!");
                 MoveObject();
 
                 StartCoroutine(ChangeToDisable());
@@ -108,6 +108,7 @@ public class TargetPoint : EnvironmentObject
     // 움직일 오브젝트의 목표 지점 설정
     private void MoveObject()
     {
+        SoundManager.Instance.PlayClip(audioClips[0]);
         if (objectToMove != null)
         {
             // 문이 바라보는 방향을 기준으로 왼쪽 방향 계산
@@ -120,6 +121,7 @@ public class TargetPoint : EnvironmentObject
 
     IEnumerator ChangeToDisable()
     {
+        SoundManager.Instance.PlayClip(audioClips[1]);
         Material mat = targetRenderer.material;
 
         Color startColor = mat.color;             // 원래 색상

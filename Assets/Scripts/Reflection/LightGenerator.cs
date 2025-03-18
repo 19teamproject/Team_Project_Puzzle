@@ -14,6 +14,7 @@ public class LightGenerator : MonoBehaviour
     [SerializeField] private float contactTime = 2f;
     [SerializeField] private int maxReflections = 1;
     [SerializeField] private string targetTag = "TargetPoint";
+    [SerializeField] private AudioClip[] audioClips;
 
     private List<GameObject> lightBeams = new List<GameObject>();
     private List<Mirror> activeMirrors = new List<Mirror>();
@@ -84,7 +85,6 @@ public class LightGenerator : MonoBehaviour
                     {
                         contactStartTime = Time.time;
                         isContactingTarget = true;
-                        Debug.Log("목표에 접촉 시작!");
                     }
                     if (Time.time - contactStartTime >= contactTime)
                     {
@@ -160,7 +160,6 @@ public class LightGenerator : MonoBehaviour
 
         if (!stillHittingTarget && isContactingTarget && !isClear)
         {
-            Debug.Log("초기화 진행");
             contactStartTime = 0f;
             isContactingTarget = false;
         }
@@ -178,15 +177,16 @@ public class LightGenerator : MonoBehaviour
     // 빛 기둥 생성
     void CreateLightBeam(Vector3 start, Vector3 end, Color beamColor)
     {
+        if (!firstActivated)
+        {
+            firstActivated = true; // 첫 활성화 설정
+            SoundManager.Instance.PlayClip(audioClips[0]);
+        }
+
         if (isClear)
         {
             firstActivated = false;
             return;
-        }
-
-        if (!firstActivated)
-        {
-            firstActivated = true; // 첫 활성화 설정
         }
 
         GameObject beam = Instantiate(lightBeamPrefab);
@@ -331,6 +331,7 @@ public class LightGenerator : MonoBehaviour
             if (isClear) 
             {
                 ClearObjects();
+                SoundManager.Instance.PlayClip(audioClips[1]);
             }
         }
     }

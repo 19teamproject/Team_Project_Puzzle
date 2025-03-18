@@ -6,7 +6,8 @@ public enum CubeType
     None,
     Scale,
     Teleport,
-    Jump
+    Jump,
+    SavePoint
 }
 
 public enum ScaleDir

@@ -54,7 +54,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         saveData.currentStage = stageIndex;
         SaveSystem.SaveGame(saveData);
-        SceneManager.LoadScene(sceneName);
+        SceneLoader.Instance.LoadScene(sceneName);
     }
 
     /// <summary>
@@ -93,7 +93,7 @@ public class StageManager : MonoSingleton<StageManager>
         string firstSceneName = stageList.GetSceneName(0);
         if (!string.IsNullOrEmpty(firstSceneName))
         {
-            SceneManager.LoadScene(firstSceneName);
+            SceneLoader.Instance.LoadScene(firstSceneName);
         }
         else
         {

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 902d95f843101244893be071f99d81bd, type: 3}
+  m_Name: Cube_SavePoint
+  m_EditorClassIdentifier: 
+  displayName: "\uC138\uC774\uBE0C \uD050\uBE0C"
+  description: "\uC704\uC5D0\uC11C [E]\uD0A4\uB97C \uB20C\uB7EC \uC800\uC7A5 \uD6C4
+    \uB2E4\uC74C \uB9F5\uC73C\uB85C \uB118\uC5B4\uAC08 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+  type: 4
+  scaleDir: 0
+  jumpForce: {x: 0, y: 15, z: 0}

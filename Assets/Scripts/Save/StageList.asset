@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: StageList
   m_EditorClassIdentifier: 
   stageScenes:
-  - {fileID: 102900000, guid: a22f76e2b909cb34fa5e2ace36c25f8e, type: 3}
-  - {fileID: 102900000, guid: a22f76e2b909cb34fa5e2ace36c25f8e, type: 3}
-  - {fileID: 102900000, guid: a22f76e2b909cb34fa5e2ace36c25f8e, type: 3}
+  - {fileID: 102900000, guid: afdde47503927b84a8e73c931dfcb7bf, type: 3}
+  - {fileID: 102900000, guid: 63909ccdf4e2a694db951ec6129e0d55, type: 3}
+  - {fileID: 102900000, guid: 97a7d04901d375d4388a445e1fa90f9a, type: 3}
+  - {fileID: 102900000, guid: da868c0c35aaf1247a6ca5f2bad000b8, type: 3}
