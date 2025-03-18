@@ -94,33 +94,36 @@ public class StageManager : MonoSingleton<StageManager>
             saveData.clearedStages.Add(saveData.currentStage);
         }
 
-        saveData.currentStage++; // 다음 스테이지로 진행
-        SaveSystem.SaveGame(saveData);
-
-        if (saveData.currentStage < stageList.stageScenes.Count)
+        if (saveData.currentStage < stageList.stageScenes.Count - 1)
         {
-            LoadStage(saveData.currentStage);
-        }
-        else
-        {
-            Debug.Log("모든 스테이지를 클리어했습니다!");
-            
-            CanvasGroup timeCG = Instantiate(timeUI);
+            saveData.currentStage++; // 다음 스테이지로 진행
+            SaveSystem.SaveGame(saveData);
 
-            int minutes = Mathf.FloorToInt(time / 60);
-            int seconds = Mathf.FloorToInt(time % 60);
+            if (saveData.currentStage < stageList.stageScenes.Count)
+            {
+                LoadStage(saveData.currentStage);
+            }
+            else
+            {
+                Debug.Log("모든 스테이지를 클리어했습니다!");
 
-            string timeText = $"<b><color=#fff9>CLEAR</color=#fff9></b>\n{minutes:00}:{seconds:00}";
+                CanvasGroup timeCG = Instantiate(timeUI);
 
-            timeCG.GetComponentInChildren<TextMeshProUGUI>().text = timeText;
+                int minutes = Mathf.FloorToInt(time / 60);
+                int seconds = Mathf.FloorToInt(time % 60);
 
-            timeCG.DOFade(1f, 0.5f)
-                .From(0f)
-                .SetEase(Ease.OutCubic);
+                string timeText = $"<b><color=#fff9>CLEAR</color=#fff9></b>\n{minutes:00}:{seconds:00}";
 
-            isStage = false;
-            isClear = true;
-            time = 0f;
+                timeCG.GetComponentInChildren<TextMeshProUGUI>().text = timeText;
+
+                timeCG.DOFade(1f, 0.5f)
+                    .From(0f)
+                    .SetEase(Ease.OutCubic);
+
+                isStage = false;
+                isClear = true;
+                time = 0f;
+            }
         }
     }
 
@@ -137,6 +140,7 @@ public class StageManager : MonoSingleton<StageManager>
         string firstSceneName = stageList.GetSceneName(0);
         if (!string.IsNullOrEmpty(firstSceneName))
         {
+            isStage = true;
             SceneLoader.Instance.LoadScene(firstSceneName);
         }
         else
