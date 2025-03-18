@@ -883,7 +883,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 2d76d7a91588a024ca83b4e7c37536ab, type: 2}
   outline: {fileID: 1566297862521353228}
-  audioClips: []
-  audioVolume: 0
+  audioClips:
+  - {fileID: 8300000, guid: 6cbf3d6e5cc18d54cb14d7c5e1056b58, type: 3}
+  audioVolume: 0.5
   target: {fileID: 0}
   offset: {x: 0, y: 1, z: 0}
