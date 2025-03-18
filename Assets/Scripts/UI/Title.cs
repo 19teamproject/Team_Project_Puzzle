@@ -2,16 +2,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class Title : MonoBehaviour
 {
     [Header("Anim")]
     [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private CanvasGroup textGroup;
     [SerializeField] private Material blurMaterial;
     [SerializeField] private float duration = 0.5f;
     [SerializeField] private Ease ease = Ease.OutCubic;
 
     [Header("Button")]
+    [SerializeField] private Button fullscreenButton;
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button continueGameButton;
     [SerializeField] private Button selectStageButton;
@@ -25,28 +28,35 @@ public class Title : MonoBehaviour
     private void Start()
     {
         canvasGroup.alpha = 0f;
+        textGroup.alpha = 1f;
         blurMaterial.SetFloat("_BlurRadius", 0f);
 
-        Invoke(nameof(PlayAnim), 2f);
+        fullscreenButton.onClick.AddListener(PlayAnim);
     }
 
-    public void PlayAnim()
+    private void PlayAnim()
     {
         canvasGroup.DOFade(1f, duration)
             .SetEase(ease);
             
         blurMaterial.DOFloat(15f, "_BlurRadius", duration)
             .SetEase(ease)
-            .OnComplete(() => InitButtonListener());
+            .OnComplete(() => {
+                fullscreenButton.onClick.RemoveListener(PlayAnim);
+                fullscreenButton.onClick.AddListener(MainMenu);
+            });
     }
 
-    private void InitButtonListener()
+    private void MainMenu()
     {
         if (stageManager == null)
         {
             Debug.LogWarning("스테이지 매니저가 등록되지 않았습니다.");
             return;
         }
+
+        textGroup.DOFade(0f, duration)
+            .SetEase(ease);
 
         if (newGameButton != null)
             newGameButton.onClick.AddListener(stageManager.NewGame);
@@ -74,7 +84,7 @@ public class Title : MonoBehaviour
         foreach (int stage in availableStages)
         {
             Button newButton = Instantiate(loadButtonPrefab, buttonContainer);
-            newButton.GetComponentInChildren<Text>().text = "Stage " + stage;
+            newButton.GetComponentInChildren<TextMeshProUGUI>().text = stage.ToString();
             newButton.onClick.AddListener(() => stageManager.LoadStage(stage));
         }
     }
