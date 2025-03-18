@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624f7c65553c5314884ddc0ee35a4447, type: 3}
   m_Name: Object_WoodCube
   m_EditorClassIdentifier: 
-  displayName: "\uD050\uBE0C"
-  description: "\uB098\uBB34\uB85C \uB418\uC5B4 \uC788\uB2E4"
+  displayName: "\uB098\uBB34 \uD050\uBE0C"
+  description: "\uBD88\uC5D0 \uB2FF\uC73C\uBA74 \uD0D1\uB2C8\uB2E4."

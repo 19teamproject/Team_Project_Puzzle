@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Item_Torch
   m_EditorClassIdentifier: 
   displayName: "\uD683\uBD88"
-  description: "[F] \uD0A4\uB97C \uB20C\uB7EC \uC7A5\uCC29\uD569\uB2C8\uB2E4."
+  description: "[E] \uD0A4\uB97C \uB20C\uB7EC \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  equipDescription: "[F] \uD0A4\uB97C \uB20C\uB7EC \uC7A5\uCC29\uD569\uB2C8\uB2E4."
   type: 1
   icon: {fileID: 21300000, guid: 682eee2c540ac66468db5638b23c4095, type: 3}
   dropPrefab: {fileID: 8629108606236483858, guid: 5b1b3d9053af7434bafc5acddb814dfc, type: 3}

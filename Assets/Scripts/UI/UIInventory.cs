@@ -202,7 +202,7 @@ public class UIInventory : MonoBehaviour
             return;
         }
 
-        selectedItemText.text = $"<font=\"GmarketSansMedium SDF\" material=\"GmarketSansMedium SDF Glow Blue\">{selectedItem.Item.displayName}</font> - {selectedItem.Item.description}";
+        selectedItemText.text = $"<font=\"GmarketSansMedium SDF\" material=\"GmarketSansMedium SDF Glow Blue\">{selectedItem.Item.displayName}</font> - {selectedItem.Item.equipDescription}";
         selectedItemTextPlus.text = selectedItemText.text;
 
         canUse = selectedItem.Item.type == ItemType.Consumable;
