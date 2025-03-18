@@ -80,7 +80,7 @@ public class StageManager : MonoSingleton<StageManager>
         SaveSystem.SaveGame(saveData);
         SceneLoader.Instance.LoadScene(sceneName);
 
-        time = PlayerPrefs.GetFloat(timeKey, 0f);
+        if (time == 0f) time += PlayerPrefs.GetFloat(timeKey, 0f);
         isStage = true;
     }
 
