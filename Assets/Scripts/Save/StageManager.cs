@@ -11,7 +11,8 @@ public class StageManager : MonoSingleton<StageManager>
 
     private bool isStage;
     private bool isClear;
-    private float time;
+
+    [ShowNonSerializedField] private float time;
     private readonly string timeKey;
 
     [Button]
