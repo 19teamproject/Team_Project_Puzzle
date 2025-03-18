@@ -5,6 +5,7 @@ using UnityEditor;
 [CreateAssetMenu(fileName = "StageList", menuName = "Scriptable Object/Stage List", order = 0)]
 public class StageList : ScriptableObject
 {
+    public SceneAsset titleScene;
     public List<SceneAsset> stageScenes;
 
     /// <summary>

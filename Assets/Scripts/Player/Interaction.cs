@@ -148,7 +148,7 @@ public class Interaction : MonoBehaviour, IObjectHolder
     private void UpdateInput()
     {
         // 마우스 좌클릭하면 상호작용 시작
-        bool interacting = Input.GetMouseButton(0);
+        bool interacting = Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.E);
         if (interacting != Interacting)
         {
             Interacting = interacting;
@@ -205,7 +205,7 @@ public class Interaction : MonoBehaviour, IObjectHolder
         Vector3 handRot;
         if (HeldObject.tag == "ElectricBox")
         {
-            HeldObject.rb.velocity = Vector3.zero;
+            HeldObject.rb.velocity = (handTransform2.position - HeldObject.transform.position) * holdingForce;
             HeldObject.transform.position = handTransform2.position;
             handRot = handTransform2.rotation.eulerAngles;
         }
@@ -356,10 +356,11 @@ public class Interaction : MonoBehaviour, IObjectHolder
             }
         }
 
-        selectedRotatableObject.lastInputTime = Time.time;
 
         if (selectedRotatableObject != null)
         {
+            selectedRotatableObject.lastInputTime = Time.time;
+            
             if (!firstActivated && !selectedRotatableObject.IsClear())
             {
                 firstActivated = true;

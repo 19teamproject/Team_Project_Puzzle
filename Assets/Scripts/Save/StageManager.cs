@@ -1,17 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using NaughtyAttributes;
 
 public class StageManager : MonoSingleton<StageManager>
 {
     [SerializeField] private StageList stageList;
+    [SerializeField] private CanvasGroup timeUI; // 시간 프리팹
     private SaveData saveData;
+
+    private bool isStage;
+    private bool isClear;
+    private float time;
+    private readonly string timeKey;
+
+    [Button]
+    private void DebugStageReset()
+    {
+        SaveSystem.ResetGame(); // 기존 세이브 데이터 삭제
+        saveData = new SaveData(); // 새로운 세이브 데이터 생성
+        SaveSystem.SaveGame(saveData);
+    }
 
     private void Start()
     {
         // 게임 데이터를 불러와서 현재 스테이지 설정
         saveData = SaveSystem.LoadGame();
+    }
+
+    private void Update()
+    {
+        if (isStage) time += Time.deltaTime;
+        if (isClear && Input.anyKeyDown)
+        {
+            isClear = false;
+            SceneLoader.Instance.LoadScene(stageList.titleScene.name);
+        }
     }
 
     /// <summary>
@@ -55,6 +79,9 @@ public class StageManager : MonoSingleton<StageManager>
         saveData.currentStage = stageIndex;
         SaveSystem.SaveGame(saveData);
         SceneLoader.Instance.LoadScene(sceneName);
+
+        if (time == 0f) time += PlayerPrefs.GetFloat(timeKey, 0f);
+        isStage = true;
     }
 
     /// <summary>
@@ -77,6 +104,23 @@ public class StageManager : MonoSingleton<StageManager>
         else
         {
             Debug.Log("모든 스테이지를 클리어했습니다!");
+            
+            CanvasGroup timeCG = Instantiate(timeUI);
+
+            int minutes = Mathf.FloorToInt(time / 60);
+            int seconds = Mathf.FloorToInt(time % 60);
+
+            string timeText = $"<b><color=#fff9>CLEAR</color=#fff9></b>\n{minutes:00}:{seconds:00}";
+
+            timeCG.GetComponentInChildren<TextMeshProUGUI>().text = timeText;
+
+            timeCG.DOFade(1f, 0.5f)
+                .From(0f)
+                .SetEase(Ease.OutCubic);
+
+            isStage = false;
+            isClear = true;
+            time = 0f;
         }
     }
 
@@ -99,5 +143,12 @@ public class StageManager : MonoSingleton<StageManager>
         {
             Debug.LogError("스테이지 리스트에 스테이지가 없습니다!");
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        isStage = false;
+        PlayerPrefs.SetFloat(timeKey, time);
+        PlayerPrefs.Save();
     }
 }

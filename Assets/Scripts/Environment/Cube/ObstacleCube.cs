@@ -13,6 +13,9 @@ public class ObstacleCube : MonoBehaviour
     public TextMeshProUGUI warningText; //경고 메세지
     [SerializeField] private PostProcessVolume DamageIndicator;
 
+    [Header("오디오 정보")]
+    [SerializeField] private AudioClip clip;
+
     private bool isPlayOnCube = false; // 플레이어가 해당 큐브에 닿았을 때의 bool 변수
     private BoxCollider boxCollider;
     private CapsuleCollider capsuleCollider;
@@ -33,6 +36,7 @@ public class ObstacleCube : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+            SoundManager.Instance.PlayClip(clip);
             warningText.gameObject.SetActive(true);
             if(DamageIndicator != null )
             {

@@ -4,6 +4,6 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData
 {
-    public int currentStage = 1;
+    public int currentStage = 0;
     public List<int> clearedStages = new();
 }
