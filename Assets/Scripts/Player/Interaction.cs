@@ -122,7 +122,6 @@ public class Interaction : MonoBehaviour, IObjectHolder
 
                     curInteractGameObject = hit.collider.gameObject;
                     curInteractable = hit.collider.GetComponent<IInteractable>();
-                    Debug.Log($"[확인] curInteractable 타입: {curInteractable.GetType().Name}");
                     curInteractable.SetOutline(true);
                     AnimatePromptText(true);
                     SetPromptText();

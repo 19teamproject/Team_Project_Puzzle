@@ -127,3 +127,6 @@ MonoBehaviour:
   elapsedTime: 0
   fadeDuration: 2
   isClear: 0
+  audioClips:
+  - {fileID: 8300000, guid: 450e65a5144a26644b428f19b066a498, type: 3}
+  - {fileID: 8300000, guid: afa64f568cb3d6543b83d9e16afce536, type: 3}
