@@ -10,6 +10,8 @@ public interface IDamagable
 
 public class PlayerCondition : MonoBehaviour, IDamagable
 {
+    [SerializeField] private AudioClip audioClip;
+
     public event Action OnTakeDamage;
     public event Action OnDeath;
 
@@ -83,6 +85,7 @@ public class PlayerCondition : MonoBehaviour, IDamagable
 
         Health.Subtract(damageAmount);
         OnTakeDamage?.Invoke();
+        SoundManager.PlayClip(audioClip);
 
         if (Health.CurValue <= 0f)
         {

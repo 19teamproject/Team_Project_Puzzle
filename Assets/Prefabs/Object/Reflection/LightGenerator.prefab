@@ -111,6 +111,9 @@ MonoBehaviour:
   contactTime: 2
   maxReflections: 0
   targetTag: TargetPoint
+  audioClips:
+  - {fileID: 8300000, guid: 6cbf3d6e5cc18d54cb14d7c5e1056b58, type: 3}
+  - {fileID: 8300000, guid: 9e3dc1a4ad51e324e9b01d50bfcb5a48, type: 3}
 --- !u!114 &2347719898528056134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,8 +130,9 @@ MonoBehaviour:
   outline: {fileID: 5248485876346281342}
   targetPoint: {fileID: 0}
   lightGenerator: {fileID: 1127046178879580942}
-  rotationSpeed: 30
   isRotating: 0
+  rotationSpeed: 30
+  lastInputTime: 0
 --- !u!114 &5248485876346281342
 MonoBehaviour:
   m_ObjectHideFlags: 0
