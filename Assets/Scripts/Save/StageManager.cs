@@ -12,6 +12,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private bool isStage;
     private bool isClear;
+    private bool isFirst;
     private bool isTransition;
 
 
@@ -28,7 +29,6 @@ public class StageManager : MonoSingleton<StageManager>
     protected override void Awake()
     {
         base.Awake();
-        Debug.Log("흠...");
     }
     private void Start()
     {
@@ -69,6 +69,11 @@ public class StageManager : MonoSingleton<StageManager>
     public void ContinueGame()
     {
         LoadStage(saveData.currentStage);
+    }
+
+    public bool CheckClear()
+    {
+        return isClear;
     }
 
     /// <summary>
@@ -136,6 +141,7 @@ public class StageManager : MonoSingleton<StageManager>
 
             isStage = false;
             isClear = true;
+            //isFirst = true;
             time = 0f;
             Time.timeScale = 0;
             CharacterManager.Instance.Player.Controller.cursorInputForLook = false;

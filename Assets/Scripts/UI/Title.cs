@@ -103,16 +103,19 @@ public class Title : MonoBehaviour
         }
 
         SaveData saveData = SaveSystem.LoadGame();
-        List<int> availableStages = new(saveData.clearedStages)
+        HashSet<int> availableStages = new HashSet<int>(saveData.clearedStages)
         {
             saveData.currentStage // 현재 진행 중인 스테이지도 포함
         };
 
-        foreach (int stage in availableStages)
+        if (!stageManager.CheckClear())
         {
-            Button newButton = Instantiate(loadButtonPrefab, buttonContainer);
-            newButton.GetComponentInChildren<TextMeshProUGUI>().text = (stage + 1).ToString();
-            newButton.onClick.AddListener(() => stageManager.LoadStage(stage));
+            foreach (int stage in availableStages)
+            {
+                Button newButton = Instantiate(loadButtonPrefab, buttonContainer);
+                newButton.GetComponentInChildren<TextMeshProUGUI>().text = (stage + 1).ToString();
+                newButton.onClick.AddListener(() => stageManager.LoadStage(stage));
+            }
         }
     }
 }
