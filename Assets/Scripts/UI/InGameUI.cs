@@ -43,7 +43,7 @@ public class InGameUI : MonoBehaviour
 
     private void ExitButton()
     {
-        SceneLoader.Instance.LoadScene("PJW_Title");
+        SceneLoader.Instance.LoadScene("TitleScene");
         Cursor.lockState = CursorLockMode.None;
     }
 }
