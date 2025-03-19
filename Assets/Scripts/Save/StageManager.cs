@@ -12,7 +12,6 @@ public class StageManager : MonoSingleton<StageManager>
 
     private bool isStage;
     private bool isClear;
-    private bool isFirst;
     private bool isTransition;
 
 
@@ -97,6 +96,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         if (time == 0f) time += PlayerPrefs.GetFloat(timeKey, 0f);
         isStage = true;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     /// <summary>
@@ -169,6 +169,7 @@ public class StageManager : MonoSingleton<StageManager>
         {
             isStage = true;
             SceneLoader.Instance.LoadScene(firstSceneName);
+            Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {

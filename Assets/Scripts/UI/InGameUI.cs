@@ -24,6 +24,9 @@ public class InGameUI : MonoBehaviour
         isEnabled = !isEnabled;
         ingameUI.SetActive(isEnabled);
         Cursor.lockState = isEnabled ? CursorLockMode.None : CursorLockMode.Locked;
+        CharacterManager.Instance.Player.Controller.cursorInputForLook = !isEnabled;
+        CharacterManager.Instance.Player.Controller.look = isEnabled ? Vector2.zero : CharacterManager.Instance.Player.Controller.look;
+        Time.timeScale = isEnabled ? 0f : 1f;
     }
 
     private void ButtonSetting()
@@ -35,10 +38,12 @@ public class InGameUI : MonoBehaviour
     private void RestarButton()
     {
         SceneLoader.Instance.LoadScene(SceneManager.GetActiveScene().name);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void ExitButton()
     {
         SceneLoader.Instance.LoadScene("PJW_Title");
+        Cursor.lockState = CursorLockMode.None;
     }
 }
