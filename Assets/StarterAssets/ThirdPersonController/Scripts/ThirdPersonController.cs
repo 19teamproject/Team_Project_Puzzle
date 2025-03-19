@@ -267,7 +267,7 @@ namespace StarterAssets
                                  new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime);
             else
                 transform.Translate(inputDirection * (10 * Time.deltaTime) +
-                                 new Vector3(0.0f, Input.GetKey(KeyCode.Q) ? 10 : (Input.GetKey(KeyCode.E) ? 10 : 0), 0.0f) * Time.deltaTime);
+                                 new Vector3(0.0f, Input.GetKey(KeyCode.Q) ? -10 : (Input.GetKey(KeyCode.E) ? 10 : 0), 0.0f) * Time.deltaTime);
 
             // update animator if using character
             if (hasAnimator)
