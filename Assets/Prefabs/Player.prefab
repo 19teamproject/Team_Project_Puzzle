@@ -822,7 +822,8 @@ Transform:
   m_LocalPosition: {x: 8.491109e-11, y: 0.032277957, z: 0.0000000047699857}
   m_LocalScale: {x: 1.0000001, y: 0.9999998, z: 0.9999998}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3395811509917779185}
   m_Father: {fileID: 4480762805270452963}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1909377628678202504
@@ -1429,6 +1430,37 @@ Transform:
   m_Children:
   - {fileID: 8096017577858002626}
   m_Father: {fileID: 5110176492734295583}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3888393054760308338
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3395811509917779185}
+  m_Layer: 0
+  m_Name: EquipPos (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3395811509917779185
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3888393054760308338}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000054016663, y: -9.313218e-10, z: -2.6193425e-10, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7581495606965851985}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4202944969677648647
 GameObject:
@@ -2268,6 +2300,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9ff8dc93-76af-4d01-9015-744af0e41fb8
     m_ActionName: Player/Rotate[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: InGameUI, Assembly-CSharp
+        m_MethodName: OnInGameUI
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1bcc9f01-5556-46ae-a848-bc1f0db1689a
+    m_ActionName: Player/InGameUI[/Keyboard/backquote]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -2316,22 +2364,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 5616490248067664077}
-  selectRange: 15
+  selectRange: 5
   selectLayer:
     serializedVersion: 2
-    m_Bits: 65537
+    m_Bits: 196608
   <SelectedObject>k__BackingField: {fileID: 0}
   <connector>k__BackingField: {fileID: 0}
   handTransform: {fileID: 3132719687861689901}
-  handTransform2: {fileID: 0}
-  holdingForce: 10
+  handTransform2: {fileID: 3395811509917779185}
+  holdingForce: 20
   heldObjectLayer: 16
   heldClamXRotation: 45
   <HeldObject>k__BackingField: {fileID: 0}
   <Interacting>k__BackingField: 0
   layerMask:
     serializedVersion: 2
-    m_Bits: 6144
+    m_Bits: 2049
   maxCheckDistance: 5
   checkRate: 0.05
   promptText: {fileID: 0}
@@ -2349,6 +2397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipParent: {fileID: 3132719687861689901}
+  infoText: {fileID: 0}
   equipItemToHand: {fileID: 0}
 --- !u!114 &8349269777685625956
 MonoBehaviour:

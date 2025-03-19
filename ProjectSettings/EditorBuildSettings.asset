@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/PJW_Title.unity
+    guid: d22b6fbf4a1550a4694799eb00c2e06d
+  - enabled: 1
     path: Assets/Scenes/YDY_Tilemap.unity
     guid: afdde47503927b84a8e73c931dfcb7bf
   - enabled: 1

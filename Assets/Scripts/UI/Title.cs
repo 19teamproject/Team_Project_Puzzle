@@ -90,9 +90,7 @@ public class Title : MonoBehaviour
             selectStageButton.onClick.AddListener(SelectStage);
 
         if (exitGameButton != null)
-        {
             exitGameButton.onClick.AddListener(stageManager.OnApplicationQuit);
-        } 
     }
 
     private void SelectStage()
