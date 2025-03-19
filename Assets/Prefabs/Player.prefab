@@ -2379,7 +2379,7 @@ MonoBehaviour:
   <Interacting>k__BackingField: 0
   layerMask:
     serializedVersion: 2
-    m_Bits: 2049
+    m_Bits: 6145
   maxCheckDistance: 5
   checkRate: 0.05
   promptText: {fileID: 0}
