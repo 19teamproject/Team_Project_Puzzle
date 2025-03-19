@@ -50,14 +50,27 @@ public class WoodCube : MonoBehaviour
 
         float elapsedTime = 0f;  // 경과 시간 초기화
 
+        Material[] materials = targetRenderer.materials;
+        Color[] startColors = new Color[materials.Length];
+        for (int i = 0; i < materials.Length; i++)
+        {
+            startColors[i] = materials[i].color;
+        }
+
         while (elapsedTime < duration)  // duration 동안 실행
         {
-            targetRenderer.material.color = Color.Lerp(startColor, endColor, elapsedTime / duration);
+            for (int i = 0; i < materials.Length; i++)
+            {
+                materials[i].color = Color.Lerp(startColors[i], endColor, elapsedTime / duration);
+            }
             elapsedTime += Time.deltaTime;  
             yield return null;
         }
 
-        targetRenderer.material.color = endColor;
+        for (int i = 0; i < materials.Length; i++)
+        {
+            materials[i].color = endColor;
+        }
 
         Instantiate(endEffect, transform.position, Quaternion.identity);
         Destroy(gameObject);

@@ -17,6 +17,7 @@ public class Title : MonoBehaviour
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button continueGameButton;
     [SerializeField] private Button selectStageButton;
+    [SerializeField] private Button exitGameButton;
 
     [Header("Canvas Group")]
     [SerializeField] private CanvasGroup titleGroup;
@@ -87,6 +88,11 @@ public class Title : MonoBehaviour
 
         if (selectStageButton != null)
             selectStageButton.onClick.AddListener(SelectStage);
+
+        if (exitGameButton != null)
+        {
+            exitGameButton.onClick.AddListener(stageManager.OnApplicationQuit);
+        } 
     }
 
     private void SelectStage()

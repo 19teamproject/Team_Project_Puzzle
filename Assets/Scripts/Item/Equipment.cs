@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using StarterAssets;
+using TMPro;
 
 public class Equipment : MonoBehaviour
 {
     [SerializeField] private Transform equipParent;
-
+    [SerializeField] private TextMeshProUGUI infoText;
     private StarterAssetsInputs controller;
     private PlayerCondition condition;
 
@@ -30,6 +31,7 @@ public class Equipment : MonoBehaviour
         if (data.displayName == "횃불")
         {
             equipItemToHand.EquipTorchToHand();
+            infoText.enabled = false;
         }
     }
 
@@ -39,6 +41,7 @@ public class Equipment : MonoBehaviour
         {
             Destroy(CurEquip.gameObject);
             CurEquip = null;
+            infoText.enabled = true;
         }
     }
 

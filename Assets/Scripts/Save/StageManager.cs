@@ -176,11 +176,17 @@ public class StageManager : MonoSingleton<StageManager>
         }
     }
 
-    private void OnApplicationQuit()
+    public void OnApplicationQuit()
     {
         isStage = false;
         PlayerPrefs.SetFloat(timeKey, time);
         PlayerPrefs.Save();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
     private void OnEnable()
     {
