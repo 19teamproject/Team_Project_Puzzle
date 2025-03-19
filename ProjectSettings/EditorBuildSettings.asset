@@ -6,19 +6,19 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/PJW_Title.unity
+    path: Assets/Scenes/TitleScene.unity
     guid: d22b6fbf4a1550a4694799eb00c2e06d
   - enabled: 1
-    path: Assets/Scenes/YDY_Tilemap.unity
+    path: Assets/Scenes/PuzzleCube.unity
     guid: afdde47503927b84a8e73c931dfcb7bf
   - enabled: 1
-    path: Assets/Scenes/KHY_Tilemap.unity
+    path: Assets/Scenes/PuzzleElemental.unity
     guid: da868c0c35aaf1247a6ca5f2bad000b8
   - enabled: 1
-    path: Assets/Scenes/KJG_Tilemap.unity
+    path: Assets/Scenes/PuzzleReflection.unity
     guid: 63909ccdf4e2a694db951ec6129e0d55
   - enabled: 1
-    path: Assets/Scenes/KJH_Tilemap.unity
+    path: Assets/Scenes/PuzzleMechanic.unity
     guid: 97a7d04901d375d4388a445e1fa90f9a
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}
