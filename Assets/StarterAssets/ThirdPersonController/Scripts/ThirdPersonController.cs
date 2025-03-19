@@ -93,6 +93,7 @@ namespace StarterAssets
 
         // 포트 연결할 때 실행
         //public static Action OnPlayerEnterPortal;
+        bool isCheating;
 
         private void Awake()
         {
@@ -126,6 +127,8 @@ namespace StarterAssets
 
         private void Update()
         {
+            CheatInput();
+
             hasAnimator = TryGetComponent(out animator);
 
             JumpAndGravity();
@@ -136,6 +139,15 @@ namespace StarterAssets
         private void LateUpdate()
         {
             CameraRotation();
+        }
+
+        private void CheatInput()
+        {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                isCheating = !isCheating;
+                controller.enabled = !isCheating;
+            }
         }
 
         private void AssignAnimationIDs()
@@ -249,9 +261,13 @@ namespace StarterAssets
 
             Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
 
-            // move the player
-            controller.Move(targetDirection.normalized * (speed * Time.deltaTime) +
-                             new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime);
+            if (!isCheating)
+                // move the player
+                controller.Move(targetDirection.normalized * (speed * Time.deltaTime) +
+                                 new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime);
+            else
+                transform.Translate(inputDirection * (10 * Time.deltaTime) +
+                                 new Vector3(0.0f, Input.GetKey(KeyCode.Q) ? -10 : (Input.GetKey(KeyCode.E) ? 10 : 0), 0.0f) * Time.deltaTime);
 
             // update animator if using character
             if (hasAnimator)
