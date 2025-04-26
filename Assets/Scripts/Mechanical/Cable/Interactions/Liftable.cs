@@ -3,61 +3,67 @@ using UnityEngine;
 
 namespace HInteractions
 {
-    // Rigidbody가 반드시 필요함 (없으면 자동 추가)
+    // Rigidbody 없으면 자동으로 추가
     [RequireComponent(typeof(Rigidbody))]
-    public class Liftable : GrabbableInteractable
+    public class Liftable : Interactable
     {
-        // 들 때 방향 보정 값 (예: 살짝 앞쪽으로 들어올리기)
+        // 들고 있는 상태인지
+        [field: SerializeField] public bool IsLift { get; private set; } = false;
         [field: SerializeField] public Vector3 LiftDirectionOffset { get; private set; } = Vector3.zero;
 
-        public Rigidbody rb { get; protected set; } // 자신의 Rigidbody
+        public Rigidbody rb { get; protected set; }
+        public IObjectHolder ObjectHolder { get; protected set; }
 
-        // (오브젝트, 원래 레이어) 쌍을 저장하는 리스트
-        private readonly List<(GameObject obj, int defaultLayer)> defaultLayers = new();
+        // 오브젝트와 레이어를 한쌍으로 담음
+        private readonly List<(GameObject obj, int defaultLayer)> _defaultLayers = new();
 
-        // 초기화
         protected override void Awake()
         {
-            base.Awake(); // Interactable 초기화도 호출
-            rb = GetComponent<Rigidbody>(); // Rigidbody 가져오기
+            base.Awake();
+            rb = GetComponent<Rigidbody>();
         }
 
-        // 오브젝트를 집어든다
-        public override void PickUp(IObjectHolder holder, int layer)
+        // 잡아들기
+        public virtual void PickUp(IObjectHolder holder, int layer)
         {
-            if (IsHeld) return; // 이미 들고 있으면 무시
+            // 무언가 들고있다면 돌아가기
+            if (IsLift)
+                return;
 
-            Holder = holder; // 나를 들고 있는 주체 설정
+            // 바라보고 있는 오브젝트 정보
+            ObjectHolder = holder;
 
-            defaultLayers.Clear(); // 레이어 백업 초기화
+            // 레이어 저장
+            _defaultLayers.Clear();
             foreach (Collider col in gameObject.GetComponentsInChildren<Collider>())
-                defaultLayers.Add((col.gameObject, col.gameObject.layer)); // 현재 레이어 저장
+                _defaultLayers.Add((col.gameObject, col.gameObject.layer));
 
-            // 들었을 때 세팅
-            rb.useGravity = false;                        // 중력 비활성화
-            rb.interpolation = RigidbodyInterpolation.Interpolate; // 물리 움직임 부드럽게
+            // 세팅
+            rb.useGravity = false;
+            rb.interpolation = RigidbodyInterpolation.Interpolate; // 물체 움직임을 부드럽게
+            foreach ((GameObject obj, int defaultLayer) item in _defaultLayers)
+                item.obj.layer = layer; // 해당 오브젝트의 레이어를 설정
 
-            foreach (var item in defaultLayers)
-                item.obj.layer = layer;                   // 모두 지정 레이어로 변경 (예: PlayerHand 레이어)
-
-            IsHeld = true; // 들림 상태로 전환
+            IsLift = true;
         }
 
-        // 오브젝트를 내려놓는다
-        public override void Drop()
+        // 놓기
+        public virtual void Drop()
         {
-            if (!IsHeld) return; // 들고 있지 않으면 무시
+            // 아무것도 들고있지 않다면 돌아가기
+            if (!IsLift)
+                return;
 
-            Holder = null; // 들고 있는 주체 정보 제거
+            // 바라보고 있는 오브젝트 정보
+            ObjectHolder = null;
 
-            // 내려놓을 때 세팅
-            rb.useGravity = true;                         // 중력 다시 활성화
-            rb.interpolation = RigidbodyInterpolation.None; // 기본 설정으로 복귀
+            // 세팅
+            rb.useGravity = true;
+            rb.interpolation = RigidbodyInterpolation.None;
+            foreach ((GameObject obj, int defaultLayer) item in _defaultLayers)
+                item.obj.layer = item.defaultLayer;
 
-            foreach (var item in defaultLayers)
-                item.obj.layer = item.defaultLayer;        // 원래 레이어로 복원
-
-            IsHeld = false; // 들림 상태 해제
+            IsLift = false;
         }
     }
 }
