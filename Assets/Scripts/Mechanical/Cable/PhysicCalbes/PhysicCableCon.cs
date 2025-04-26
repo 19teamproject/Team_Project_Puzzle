@@ -3,44 +3,49 @@ using HInteractions;
 
 namespace HPhysic
 {
-    // Connector 없으면 자동으로 추가
+    // Connector가 필수 (없으면 자동 추가됨)
     [RequireComponent(typeof(Connector))]
-    // Start나 End에 들어갈 스크립트
+    // 케이블의 Start나 End 부분에 붙는 스크립트
     public class PhysicCableCon : Liftable
     {
-        private Connector _connector;
+        private Connector connector; // 자신의 Connector 참조
 
         protected override void Awake()
         {
-            base.Awake();
-
-            _connector = gameObject.GetComponent<Connector>();
+            base.Awake(); // Liftable 초기화
+            connector = gameObject.GetComponent<Connector>(); // Connector 컴포넌트 가져오기
         }
 
-        // 잡아들기
+        // 들 때 (PickUp)
         public override void PickUp(IObjectHolder holder, int layer)
         {
-            base.PickUp(holder, layer);
+            base.PickUp(holder, layer); // 기본 PickUp 처리 (Liftable)
 
-            if (_connector.ConnectedTo)
-                _connector.Disconnect();
+            if (connector.ConnectedTo)
+                connector.Disconnect(); // 들 때 이미 연결되어 있으면 해제
         }
 
-        // 놓기
+        // 놓을 때 (Drop)
         public override void Drop()
         {
-            if (ObjectHolder.SelectedObject && ObjectHolder.SelectedObject.TryGetComponent(out Connector secondConnector))
+            if (Holder.SelectedObject && Holder.SelectedObject.TryGetComponent(out Connector secondConnector))
             {
-                if (_connector.CanConnect(secondConnector))
-                    secondConnector.Connect(_connector);
+                // 놓으려고 할 때, 다른 Connector를 바라보고 있다면
+                if (connector.CanConnect(secondConnector))
+                {
+                    // 연결할 수 있으면 바로 연결
+                    secondConnector.Connect(connector);
+                }
                 else if (!secondConnector.IsConnected)
                 {
-                    transform.rotation = secondConnector.ConnectionRotation * _connector.RotationOffset;
-                    transform.position = (secondConnector.ConnectionPosition + secondConnector.ConnectedOutOffset * 0.2f) - (_connector.ConnectionPosition - _connector.transform.position);
+                    // 연결은 안되지만, 빈 상태라면 위치만 적절히 맞춰줌
+                    transform.rotation = secondConnector.ConnectionRotation * connector.RotationOffset;
+                    transform.position = (secondConnector.ConnectionPosition + secondConnector.ConnectedOutOffset * 0.2f)
+                                         - (connector.ConnectionPosition - connector.transform.position);
                 }
             }
 
-            base.Drop();
+            base.Drop(); // 기본 Drop 처리 (Liftable)
         }
     }
 }
